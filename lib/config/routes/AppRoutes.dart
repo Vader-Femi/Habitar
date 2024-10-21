@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapplication/features/home/presentation/pages/home_page.dart';
 import 'package:myapplication/features/splash/presentation/pages/splash.dart';
+import '../../features/auth/presentation/pages/get_started.dart';
 import '../../features/auth/presentation/pages/signin.dart';
 import '../../features/auth/presentation/pages/signup.dart';
 
@@ -11,8 +12,8 @@ class AppRoutes {
       case '/':
         return _materialRoute(const SplashPage());
 
-      case '/SignIn':
-        return _materialRoute(SignIn());
+      case '/GetStarted':
+        return _materialRoute(const GetStartedPage());
 
       case '/SignIn':
         return _materialRoute(SignIn());

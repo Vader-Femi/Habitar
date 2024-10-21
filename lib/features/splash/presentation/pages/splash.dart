@@ -28,6 +28,6 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> redirect() async {
     await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushNamed(context, '/SignIn');
+    Navigator.pushReplacementNamed(context, '/GetStarted');
   }
 }

@@ -5,8 +5,7 @@ class AppTheme {
   static final lightTheme = ThemeData(
     primaryColor: AppColours.primary,
     colorScheme: const ColorScheme.light(
-      primary: AppColours.primary,
-    ),
+        primary: AppColours.primary, secondary: AppColours.secondary),
     scaffoldBackgroundColor: AppColours.lightBackground,
     brightness: Brightness.light,
     fontFamily: "Satoshi",
@@ -39,22 +38,22 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          backgroundColor: AppColours.primary,
-          textStyle: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
+        backgroundColor: AppColours.primary,
+        textStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
     ),
   );
 
   static final darkTheme = ThemeData(
     primaryColor: AppColours.primary,
     colorScheme: const ColorScheme.dark(
-      primary: AppColours.primary,
-
-    ),
+        primary: AppColours.primary, secondary: AppColours.secondary),
     scaffoldBackgroundColor: AppColours.darkBackground,
     brightness: Brightness.dark,
     fontFamily: "Satoshi",
@@ -87,13 +86,15 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          backgroundColor: AppColours.primary,
-          textStyle: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
+        backgroundColor: AppColours.primary,
+        textStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
     ),
   );
 }
