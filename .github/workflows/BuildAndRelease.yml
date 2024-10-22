@@ -41,12 +41,12 @@ jobs:
         run: flutter pub get
 
         #5 Setup Keystore
-      - name: Decode Keystore
-        run: |
+      # - name: Decode Keystore
+      #  run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
           
-      - name: Create key.properties
-        run: |
+      # - name: Create key.properties
+      #  run: |
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
@@ -80,16 +80,16 @@ jobs:
             build/ios_build.tar.gz
 
         #10 Extract Version
-      - name: Extract version from pubspec.yaml
+      #- name: Extract version from pubspec.yaml
         id: extract_version
-        run: |
+       # run: |
           version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
           echo "VERSION=$version" >> $GITHUB_ENV
 
         #11 Check if Tag Exists
-      - name: Check if Tag Exists
-        id: check_tag
-        run: |
+      #- name: Check if Tag Exists
+       # id: check_tag
+        #run: |
           if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
             echo "TAG_EXISTS=true" >> $GITHUB_ENV
           else
@@ -97,10 +97,10 @@ jobs:
           fi
 
         #12 Modify Tag if it Exists
-      - name: Modify Tag
-        if: env.TAG_EXISTS == 'true'
-        id: modify_tag
-        run: |
+      #- name: Modify Tag
+      #  if: env.TAG_EXISTS == 'true'
+      #  id: modify_tag
+       # run: |
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
         
@@ -109,5 +109,5 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
-          tag: v${{ env.VERSION }}
+         # tag: v${{ env.VERSION }}
           token: ${{ secrets.TOKEN }}
