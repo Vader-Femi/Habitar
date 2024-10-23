@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myapplication/core/assets/app_vectors.dart';
-import 'package:myapplication/features/auth/presentation/pages/signin.dart';
 import '../../../../common/widgets/button/basic_app_button.dart';
 import '../../../../core/assets/app_images.dart';
 
@@ -25,25 +22,26 @@ class GetStartedPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   "Habitar",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 20,
-                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
+                const SizedBox(height: 2),
+                const Text(
                   "Build atomic habits",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Theme.of(context).colorScheme.primary,),
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Hero(
                   tag: "Next Button",
                   child: BasicAppButton(
-                    colour: Theme.of(context).colorScheme.secondary,
                     onPressed: () {
                       Navigator.pushNamed(
                         context,

@@ -8,55 +8,78 @@ import 'package:myapplication/features/auth/presentation/pages/signin.dart';
 import 'package:myapplication/features/home/presentation/pages/home_page.dart';
 import 'package:myapplication/service_locator.dart';
 
+import '../../../../config/theme/app_colors.dart';
+import '../widgets/app_bar.dart';
+
 class SignUp extends StatelessWidget {
   SignUp({super.key});
 
-  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _name = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppbar(
-        title: SvgPicture.asset(
-          AppVectors.appLogo,
-          height: 40,
-          width: 40,
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+      appBar: const AuthAppbar(pageNumber: 1),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            _registerText(),
-            const SizedBox(height: 5),
-            _supportText(),
-            const SizedBox(height: 26),
-            _fullNameField(context),
-            const SizedBox(height: 16),
-            _emailField(context),
-            const SizedBox(height: 16),
-            _passwordField(context),
-            const SizedBox(height: 33),
-            Hero(
-              tag: "Next Button",
-              child: BasicAppButton(
-                onPressed: () async {
-                  var result = await sl<SignupUseCase>().call(
-                      params: "Name"
-                  );
-
-                  result.fold((l) {
-                    var snackbar = SnackBar(content: Text(l));
-                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                  }, (r) {
-                    Navigator.pushNamed(context, '/Home');
-                  });
-                },
-                title: "Create Password",
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _fullNameField(context),
+                  const SizedBox(height: 45),
+                  _emailField(context),
+                  const SizedBox(height: 45),
+                  _passwordField(context),
+                  const SizedBox(height: 45),
+                ],
               ),
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Hero(
+                    tag: "Skip Button",
+                    child: OutlinedButton(
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        elevation: 5,
+                      ),
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Hero(
+                    tag: "Next Button",
+                    child: BasicAppButton(
+                      onPressed: () async {
+                        var result =
+                            await sl<SignupUseCase>().call(params: "Name");
+
+                        result.fold((l) {
+                          var snackbar = SnackBar(content: Text(l));
+                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        }, (r) {
+                          Navigator.pushNamed(context, '/Home');
+                        });
+                      },
+                      title: "Proceed",
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 5),
             _signinText(context),
@@ -66,88 +89,71 @@ class SignUp extends StatelessWidget {
     );
   }
 
-  Widget _registerText() {
-    return const Text(
-      "Register",
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget _supportText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          "If you need any support",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-          ),
-        ),
-        TextButton(
-            onPressed: () {},
-            child: const Text(
-              "click here",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                color: Color(0xff38B432),
-              ),
-            ))
-      ],
-    );
-  }
-
   Widget _fullNameField(BuildContext context) {
     return TextField(
-      decoration: const InputDecoration(hintText: "Full Name"),
-      controller: _fullName,
+      decoration: const InputDecoration(
+        hintText: "Firstly, what is your firstname?",
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColours.primaryUnfocused),
+        ),
+      ),
+      controller: _name,
     );
   }
 
   Widget _emailField(BuildContext context) {
     return TextField(
-      decoration: const InputDecoration(hintText: "Enter Email"),
+      decoration: const InputDecoration(
+        hintText: "What is your email address?",
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColours.primaryUnfocused),
+        ),
+      ),
       controller: _email,
     );
   }
 
   Widget _passwordField(BuildContext context) {
     return TextField(
-      decoration: const InputDecoration(hintText: "Password"),
+      decoration: const InputDecoration(
+        hintText: "What is your desired password?",
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColours.primaryUnfocused),
+        ),
+      ),
       controller: _password,
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      enableSuggestions: false,
+      autocorrect: false,
     );
   }
 
   Widget _signinText(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Do You Have An Account?",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Already Have An Account?",
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            color: Theme.of(context).colorScheme.primary,
           ),
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/SignIn');
-              },
-              child: const Text(
-                "Sign in",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Color(0xff288CE9),
-                ),
-              ))
-        ],
-      ),
+        ),
+        TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/SignIn');
+            },
+            child: Text(
+              "Sign in",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ))
+      ],
     );
   }
-
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myapplication/core/assets/app_vectors.dart';
-import 'package:myapplication/features/auth/presentation/pages/signin.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

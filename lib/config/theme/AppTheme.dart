@@ -8,41 +8,50 @@ class AppTheme {
         primary: AppColours.primary, secondary: AppColours.secondary),
     scaffoldBackgroundColor: AppColours.lightBackground,
     brightness: Brightness.light,
-    fontFamily: "Satoshi",
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.transparent,
-      hintStyle: const TextStyle(
-        color: Color(0xff383838),
+    fontFamily: "Domine",
+    textTheme: const TextTheme(
+      bodySmall: TextStyle(color: AppColours.primary),
+      bodyMedium: TextStyle(color: AppColours.primary),
+      bodyLarge: TextStyle(color: AppColours.primary),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      hintStyle: TextStyle(
+        color: AppColours.primaryUnfocused,
         fontWeight: FontWeight.w500,
       ),
-      contentPadding: const EdgeInsets.all(13),
       focusColor: AppColours.primary,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7),
-        borderSide: const BorderSide(color: Colors.black, width: 1),
-      ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7),
-        borderSide: const BorderSide(color: Colors.black, width: 1),
-      ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColours.textButtonLight,
         textStyle: const TextStyle(
-          fontSize: 19,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        textStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        minimumSize: const Size.fromHeight(48),
+        side: const BorderSide(color: AppColours.primary),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColours.primary,
+        backgroundColor: AppColours.secondary,
         textStyle: const TextStyle(
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
+        minimumSize: const Size.fromHeight(48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -56,41 +65,50 @@ class AppTheme {
         primary: AppColours.primary, secondary: AppColours.secondary),
     scaffoldBackgroundColor: AppColours.darkBackground,
     brightness: Brightness.dark,
-    fontFamily: "Satoshi",
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Colors.transparent,
-      hintStyle: const TextStyle(
-        color: Color(0xffA7A7A7),
+    fontFamily: "Domine",
+    textTheme: const TextTheme(
+      bodySmall: TextStyle(color: AppColours.primary),
+      bodyMedium: TextStyle(color: AppColours.primary),
+      bodyLarge: TextStyle(color: AppColours.primary),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      hintStyle: TextStyle(
+        color: AppColours.primaryUnfocused,
         fontWeight: FontWeight.w500,
       ),
-      contentPadding: const EdgeInsets.all(13),
       focusColor: AppColours.primary,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7),
-        borderSide: const BorderSide(color: Colors.white, width: 1),
-      ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7),
-        borderSide: const BorderSide(color: Colors.white, width: 1),
-      ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColours.textButtonDark,
         textStyle: const TextStyle(
-          fontSize: 19,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        textStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        minimumSize: const Size.fromHeight(48),
+        side: const BorderSide(color: AppColours.primary),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColours.primary,
+        backgroundColor: AppColours.secondary,
         textStyle: const TextStyle(
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
+        minimumSize: const Size.fromHeight(48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
