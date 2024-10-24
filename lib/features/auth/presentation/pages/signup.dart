@@ -10,6 +10,8 @@ import 'package:myapplication/service_locator.dart';
 
 import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/sign_in_text.dart';
+import '../widgets/skip_button.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({super.key});
@@ -46,17 +48,7 @@ class SignUp extends StatelessWidget {
                 Expanded(
                   child: Hero(
                     tag: "Skip Button",
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        elevation: 5,
-                      ),
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary),
-                      ),
-                    ),
+                    child: skipButton(context),
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -67,12 +59,11 @@ class SignUp extends StatelessWidget {
                       onPressed: () async {
                         var result =
                             await sl<SignupUseCase>().call(params: "Name");
-
                         result.fold((l) {
                           var snackbar = SnackBar(content: Text(l));
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
                         }, (r) {
-                          Navigator.pushNamed(context, '/Home');
+                          Navigator.pushNamed(context, '/AddFirstHabit');
                         });
                       },
                       title: "Proceed",
@@ -82,7 +73,7 @@ class SignUp extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 5),
-            _signinText(context),
+            signinText(context),
           ],
         ),
       ),
@@ -126,34 +117,6 @@ class SignUp extends StatelessWidget {
       obscureText: true,
       enableSuggestions: false,
       autocorrect: false,
-    );
-  }
-
-  Widget _signinText(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Already Have An Account?",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/SignIn');
-            },
-            child: Text(
-              "Sign in",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ))
-      ],
     );
   }
 }

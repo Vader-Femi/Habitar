@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapplication/features/auth/presentation/pages/add_a_habit.dart';
 import 'package:myapplication/features/home/presentation/pages/home_page.dart';
 import 'package:myapplication/features/splash/presentation/pages/splash.dart';
 import '../../features/auth/presentation/pages/get_started.dart';
@@ -20,6 +21,9 @@ class AppRoutes {
 
       case '/SignUp':
         return _materialRoute(SignUp());
+
+      case '/AddFirstHabit':
+        return _materialRoute(const AddAHabit());
 
       case '/Home':
         return _materialRoute(const HomePage());

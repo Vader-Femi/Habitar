@@ -27,6 +27,7 @@ class GetStartedPage extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 20,
+                    letterSpacing: 1.5,
                   ),
                 ),
                 const SizedBox(height: 2),

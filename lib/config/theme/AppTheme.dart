@@ -16,7 +16,7 @@ class AppTheme {
     ),
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(
-        color: AppColours.primaryUnfocused,
+        color: AppColours.primary,
         fontWeight: FontWeight.w500,
       ),
       focusColor: AppColours.primary,
@@ -73,7 +73,7 @@ class AppTheme {
     ),
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(
-        color: AppColours.primaryUnfocused,
+        color: AppColours.primary,
         fontWeight: FontWeight.w500,
       ),
       focusColor: AppColours.primary,
