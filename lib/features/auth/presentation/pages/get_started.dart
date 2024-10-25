@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/button/basic_app_button.dart';
+import 'package:myapplication/core/constants/constants.dart';
 import '../../../../core/assets/app_images.dart';
+import '../widgets/next_button.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -10,11 +11,14 @@ class GetStartedPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(AppImages.getStarted),
-                  fit: BoxFit.fitWidth),
+          Hero(
+            tag: Constants.headingHeroTag,
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(AppImages.getStarted),
+                    fit: BoxFit.fitWidth),
+              ),
             ),
           ),
           Padding(
@@ -40,18 +44,10 @@ class GetStartedPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Hero(
-                  tag: "Next Button",
-                  child: BasicAppButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        "/SignUp",
-                      );
-                    },
-                    title: "Get Started",
-                  ),
-                )
+                NextButton(
+                  title: "Get Started",
+                  onClick: () => Navigator.pushNamed(context, "/SignUp"),
+                ),
               ],
             ),
           ),

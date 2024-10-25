@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/common/widgets/button/basic_app_button.dart';
+import 'package:myapplication/features/auth/presentation/widgets/next_button.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/sign_in_text.dart';
@@ -15,7 +15,15 @@ class AddAHabit extends StatefulWidget {
 class _AddAHabitState extends State<AddAHabit> {
   final TextEditingController _habit = TextEditingController();
 
-  List<bool> selectedDays = [true, false, false, true, false, true, false];
+  List<DayOfWeek> dayOfWeek = [
+    DayOfWeek(dayTitle: "M", isSelected: true),
+    DayOfWeek(dayTitle: "T", isSelected: false),
+    DayOfWeek(dayTitle: "W", isSelected: true),
+    DayOfWeek(dayTitle: "T", isSelected: false),
+    DayOfWeek(dayTitle: "F", isSelected: true),
+    DayOfWeek(dayTitle: "S", isSelected: false),
+    DayOfWeek(dayTitle: "S", isSelected: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +32,7 @@ class _AddAHabitState extends State<AddAHabit> {
       body: Padding(
         padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SingleChildScrollView(
               child: Column(
@@ -42,25 +51,19 @@ class _AddAHabitState extends State<AddAHabit> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: Hero(
-                    tag: "Skip Button",
-                    child: skipButton(context),
-                  ),
+                  child: SkipButton(onClick: (){}),
                 ),
                 const SizedBox(width: 15),
                 Expanded(
-                  child: Hero(
-                    tag: "Next Button",
-                    child: BasicAppButton(
-                      onPressed: () {},
-                      title: "Add habit",
-                    ),
+                  child: NextButton(
+                    title: "Add habit",
+                    onClick: () => Navigator.pushNamed(context, "/SetFirstHabitReminder"),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 5),
-            signinText(context),
+            const SignInText(),
           ],
         ),
       ),
@@ -92,16 +95,12 @@ class _AddAHabitState extends State<AddAHabit> {
   }
 
   Widget _periodicitySelector(BuildContext context) {
-    // List to store the selected days (false for unselected, true for selected)
-
-    // List of days labels
-    final List<String> days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "How often do you want to be reminded?",
+          "What day(s) do you want to be reminded?",
           textAlign: TextAlign.start,
           style: TextStyle(
             fontWeight: FontWeight.w700,
@@ -115,14 +114,14 @@ class _AddAHabitState extends State<AddAHabit> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
-            days.length,
+            dayOfWeek.length,
             (index) {
               return GestureDetector(
                 onTap: () {
 
                   setState(() {
                     // Toggle the selected state of the day
-                    selectedDays[index] = !selectedDays[index];
+                    dayOfWeek[index].isSelected = !dayOfWeek[index].isSelected;
                   });
 
                 },
@@ -134,12 +133,12 @@ class _AddAHabitState extends State<AddAHabit> {
                     border: Border.all(
                       color: Theme.of(context).primaryColor,
                     ),
-                    color: selectedDays[index] ? Theme.of(context).primaryColor : Colors.transparent,
+                    color: dayOfWeek[index].isSelected ? Theme.of(context).primaryColor : Colors.transparent,
                   ),
                   child: Text(
-                    days[index],
+                    dayOfWeek[index].dayTitle,
                     style: TextStyle(
-                      color: selectedDays[index] ? Colors.white : Theme.of(context).primaryColor,
+                      color: dayOfWeek[index].isSelected ? Colors.white : Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -151,4 +150,11 @@ class _AddAHabitState extends State<AddAHabit> {
       ],
     );
   }
+}
+
+class DayOfWeek{
+  final String dayTitle;
+  bool isSelected;
+
+  DayOfWeek({required this.dayTitle, required this.isSelected});
 }

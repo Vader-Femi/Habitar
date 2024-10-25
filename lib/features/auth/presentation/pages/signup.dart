@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myapplication/common/widgets/appbar/app_bar.dart';
-import 'package:myapplication/common/widgets/button/basic_app_button.dart';
-import 'package:myapplication/core/assets/app_vectors.dart';
 import 'package:myapplication/features/auth/domain/usecases/signup.dart';
-import 'package:myapplication/features/auth/presentation/pages/signin.dart';
-import 'package:myapplication/features/home/presentation/pages/home_page.dart';
 import 'package:myapplication/service_locator.dart';
-
 import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/next_button.dart';
 import '../widgets/sign_in_text.dart';
 import '../widgets/skip_button.dart';
 
-class SignUp extends StatelessWidget {
-  SignUp({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final TextEditingController _name = TextEditingController();
+
   final TextEditingController _email = TextEditingController();
+
   final TextEditingController _password = TextEditingController();
 
   @override
@@ -46,34 +47,33 @@ class SignUp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: Hero(
-                    tag: "Skip Button",
-                    child: skipButton(context),
+                  child: SkipButton(
+                    onClick: () {},
                   ),
                 ),
                 const SizedBox(width: 15),
                 Expanded(
-                  child: Hero(
-                    tag: "Next Button",
-                    child: BasicAppButton(
-                      onPressed: () async {
-                        var result =
-                            await sl<SignupUseCase>().call(params: "Name");
-                        result.fold((l) {
+                  child: NextButton(
+                    title: "Proceed",
+                    onClick: () async {
+                      var result =
+                          await sl<SignupUseCase>().call(params: "Name");
+                      result.fold(
+                        (l) {
                           var snackbar = SnackBar(content: Text(l));
                           ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                        }, (r) {
+                        },
+                        (r) {
                           Navigator.pushNamed(context, '/AddFirstHabit');
-                        });
-                      },
-                      title: "Proceed",
-                    ),
+                        },
+                      );
+                    },
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 5),
-            signinText(context),
+            const SignInText(),
           ],
         ),
       ),

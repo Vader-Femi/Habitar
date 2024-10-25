@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myapplication/common/helpers/is_light_mode.dart';
 import 'package:myapplication/config/theme/app_colors.dart';
 
+import '../../../../core/constants/constants.dart';
+
 class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
   final int pageNumber;
   final double toolbarHeight = 68.0;
@@ -11,7 +13,7 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: "Appbar",
+      tag: Constants.appBarHeroTag,
       child: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -35,7 +37,7 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
                   Text(
                     "$pageNumber/4",
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       fontFamily: "Satoshi",
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,

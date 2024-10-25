@@ -8,10 +8,16 @@ import 'package:myapplication/features/auth/presentation/pages/signup.dart';
 import 'package:myapplication/features/home/presentation/pages/home_page.dart';
 import 'package:myapplication/service_locator.dart';
 
-class SignIn extends StatelessWidget {
-  SignIn({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final TextEditingController _email = TextEditingController();
+
   final TextEditingController _password = TextEditingController();
 
   @override
