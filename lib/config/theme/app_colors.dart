@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColours {
 
-  // static const primary = Color(0xff6C3BAA); //Royal Purple
-  static const primary = Color(0xff4f2873); //Royal Purple
+  static const primary = Color(0xff6C3BAA); //Royal Purple
   static const primaryUnfocused = Color(0xffca8dfd);
   static const secondary = Color(0xffFF746C); //Pastel Red
 
