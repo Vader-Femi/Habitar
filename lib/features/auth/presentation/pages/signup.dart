@@ -46,10 +46,8 @@ class _SignUpState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: SkipButton(
-                    onClick: () {},
-                  ),
+                const Expanded(
+                  child: SkipButton(),
                 ),
                 const SizedBox(width: 15),
                 Expanded(

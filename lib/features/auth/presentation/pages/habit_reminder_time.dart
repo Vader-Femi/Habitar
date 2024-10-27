@@ -43,14 +43,14 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: SkipButton(onClick: () {}),
+                const Expanded(
+                  child: SkipButton(),
                 ),
                 const SizedBox(width: 15),
                 Expanded(
                   child: NextButton(
                     title: "Finish",
-                    onClick: () {},
+                    onClick: () => Navigator.pushNamed(context, "/AllSet"),
                   ),
                 ),
               ],
