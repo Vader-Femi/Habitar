@@ -18,7 +18,9 @@ class _AllSetState extends State<AllSet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AuthAppbar(pageNumber: 4),
+      appBar: AuthAppbar(pageNumber: 4, goBack: () {
+        Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+      },),
       body: Padding(
         padding: const EdgeInsets.only(top: 45, left: 30, right: 30, bottom: 30),
         child: Column(
@@ -37,7 +39,7 @@ class _AllSetState extends State<AllSet> {
             const Spacer(flex: 2),
             NextButton(
               title: "Start Tracking",
-              onClick: () {},
+              onClick: () => Navigator.pushNamed(context, "/Home"),
             ),
           ],
         ),

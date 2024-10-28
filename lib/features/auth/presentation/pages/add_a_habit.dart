@@ -28,7 +28,9 @@ class _AddAHabitState extends State<AddAHabit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AuthAppbar(pageNumber: 2),
+      appBar: AuthAppbar(pageNumber: 2, goBack: () {
+        Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+      },),
       body: Padding(
         padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
         child: Column(
@@ -57,7 +59,8 @@ class _AddAHabitState extends State<AddAHabit> {
                 Expanded(
                   child: NextButton(
                     title: "Add habit",
-                    onClick: () => Navigator.pushNamed(context, "/SetFirstHabitReminder"),
+                    onClick: () =>
+                        Navigator.pushNamed(context, "/SetFirstHabitReminder"),
                   ),
                 ),
               ],
@@ -95,7 +98,6 @@ class _AddAHabitState extends State<AddAHabit> {
   }
 
   Widget _periodicitySelector(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -115,15 +117,13 @@ class _AddAHabitState extends State<AddAHabit> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             dayOfWeek.length,
-            (index) {
+                (index) {
               return GestureDetector(
                 onTap: () {
-
                   setState(() {
                     // Toggle the selected state of the day
                     dayOfWeek[index].isSelected = !dayOfWeek[index].isSelected;
                   });
-
                 },
                 child: Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -131,14 +131,20 @@ class _AddAHabitState extends State<AddAHabit> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
                     ),
-                    color: dayOfWeek[index].isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+                    color: dayOfWeek[index].isSelected ? Theme
+                        .of(context)
+                        .primaryColor : Colors.transparent,
                   ),
                   child: Text(
                     dayOfWeek[index].dayTitle,
                     style: TextStyle(
-                      color: dayOfWeek[index].isSelected ? Colors.white : Theme.of(context).primaryColor,
+                      color: dayOfWeek[index].isSelected ? Colors.white : Theme
+                          .of(context)
+                          .primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -152,7 +158,7 @@ class _AddAHabitState extends State<AddAHabit> {
   }
 }
 
-class DayOfWeek{
+class DayOfWeek {
   final String dayTitle;
   bool isSelected;
 

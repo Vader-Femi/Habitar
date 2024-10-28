@@ -7,8 +7,9 @@ import '../../../../core/constants/constants.dart';
 class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
   final int pageNumber;
   final double toolbarHeight = 68.0;
+  final VoidCallback goBack;
 
-  const AuthAppbar({super.key, required this.pageNumber});
+  const AuthAppbar({super.key, required this.pageNumber, required this.goBack});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: goBack,
                     icon: Icon(
                       Icons.arrow_back,
                       size: 18,
@@ -54,7 +55,6 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(7),
                 backgroundColor: AppColours.primaryUnfocused,
                 minHeight: 8,
-
               ),
             )
           ],

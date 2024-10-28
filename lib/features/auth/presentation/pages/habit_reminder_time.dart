@@ -23,7 +23,9 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AuthAppbar(pageNumber: 3),
+      appBar: AuthAppbar(pageNumber: 3, goBack: () {
+        Navigator.pop(context);
+      },),
       body: Padding(
         padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
         child: Column(
