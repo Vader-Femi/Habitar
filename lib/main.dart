@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,16 @@ import 'package:myapplication/features/splash/presentation/pages/splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:myapplication/service_locator.dart';
 import 'config/routes/AppRoutes.dart';
+import 'firebase_options.dart';
 
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
