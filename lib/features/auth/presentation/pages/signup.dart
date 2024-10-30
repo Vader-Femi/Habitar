@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/features/auth/domain/usecases/signup.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapplication/service_locator.dart';
 import '../../../../config/theme/app_colors.dart';
+import '../bloc/sign_up/sign_up_bloc.dart';
+import '../bloc/sign_up/sign_up_event.dart';
+import '../bloc/sign_up/sign_up_state.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/next_button.dart';
 import '../widgets/sign_in_text.dart';
@@ -15,6 +18,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final TextEditingController _name = TextEditingController();
 
   final TextEditingController _email = TextEditingController();
@@ -23,60 +32,104 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AuthAppbar(pageNumber: 1, goBack: () {
-        Navigator.pop(context);
-      },),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _fullNameField(context),
-                  const SizedBox(height: 45),
-                  _emailField(context),
-                  const SizedBox(height: 45),
-                  _passwordField(context),
-                  const SizedBox(height: 45),
-                ],
-              ),
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Expanded(
-                  child: SkipButton(),
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: NextButton(
-                    title: "Proceed",
-                    onClick: () async {
-                      var result =
-                          await sl<SignupUseCase>().call(params: "Name");
-                      result.fold(
-                        (l) {
-                          var snackbar = SnackBar(content: Text(l));
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                        },
-                        (r) {
-                          Navigator.pushNamed(context, '/AddFirstHabit');
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            const SignInText(),
-          ],
+    return BlocProvider(
+      create: (_) =>
+      sl<SignUpBloc>()
+        ..add(const InitSignUp()),
+      child: Scaffold(
+        appBar: AuthAppbar(pageNumber: 1, goBack: () {
+          Navigator.pop(context);
+        },),
+        body: Padding(
+          padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
+          child: BlocBuilder<SignUpBloc, SignUpState>(
+              builder: (context, state) {
+                if (state is SignUpLoading) {
+                  return Container(
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(),
+                  );
+                }
+
+                if (state is SignUpInit) {
+                  return _buildBody(context);
+                }
+
+                if (state is SignUpDone) {
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    Navigator.pushNamed(
+                        context, '/AddFirstHabit');
+                  });
+
+                  return _buildBody(context);
+                }
+
+                if (state is ShowPasswordChanged) {
+                  return _buildBody(context);
+                }
+
+                if (state is SignUpError) {
+
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Error : ${state.errorMessage}"),
+                    ));
+                  });
+
+                  return _buildBody(context);
+                }
+
+
+                return const SizedBox();
+              }
+          ),
         ),
       ),
+    );
+  }
+
+  _buildBody(BuildContext context) {
+    return Column(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              _fullNameField(context),
+              const SizedBox(height: 45),
+              _emailField(context),
+              const SizedBox(height: 45),
+              _passwordField(context),
+              const SizedBox(height: 45),
+            ],
+          ),
+        ),
+        const Spacer(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Expanded(
+              child: SkipButton(),
+            ),
+            const SizedBox(width: 15),
+            Expanded(
+              child: NextButton(
+                title: "Proceed",
+                onClick: () async {
+                  BlocProvider.of<SignUpBloc>(context).add(
+                      TrySignUp(
+                          name: _name.text,
+                          email: _email.text,
+                          password: _password.text
+                      ));
+                },
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        const SignInText(),
+      ],
     );
   }
 
