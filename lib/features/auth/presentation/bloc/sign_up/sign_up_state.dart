@@ -24,8 +24,8 @@ class SignUpInit extends SignUpState {
   const SignUpInit();
 }
 
-class SignUpDone extends SignUpState {
-  const SignUpDone();
+class SignUpSuccess extends SignUpState {
+  const SignUpSuccess();
 }
 
 class SignUpError extends SignUpState {

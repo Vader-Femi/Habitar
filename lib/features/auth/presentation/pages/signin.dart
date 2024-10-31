@@ -3,6 +3,7 @@ import 'package:myapplication/features/auth/domain/usecases/SignIn.dart';
 import 'package:myapplication/service_locator.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/res/data_state.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/next_button.dart';
 import '../widgets/sign_in_text.dart';
@@ -58,17 +59,15 @@ class _SignInState extends State<SignIn> {
             NextButton(
               title: "Log In",
               onClick: () async {
-                var result = await sl<SigninUseCase>().call(params: "Name");
-                result.fold(
-                  (l) {
-                    var snackbar = SnackBar(content: Text(l));
-                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                  },
-                  (r) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, "/Home", (r) => false);
-                  },
-                );
+                var result = await sl<SignInUseCase>().call(params: "Name");
+
+                if (result is DataSuccess){
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/Home", (r) => false);
+                } else if (result is DataFailed){
+                  var snackbar = SnackBar(content: Text(result.errorMessage.toString()));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
               },
             ),
             const SizedBox(height: 5),

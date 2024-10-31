@@ -170,12 +170,6 @@
       "languageVersion": "3.0"
     },
     {
-      "name": "dartz",
-      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dartz-0.10.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "dio",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.7.0",
       "packageUri": "lib/",
@@ -566,6 +560,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "rename_app",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/rename_app-1.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "retrofit",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/retrofit-4.4.1",
       "packageUri": "lib/",
@@ -752,7 +752,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-10-30T16:55:23.883127Z",
+  "generated": "2024-10-31T19:01:09.289182Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///D:/Sdk/flutter",

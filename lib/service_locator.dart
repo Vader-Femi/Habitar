@@ -19,12 +19,12 @@ Future<void> initializeDependencies() async {
     AuthRepositoryImpl(sl())
   );
 
-  sl.registerSingleton<SignupUseCase>(
-    SignupUseCase(sl())
+  sl.registerSingleton<SignUpUseCase>(
+    SignUpUseCase(sl())
   );
 
-  sl.registerSingleton<SigninUseCase>(
-    SigninUseCase(sl())
+  sl.registerSingleton<SignInUseCase>(
+    SignInUseCase(sl())
   );
 
   // Bloc

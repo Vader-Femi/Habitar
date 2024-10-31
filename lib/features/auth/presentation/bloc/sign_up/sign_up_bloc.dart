@@ -7,7 +7,7 @@ import 'package:myapplication/features/auth/presentation/bloc/sign_up/sign_up_st
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
-  final SignupUseCase _signupUseCase;
+  final SignUpUseCase _signupUseCase;
 
   SignUpBloc(this._signupUseCase) : super(const SignUpInit()) {
    on <InitSignUp> (initSignUp);
@@ -33,7 +33,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (dataState is DataFailed){
       emit(SignUpError(dataState.errorMessage ?? "Something went wrong"));
     } else {
-      emit(const SignUpDone());
+      emit(const SignUpSuccess());
     }
   }
 

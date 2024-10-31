@@ -55,7 +55,7 @@ class _SignUpState extends State<SignUp> {
                   return _buildBody(context);
                 }
 
-                if (state is SignUpDone) {
+                if (state is SignUpSuccess) {
                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                     Navigator.pushNamed(
                         context, '/AddFirstHabit');
@@ -80,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                 }
 
 
-                return const SizedBox();
+                return _buildBody(context);
               }
           ),
         ),

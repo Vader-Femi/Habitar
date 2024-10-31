@@ -1,23 +1,20 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapplication/core/res/data_state.dart';
-
 import '../../domain/entities/SignUpRequestEntity.dart';
 
 abstract class AuthService {
   Future<DataState> signup(SignUpRequestEntity signUpReq);
 
-  Future<Either> signin(String name);
+  Future<DataState> signIn(String name);
 }
 
 
 class AuthServiceImpl extends AuthService {
 
   @override
-  Future<Either> signin(String name) async {
+  Future<DataState> signIn(String name) async {
 
     /*
       try {
@@ -44,9 +41,7 @@ class AuthServiceImpl extends AuthService {
 
     try {
 
-
-
-      return const Right("Sign in was successful");
+      return const DataSuccess("Sign in was successful");
 
     } on HttpException catch (e) {
       String message = "";
@@ -59,7 +54,7 @@ class AuthServiceImpl extends AuthService {
       //   message = e.message ?? "Something went wrong";
       // }
 
-      return Left(message);
+      return DataSuccess(message);
     }
   }
 
