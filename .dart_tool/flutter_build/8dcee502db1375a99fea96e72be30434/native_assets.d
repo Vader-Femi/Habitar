@@ -1,0 +1,1 @@
+ D:\\ProjectFiles\\Flutter\\Habitar\\.dart_tool\\flutter_build\\8dcee502db1375a99fea96e72be30434\\native_assets.yaml: 
