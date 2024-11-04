@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapplication/core/res/data_state.dart';
-import 'package:myapplication/features/auth/domain/entities/SignUpRequestEntity.dart';
-import 'package:myapplication/features/auth/domain/usecases/signup.dart';
-import 'package:myapplication/features/auth/presentation/bloc/sign_up/sign_up_event.dart';
-import 'package:myapplication/features/auth/presentation/bloc/sign_up/sign_up_state.dart';
+import 'package:habitar/features/auth/presentation/bloc/sign_up/sign_up_event.dart';
+import 'package:habitar/features/auth/presentation/bloc/sign_up/sign_up_state.dart';
+import '../../../../../core/res/data_state.dart';
+import '../../../domain/entities/SignUpRequestEntity.dart';
+import '../../../domain/usecases/signup.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 

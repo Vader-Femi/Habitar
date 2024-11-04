@@ -1,7 +1,7 @@
-import 'package:myapplication/core/res/data_state.dart';
-import 'package:myapplication/features/auth/data/sources/auth_service.dart';
-import 'package:myapplication/features/auth/domain/repository/auth.dart';
+import '../../../../core/res/data_state.dart';
 import '../../domain/entities/SignUpRequestEntity.dart';
+import '../../domain/repository/auth.dart';
+import '../sources/auth_service.dart';
 
 class AuthRepositoryImpl extends AuthRepository{
 

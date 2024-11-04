@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/config/theme/app_colors.dart';
-import 'package:myapplication/features/auth/presentation/widgets/next_button.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/sign_in_text.dart';
-import '../widgets/skip_button.dart';
+import '../widgets/next_button.dart';
 
 class AllSet extends StatefulWidget {
   const AllSet({super.key});

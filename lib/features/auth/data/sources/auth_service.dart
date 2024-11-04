@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:myapplication/core/res/data_state.dart';
+import '../../../../core/res/data_state.dart';
 import '../../domain/entities/SignUpRequestEntity.dart';
 
 abstract class AuthService {

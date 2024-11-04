@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myapplication/core/assets/app_vectors.dart';
+import '../../../../core/assets/app_vectors.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

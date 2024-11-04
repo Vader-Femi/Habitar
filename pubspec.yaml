@@ -1,4 +1,4 @@
-name: myapplication
+name: habitar
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.4 <4.0.0'
+  sdk: ^3.5.3
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,8 +34,8 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  flutter_svg: ^2.0.10+1
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.11
 
   #Sate management
   flutter_bloc: ^8.1.6
@@ -47,7 +47,7 @@ dependencies:
   path_provider: ^2.1.5
 
   #Service locator
-  get_it: ^7.6.7
+  get_it: ^8.0.2
 
   #Compare dart objects
   equatable: ^2.0.5
@@ -58,7 +58,7 @@ dependencies:
   json_annotation: ^4.9.0
 
   #hooks Lifecycle
-  flutter_hooks: ^0.18.3
+  flutter_hooks: ^0.20.5
 
   dio: ^5.7.0
 
@@ -77,10 +77,10 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
   floor_generator: 1.5.0
-  retrofit_generator: ^9.0.0 # for Dart 3.3 use ^9.0.0
-  build_runner: ^2.3.3
+  retrofit_generator: ^9.1.4 # for Dart 3.3 use ^9.0.0
+  build_runner: ^2.4.13
   json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
@@ -101,10 +101,10 @@ flutter:
     - assets/vectors/
 
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
+  # https://flutter.dev/to/resolution-aware-images
 
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+  # https://flutter.dev/to/asset-from-package
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
@@ -146,6 +146,5 @@ flutter:
         - asset: assets/fonts/domine/Domine-Regular.ttf
           weight: 400
 
-  #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # see https://flutter.dev/to/font-from-package

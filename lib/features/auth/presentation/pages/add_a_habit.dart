@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/features/auth/presentation/widgets/next_button.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/next_button.dart';
 import '../widgets/sign_in_text.dart';
 import '../widgets/skip_button.dart';
 

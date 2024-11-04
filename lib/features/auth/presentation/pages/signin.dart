@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/features/auth/domain/usecases/SignIn.dart';
-import 'package:myapplication/service_locator.dart';
 import '../../../../config/theme/app_colors.dart';
-import '../../../../core/constants/constants.dart';
 import '../../../../core/res/data_state.dart';
-import '../widgets/app_bar.dart';
+import '../../../../service_locator.dart';
+import '../../domain/usecases/signin.dart';
 import '../widgets/next_button.dart';
-import '../widgets/sign_in_text.dart';
-import '../widgets/skip_button.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});

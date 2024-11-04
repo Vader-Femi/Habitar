@@ -1,8 +1,7 @@
-import 'package:myapplication/core/res/data_state.dart';
-import 'package:myapplication/core/usecase/usecase.dart';
-import 'package:myapplication/features/auth/domain/repository/auth.dart';
-
+import '../../../../core/res/data_state.dart';
+import '../../../../core/usecase/usecase.dart';
 import '../entities/SignUpRequestEntity.dart';
+import '../repository/auth.dart';
 
 class SignUpUseCase implements Usecase<DataState,SignUpRequestEntity> {
 

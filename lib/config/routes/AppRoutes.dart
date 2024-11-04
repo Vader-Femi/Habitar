@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/features/auth/presentation/pages/add_a_habit.dart';
-import 'package:myapplication/features/auth/presentation/pages/habit_reminder_time.dart';
-import 'package:myapplication/features/home/presentation/pages/home_page.dart';
-import 'package:myapplication/features/splash/presentation/pages/splash.dart';
+import '../../features/auth/presentation/pages/add_a_habit.dart';
 import '../../features/auth/presentation/pages/all_set.dart';
 import '../../features/auth/presentation/pages/get_started.dart';
+import '../../features/auth/presentation/pages/habit_reminder_time.dart';
 import '../../features/auth/presentation/pages/signin.dart';
 import '../../features/auth/presentation/pages/signup.dart';
+import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/splash/presentation/pages/splash.dart';
 
 
 class AppRoutes {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/common/helpers/is_light_mode.dart';
-import 'package:myapplication/config/theme/app_colors.dart';
-
+import '../../../../config/theme/app_colors.dart';
 import '../../../../core/constants/constants.dart';
 
 class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {

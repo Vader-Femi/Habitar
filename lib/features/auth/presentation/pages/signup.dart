@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapplication/service_locator.dart';
 import '../../../../config/theme/app_colors.dart';
+import '../../../../service_locator.dart';
 import '../bloc/sign_up/sign_up_bloc.dart';
 import '../bloc/sign_up/sign_up_event.dart';
 import '../bloc/sign_up/sign_up_state.dart';

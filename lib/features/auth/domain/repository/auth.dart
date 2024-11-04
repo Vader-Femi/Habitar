@@ -1,5 +1,4 @@
-import 'package:myapplication/core/res/data_state.dart';
-
+import '../../../../core/res/data_state.dart';
 import '../entities/SignUpRequestEntity.dart';
 
 abstract class AuthRepository {

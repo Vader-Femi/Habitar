@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapplication/common/helpers/is_light_mode.dart';
-import 'package:myapplication/config/theme/app_colors.dart';
+import 'package:habitar/common/helpers/is_light_mode.dart';
+import '../../../config/theme/app_colors.dart';
 
 class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;

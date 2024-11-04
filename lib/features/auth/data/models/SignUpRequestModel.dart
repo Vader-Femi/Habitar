@@ -1,4 +1,4 @@
-import 'package:myapplication/features/auth/domain/entities/SignUpRequestEntity.dart';
+import '../../domain/entities/SignUpRequestEntity.dart';
 
 class SignUpRequestModel extends SignUpRequestEntity{
 
