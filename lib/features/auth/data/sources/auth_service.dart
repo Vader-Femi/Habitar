@@ -2,60 +2,43 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../core/res/data_state.dart';
+import '../../domain/entities/SignInRequestEntity.dart';
 import '../../domain/entities/SignUpRequestEntity.dart';
 
 abstract class AuthService {
   Future<DataState> signup(SignUpRequestEntity signUpReq);
 
-  Future<DataState> signIn(String name);
+  Future<DataState> signIn(SignInRequestEntity signInReq);
 }
 
 
 class AuthServiceImpl extends AuthService {
 
   @override
-  Future<DataState> signIn(String name) async {
+  Future<DataState> signIn(SignInRequestEntity signInReq) async {
 
-    /*
-      try {
+    try {
+
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: signInUserRequest.email, password: signInUserRequest.password);
+          email: signInReq.email, password: signInReq.password);
 
-      return const Right("Sign in was successful");
+      return  const DataSuccess("Sign up was successful");
+    } on FirebaseAuthException  catch (e) {
 
-    } on FirebaseAuthException catch (e) {
       String message = "";
-
-      if (e.code == "invalid-email") {
-        message = "Email or password invalid";
-      } else if (e.code == "invalid-credential") {
-        message = "Email or password invalid";
+      if (e.code == "weak-password") {
+        message = "The Password provided is too weak";
+      } else if (e.code == "email-already-in-use") {
+        message = "An account already exist with that email";
       } else {
         message = e.message ?? "Something went wrong";
       }
 
-      return Left(message);
+      return DataFailed(
+          errorMessage: message
+      );
     }
-       */
 
-
-    try {
-
-      return const DataSuccess("Sign in was successful");
-
-    } on HttpException catch (e) {
-      String message = "";
-
-      // if (e.code == "invalid-email") {
-      //   message = "Email or password invalid";
-      // } else if (e.code == "invalid-credential") {
-      //   message = "Email or password invalid";
-      // } else {
-      //   message = e.message ?? "Something went wrong";
-      // }
-
-      return DataSuccess(message);
-    }
   }
 
   @override

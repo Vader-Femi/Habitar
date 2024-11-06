@@ -88,7 +88,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     return Column(
       children: [
         SingleChildScrollView(

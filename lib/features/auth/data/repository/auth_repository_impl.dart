@@ -1,4 +1,5 @@
 import '../../../../core/res/data_state.dart';
+import '../../domain/entities/SignInRequestEntity.dart';
 import '../../domain/entities/SignUpRequestEntity.dart';
 import '../../domain/repository/auth.dart';
 import '../sources/auth_service.dart';
@@ -11,7 +12,7 @@ class AuthRepositoryImpl extends AuthRepository{
 
 
   @override
-  Future<DataState> signIn(String name) async {
+  Future<DataState> signIn(SignInRequestEntity name) async {
     return await _authService.signIn(name);
   }
 

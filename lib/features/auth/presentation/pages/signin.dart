@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/theme/app_colors.dart';
-import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
-import '../../domain/usecases/signin.dart';
+import '../bloc/sign_in/sign_in_bloc.dart';
+import '../bloc/sign_in/sign_in_event.dart';
+import '../bloc/sign_in/sign_in_state.dart';
 import '../widgets/next_button.dart';
 
 class SignIn extends StatefulWidget {
@@ -13,64 +15,101 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
   final TextEditingController _email = TextEditingController();
 
   final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: _headingText(context),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(context, "/GetStarted", (r) => false),
-          icon: Icon(
-            Icons.arrow_back,
-            size: 18,
-            color: Theme.of(context).colorScheme.primary,
+    return BlocProvider(
+      create: (_) =>
+      sl<SignInBloc>()
+        ..add(const InitSignIn()),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          title: _headingText(context),
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context, "/GetStarted", (r) => false),
+            icon: Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left:30, top: 30, right: 30),
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _emailField(context),
-                  const SizedBox(height: 45),
-                  _passwordField(context),
-                  const SizedBox(height: 45),
-                ],
-              ),
-            ),
-            // const Spacer(),
-            const SizedBox(height: 5),
-            NextButton(
-              title: "Log In",
-              onClick: () async {
-                var result = await sl<SignInUseCase>().call(params: "Name");
+        body: Padding(
+          padding: const EdgeInsets.only(left: 30, top: 30, right: 30),
+          child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+            if (state is SignInLoading) {
+              return Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              );
+            }
 
-                if (result is DataSuccess){
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "/Home", (r) => false);
-                } else if (result is DataFailed){
-                  var snackbar = SnackBar(content: Text(result.errorMessage.toString()));
-                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                }
-              },
-            ),
-            const SizedBox(height: 5),
-            _resetPasswordTest(),
-          ],
+            if (state is SignInInit) {
+              return _buildBody(context);
+            }
+
+            if (state is SignInSuccess) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+              });
+
+              return _buildBody(context);
+            }
+
+            if (state is ShowPasswordChanged) {
+              return _buildBody(context);
+            }
+
+            if (state is SignInError) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Error : ${state.errorMessage}"),
+                ));
+              });
+
+              return _buildBody(context);
+            }
+
+            return _buildBody(context);
+          }),
         ),
       ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Column(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              _emailField(context),
+              const SizedBox(height: 45),
+              _passwordField(context),
+              const SizedBox(height: 45),
+            ],
+          ),
+        ),
+        // const Spacer(),
+        const SizedBox(height: 5),
+        NextButton(
+          title: "Log In",
+          onClick: () async {
+            BlocProvider.of<SignInBloc>(context)
+                .add(TrySignIn(email: _email.text, password: _password.text));
+          },
+        ),
+        const SizedBox(height: 5),
+        _resetPasswordTest(),
+      ],
     );
   }
 
@@ -82,8 +121,7 @@ class _SignInState extends State<SignIn> {
           fontWeight: FontWeight.w700,
           fontSize: 20,
           letterSpacing: 1,
-          color: Theme.of(context).primaryColor
-      ),
+          color: Theme.of(context).primaryColor),
     );
   }
 

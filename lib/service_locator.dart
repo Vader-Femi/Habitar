@@ -4,6 +4,7 @@ import 'features/auth/data/sources/auth_service.dart';
 import 'features/auth/domain/repository/auth.dart';
 import 'features/auth/domain/usecases/signin.dart';
 import 'features/auth/domain/usecases/signup.dart';
+import 'features/auth/presentation/bloc/sign_in/sign_in_bloc.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_bloc.dart';
 
 final sl = GetIt.instance;
@@ -28,4 +29,6 @@ Future<void> initializeDependencies() async {
 
   // Bloc
   sl.registerFactory<SignUpBloc>(() => SignUpBloc(sl()));
+
+  sl.registerFactory<SignInBloc>(() => SignInBloc(sl()));
 }
