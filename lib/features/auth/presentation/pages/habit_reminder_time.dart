@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/helpers/time_of_day.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/next_button.dart';
@@ -14,10 +15,10 @@ class HabitReminderTime extends StatefulWidget {
 
 class _HabitReminderTimeState extends State<HabitReminderTime> {
 
-  List<TimeOfDay> timeOfDay = [
-    TimeOfDay(timeIcon: Icons.wb_sunny_rounded, timeTitle: "Afternoon", isSelected: false),
-    TimeOfDay(timeIcon: Icons.wb_twilight_rounded, timeTitle: "Morning", isSelected: false),
-    TimeOfDay(timeIcon: Icons.dark_mode_rounded, timeTitle: "Evening", isSelected: true)
+  List<ReminderTimeOfDay> timeOfDay = [
+    ReminderTimeOfDay(timeIcon: Icons.wb_sunny_rounded, timeTitle: "Afternoon", isSelected: false),
+    ReminderTimeOfDay(timeIcon: Icons.wb_twilight_rounded, timeTitle: "Morning", isSelected: false),
+    ReminderTimeOfDay(timeIcon: Icons.dark_mode_rounded, timeTitle: "Evening", isSelected: true)
   ];
 
   @override
@@ -135,12 +136,4 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
       ),
     );
   }
-}
-
-class TimeOfDay{
-  final IconData timeIcon;
-  final String timeTitle;
-  bool isSelected;
-
-  TimeOfDay({required this.timeIcon, required this.timeTitle, required this.isSelected});
 }

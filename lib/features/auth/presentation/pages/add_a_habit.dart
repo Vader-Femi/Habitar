@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common/helpers/day_of_week.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/next_button.dart';
@@ -15,14 +16,14 @@ class AddAHabit extends StatefulWidget {
 class _AddAHabitState extends State<AddAHabit> {
   final TextEditingController _habit = TextEditingController();
 
-  List<DayOfWeek> dayOfWeek = [
-    DayOfWeek(dayTitle: "M", isSelected: true),
-    DayOfWeek(dayTitle: "T", isSelected: false),
-    DayOfWeek(dayTitle: "W", isSelected: true),
-    DayOfWeek(dayTitle: "T", isSelected: false),
-    DayOfWeek(dayTitle: "F", isSelected: true),
-    DayOfWeek(dayTitle: "S", isSelected: false),
-    DayOfWeek(dayTitle: "S", isSelected: false),
+  List<ReminderDayOfWeek> dayOfWeek = [
+    ReminderDayOfWeek(dayTitle: "M", isSelected: true),
+    ReminderDayOfWeek(dayTitle: "T", isSelected: false),
+    ReminderDayOfWeek(dayTitle: "W", isSelected: true),
+    ReminderDayOfWeek(dayTitle: "T", isSelected: false),
+    ReminderDayOfWeek(dayTitle: "F", isSelected: true),
+    ReminderDayOfWeek(dayTitle: "S", isSelected: false),
+    ReminderDayOfWeek(dayTitle: "S", isSelected: false),
   ];
 
   @override
@@ -156,11 +157,4 @@ class _AddAHabitState extends State<AddAHabit> {
       ],
     );
   }
-}
-
-class DayOfWeek {
-  final String dayTitle;
-  bool isSelected;
-
-  DayOfWeek({required this.dayTitle, required this.isSelected});
 }
