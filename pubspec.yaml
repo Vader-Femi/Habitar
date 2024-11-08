@@ -67,6 +67,9 @@ dependencies:
   firebase_auth: ^5.3.1
   cloud_firestore: ^5.4.4
 
+  #State management
+  flutter_super: ^1.4.9
+
 
 dev_dependencies:
   flutter_test:

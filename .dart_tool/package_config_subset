@@ -106,6 +106,10 @@ dart_style
 3.0
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dart_style-2.3.7/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dart_style-2.3.7/lib/
+dart_super
+3.0
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dart_super-1.4.8/
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dart_super-1.4.8/lib/
 dio
 2.18
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.7.0/
@@ -178,6 +182,10 @@ flutter_lints
 3.5
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-5.0.0/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-5.0.0/lib/
+flutter_super
+3.0
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_super-1.4.9/
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_super-1.4.9/lib/
 flutter_svg
 3.4
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.0.11/
@@ -476,8 +484,8 @@ file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/yaml-3.1.2/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/yaml-3.1.2/lib/
 habitar
 3.5
-file:///D:/ProjectFiles/Flutter/Habitar/habitar/
-file:///D:/ProjectFiles/Flutter/Habitar/habitar/lib/
+file:///D:/ProjectFiles/Flutter/Habitar/
+file:///D:/ProjectFiles/Flutter/Habitar/lib/
 _macros
 3.4
 file:///D:/Sdk/flutter/bin/cache/dart-sdk/pkg/_macros/

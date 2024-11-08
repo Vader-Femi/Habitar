@@ -170,6 +170,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "dart_super",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dart_super-1.4.8",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "dio",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.7.0",
       "packageUri": "lib/",
@@ -282,6 +288,12 @@
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-5.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_super",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_super-1.4.9",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_svg",
@@ -752,7 +764,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-11-04T20:55:10.280440Z",
+  "generated": "2024-11-08T19:52:34.311269Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///D:/Sdk/flutter",
