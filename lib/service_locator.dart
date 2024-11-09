@@ -27,6 +27,8 @@ Future<void> initializeDependencies() async {
     SignInUseCase(sl())
   );
 
+
+
   // Bloc
   sl.registerFactory<SignUpBloc>(() => SignUpBloc(sl()));
 

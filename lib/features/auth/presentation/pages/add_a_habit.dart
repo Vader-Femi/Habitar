@@ -123,7 +123,8 @@ class _AddAHabitState extends State<AddAHabit> {
                 onTap: () {
                   setState(() {
                     // Toggle the selected state of the day
-                    dayOfWeek[index].isSelected = !dayOfWeek[index].isSelected;
+                    final day = dayOfWeek[index];
+                    dayOfWeek[index] = day.copyWith(isSelected: !day.isSelected);
                   });
                 },
                 child: Container(

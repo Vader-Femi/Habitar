@@ -30,7 +30,7 @@ void main() async {
   await initializeDependencies();
 
 
-  runApp(SuperApp(child: const MyApp()));
+  runApp(const SuperApp(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -91,7 +91,8 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                timeOfDay[index].isSelected = !timeOfDay[index].isSelected;
+                final time = timeOfDay[index];
+                timeOfDay[index] = time.copyWith(isSelected: !time.isSelected);
               });
             },
             child: Container(
