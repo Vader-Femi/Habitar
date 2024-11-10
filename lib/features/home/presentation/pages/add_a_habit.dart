@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import '../../../../config/theme/app_colors.dart';
+import '../../../../core/res/data_state.dart';
 import '../../../auth/presentation/widgets/next_button.dart';
 import '../state/add_new_habit_view_model.dart';
 
@@ -26,7 +27,19 @@ class _AddAHabitState extends State<AddAHabit> {
         Spacer(),
         NextButton(
           title: "Add a new habit",
-          onClick: () {},
+          onClick: () {
+            var result = addNewHabitViewModel.addANewHabit();
+            if (result is DataFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Error : ${(result as DataFailed).errorMessage}"),
+              ));
+            } else if (result is DataSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Navigate Home"),
+              ));
+              // Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+            }
+          },
         ),
       ],
     );

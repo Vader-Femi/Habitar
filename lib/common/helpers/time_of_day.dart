@@ -12,5 +12,21 @@ class ReminderTimeOfDay{
         isSelected: isSelected ?? this.isSelected);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'timeIcon': timeIcon,
+      'timeTitle': timeTitle,
+      'isSelected': isSelected,
+    };
+  }
+
+  factory ReminderTimeOfDay.fromJson(Map<String, dynamic> json) {
+    return ReminderTimeOfDay(
+      timeIcon: json["timeIcon"],
+      timeTitle: json["timeTitle"],
+      isSelected: json["isSelected"],
+    );
+  }
+
   ReminderTimeOfDay({required this.timeIcon, required this.timeTitle, required this.isSelected});
 }

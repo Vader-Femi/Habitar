@@ -6,14 +6,13 @@ import '../sources/auth_service.dart';
 
 class AuthRepositoryImpl extends AuthRepository{
 
-
   final AuthService _authService;
   AuthRepositoryImpl(this._authService);
 
 
   @override
-  Future<DataState> signIn(SignInRequestEntity name) async {
-    return await _authService.signIn(name);
+  Future<DataState> signIn(SignInRequestEntity signInReq) async {
+    return await _authService.signIn(signInReq);
   }
 
   @override

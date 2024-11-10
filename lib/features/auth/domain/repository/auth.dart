@@ -6,5 +6,5 @@ abstract class AuthRepository {
 
   Future<DataState> signUp(SignUpRequestEntity signUpReq);
 
-  Future<DataState> signIn(SignInRequestEntity name);
+  Future<DataState> signIn(SignInRequestEntity signInReq);
 }
