@@ -1,5 +1,3 @@
-
-
 import '../../domain/entities/add_a_habit_req_entity.dart';
 
 class AddAHabitModel extends AddAHabitEntity{

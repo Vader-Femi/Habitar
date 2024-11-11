@@ -56,7 +56,7 @@ class AuthServiceImpl extends AuthService {
 
 
 
-      return  const DataSuccess("Sign up was successful");
+      return const DataSuccess("Sign up was successful");
     } on FirebaseAuthException  catch (e) {
 
       String message = "";
