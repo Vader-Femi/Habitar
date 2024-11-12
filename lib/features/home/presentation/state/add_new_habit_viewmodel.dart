@@ -58,16 +58,32 @@ class AddNewHabitViewModel{
 
   Future<DataState> addANewHabit() async {
 
-    var selectedPeriodicity = <int>[];
+    final weekNames = <String>[
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thur",
+      "Fri",
+      "Sat",
+      "Sun",
+    ];
+
+    final timeNames = <String>[
+      "Morning",
+      "Afternoon",
+      "Evening",
+    ];
+
+    var selectedPeriodicity = <String>[];
     weekdays.forEachIndexed((index, element) {
       if(element.isSelected == true){
-        selectedPeriodicity.add(index);
+        selectedPeriodicity.add(weekNames[index]);
       }
     });
-    var selectedTimeOfDay = <int>[];
+    var selectedTimeOfDay = <String>[];
     timeOfDay.forEachIndexed((index, element) {
       if(element.isSelected == true){
-        selectedTimeOfDay.add(index);
+        selectedTimeOfDay.add(timeNames[index]);
       }
     });
     var addAHabitEntity = AddAHabitEntity(

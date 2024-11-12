@@ -3,16 +3,10 @@ import 'package:flutter_super/flutter_super.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../auth/presentation/widgets/next_button.dart';
-import '../state/add_new_habit_view_model.dart';
+import '../state/add_new_habit_viewmodel.dart';
 
-class AddAHabit extends StatefulWidget {
-  const AddAHabit({super.key});
-
-  @override
-  State<AddAHabit> createState() => _AddAHabitState();
-}
-
-class _AddAHabitState extends State<AddAHabit> {
+class AddAHabitTab extends StatelessWidget {
+  const AddAHabitTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +21,27 @@ class _AddAHabitState extends State<AddAHabit> {
         Spacer(),
         NextButton(
           title: "Add a new habit",
-          onClick: () {
-            var result = addNewHabitViewModel.addANewHabit();
+          onClick: () async {
+            var result = await addNewHabitViewModel.addANewHabit();
             if (result is DataFailed) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Error : ${(result as DataFailed).errorMessage}"),
-              ));
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Error : ${(result).errorMessage}"),
+                ));
+              }
             } else if (result is DataSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Navigate Home"),
-              ));
-              // Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Done"),
+                ));
+                // Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+              }
             }
           },
         ),
       ],
     );
   }
-
 }
 
 class _HabitNameField extends StatelessWidget {
@@ -105,7 +102,7 @@ class _TimeSelector extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                 addNewHabitViewModel.timeOfDay.length,
-                    (index) {
+                (index) {
                   return GestureDetector(
                     onTap: () => addNewHabitViewModel.toggleTImeOfDay(index),
                     child: Container(
@@ -128,9 +125,10 @@ class _TimeSelector extends StatelessWidget {
                           Icon(
                             addNewHabitViewModel.timeOfDay[index].timeIcon,
                             size: 36,
-                            color: addNewHabitViewModel.timeOfDay[index].isSelected
-                                ? AppColours.primaryUnfocused
-                                : Theme.of(context).primaryColor,
+                            color:
+                                addNewHabitViewModel.timeOfDay[index].isSelected
+                                    ? AppColours.primaryUnfocused
+                                    : Theme.of(context).primaryColor,
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -139,7 +137,8 @@ class _TimeSelector extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
-                              color: addNewHabitViewModel.timeOfDay[index].isSelected
+                              color: addNewHabitViewModel
+                                      .timeOfDay[index].isSelected
                                   ? AppColours.primaryUnfocused
                                   : Theme.of(context).primaryColor,
                             ),
@@ -157,7 +156,6 @@ class _TimeSelector extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _PeriodicitySelector extends StatelessWidget {

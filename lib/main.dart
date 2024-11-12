@@ -49,9 +49,10 @@ class MyApp extends StatelessWidget {
           // darkTheme: AppTheme.darkTheme,
           themeMode: mode,
           onGenerateRoute: AppRoutes.onGenerateRoutes,
-          home: const SplashPage(),
+          home: const HomePage(),//SplashPage(),
         ),
       ),
     );
   }
 }
+//

@@ -10,6 +10,7 @@ import 'features/auth/domain/usecases/signin.dart';
 import 'features/auth/domain/usecases/signup.dart';
 import 'features/auth/presentation/bloc/sign_in/sign_in_bloc.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_bloc.dart';
+import 'features/home/domain/usecases/get_habits.dart';
 
 final sl = GetIt.instance;
 
@@ -50,6 +51,10 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<AddAHabitUseCase>(
       AddAHabitUseCase(sl())
+  );
+
+  sl.registerSingleton<GetHabitsUseCase>(
+      GetHabitsUseCase(sl())
   );
 
 }

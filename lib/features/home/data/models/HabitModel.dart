@@ -1,8 +1,8 @@
-import '../../domain/entities/add_a_habit_req_entity.dart';
+import '../../domain/entities/habit_entity.dart';
 
-class AddAHabitModel extends AddAHabitEntity{
+class HabitModel extends HabitEntity{
 
-  const AddAHabitModel({
+  const HabitModel({
     required super.habit,
     required super.selectedPeriodicity,
     required super.selectedTimeOfDay,
@@ -16,8 +16,8 @@ class AddAHabitModel extends AddAHabitEntity{
     };
   }
 
-  factory AddAHabitModel.fromJson(Map<String, dynamic> json) {
-    return AddAHabitModel(
+  factory HabitModel.fromJson(Map<String, dynamic> json) {
+    return HabitModel(
       habit: json["habit"],
       selectedPeriodicity: json["selectedPeriodicity"].cast<String>(),
       selectedTimeOfDay: json["selectedTimeOfDay"].cast<String>(),
@@ -25,9 +25,9 @@ class AddAHabitModel extends AddAHabitEntity{
   }
 
 
-  factory AddAHabitModel.fromEntity(
-      AddAHabitEntity entity) {
-    return AddAHabitModel(
+  factory HabitModel.fromEntity(
+      HabitEntity entity) {
+    return HabitModel(
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,
       selectedTimeOfDay: entity.selectedTimeOfDay,
