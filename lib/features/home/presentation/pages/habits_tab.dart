@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import 'package:habitar/features/home/presentation/state/get_habits_viewmodel.dart';
-import '../widgets/home_app_bar.dart';
 
 class HabitsTab extends StatefulWidget {
   const HabitsTab({super.key});

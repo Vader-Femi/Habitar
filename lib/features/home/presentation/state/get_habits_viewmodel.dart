@@ -13,6 +13,7 @@ class GetHabitsViewModel {
   Future<DataState> getHabits() async {
     var result = await sl<GetHabitsUseCase>().call();
     if (result is DataSuccess){
+      habits.clear();
       for (var habitModel in result.data) {
         habits.add(HabitEntity.fromModel(habitModel));
       }
