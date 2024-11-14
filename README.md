@@ -1,4 +1,4 @@
-# habitar
+# Habitar
 
 A habit-tracking app using Flutter, integrating Bloc, Hydrated Bloc, and Flutter Super for robust state management. 
 Applied clean architecture principles to ensure clear feature separation. 
