@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../config/theme/app_colors.dart';
+import 'package:flutter_super/flutter_super.dart';
+import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/constants/constants.dart';
-import '../pages/home_page.dart';
 import 'app_bar_shape.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -25,13 +24,15 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Welcome \$username",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: "Satoshi",
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              SuperBuilder(
+                builder: (context) => Text(
+                  "Welcome ${getHomeViewModel.user.state.username}",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Satoshi",
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Container(
@@ -44,6 +45,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                 child: Icon(
                   Icons.person_rounded,
                   size: 28,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -56,5 +58,6 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(toolbarHeight); //kTextTabBarHeight);
+  Size get preferredSize =>
+      Size.fromHeight(toolbarHeight); //kTextTabBarHeight);
 }

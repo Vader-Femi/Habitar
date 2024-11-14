@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import 'package:habitar/config/theme/app_colors.dart';
 import 'package:habitar/features/home/presentation/pages/add_a_habit_tab.dart';
-import 'package:habitar/features/home/presentation/pages/habits_tab.dart';
+import 'package:habitar/features/home/presentation/pages/today_habits_tab.dart';
 import 'package:habitar/features/home/presentation/widgets/add_new_habit_app_bar.dart';
 import '../state/home_viewmodel.dart';
 import '../widgets/home_app_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    getHomeViewModel.getUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +33,11 @@ class HomePage extends StatelessWidget {
         },
         body: Padding(
           padding:
-              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 30),
+              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 20),
           child: switch (getHomeViewModel.selectedTabIndex.state) {
-            0 => HabitsTab(),
+            0 => TodayHabitsTab(),
             1 => AddAHabitTab(),
-            _ => HabitsTab(),
+            _ => TodayHabitsTab(),
           },
         ),
         bottomNavigationBar: getHomeViewModel.selectedTabIndex.state == 1
@@ -46,20 +58,24 @@ class HomePage extends StatelessWidget {
                   NavigationDestination(
                     icon: Icon(Icons.home_outlined),
                     label: 'Home',
-                    selectedIcon: Icon(Icons.home),
+                    selectedIcon: Icon(Icons.home_outlined),
                   ),
                   NavigationDestination(
-                    icon: Icon(
-                      Icons.add_circle_rounded,
-                      color: AppColours.primary,
-                      size: 40,
+                    icon: Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Icon(
+                        Icons.add_circle_rounded,
+                        color: AppColours.primary,
+                        size: 40,
+                      ),
                     ),
                     label: '',
                   ),
                   NavigationDestination(
-                      icon: Icon(Icons.settings_outlined),
-                      label: 'Settings',
-                      selectedIcon: Icon(Icons.settings_rounded)),
+                    icon: Icon(Icons.perm_identity_outlined),
+                    label: 'Profile',
+                    selectedIcon: Icon(Icons.perm_identity_outlined),
+                  ),
                 ],
               ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
+import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../config/theme/app_colors.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../auth/presentation/widgets/next_button.dart';
@@ -29,12 +30,13 @@ class AddAHabitTab extends StatelessWidget {
                   content: Text("Error : ${(result).errorMessage}"),
                 ));
               }
-            } else if (result is DataSuccess) {
+            }
+            if (result is DataSuccess) {
+              getHomeViewModel.selectTabAtIndex(0);
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text("Done"),
                 ));
-                // Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
               }
             }
           },

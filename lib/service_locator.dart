@@ -3,6 +3,8 @@ import 'package:habitar/features/home/data/repository/home_repository_impl.dart'
 import 'package:habitar/features/home/data/sources/home_service.dart';
 import 'package:habitar/features/home/domain/repository/home.dart';
 import 'package:habitar/features/home/domain/usecases/add_a_habit.dart';
+import 'package:habitar/features/home/domain/usecases/get_user.dart';
+import 'package:habitar/features/home/domain/usecases/tick_habits.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
 import 'features/auth/data/sources/auth_service.dart';
 import 'features/auth/domain/repository/auth.dart';
@@ -55,6 +57,14 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetHabitsUseCase>(
       GetHabitsUseCase(sl())
+  );
+
+  sl.registerSingleton<TickHabitsUseCase>(
+      TickHabitsUseCase(sl())
+  );
+
+  sl.registerSingleton<GetUserUseCase>(
+      GetUserUseCase(sl())
   );
 
 }
