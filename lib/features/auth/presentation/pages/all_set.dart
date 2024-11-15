@@ -45,7 +45,7 @@ class _AllSetState extends State<AllSet> {
   }
 
   Widget _tick(BuildContext context) {
-    return Icon(Icons.check_circle_outline_rounded, size: 150,color: Theme.of(context).primaryColor,);
+    return Icon(Icons.check_circle_outline_rounded, size: 150,color: Theme.of(context).colorScheme.primary,);
   }
 
   Widget _text(BuildContext context) {

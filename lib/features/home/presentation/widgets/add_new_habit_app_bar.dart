@@ -15,8 +15,7 @@ class AddNewHabitAppbar extends StatelessWidget implements PreferredSizeWidget {
     return Hero(
       tag: Constants.appBarHeroTag,
       child: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
+        elevation: 30,
         centerTitle: false,
         toolbarHeight: toolbarHeight,
         shape: AppBarShape(),
@@ -31,7 +30,6 @@ class AddNewHabitAppbar extends StatelessWidget implements PreferredSizeWidget {
                   fontSize: 20,
                   fontFamily: "Satoshi",
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
               GestureDetector(
@@ -39,7 +37,7 @@ class AddNewHabitAppbar extends StatelessWidget implements PreferredSizeWidget {
                 child: Icon(
                   Icons.cancel,
                   size: 28,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSecondaryContainer,
                 ),
               ),
             ],

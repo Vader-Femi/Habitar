@@ -14,41 +14,19 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
     return Hero(
       tag: Constants.appBarHeroTag,
       child: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
+        elevation: 30,
         centerTitle: false,
         toolbarHeight: toolbarHeight,
         shape: AppBarShape(),
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SuperBuilder(
-                builder: (context) => Text(
-                  "Welcome ${getHomeViewModel.user.state.username}",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "Satoshi",
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surface,
-                  ),
-                ),
-                child: Icon(
-                  Icons.person_rounded,
-                  size: 28,
-                  color: Colors.white,
-                ),
-              ),
-            ],
+          child: Text(
+            "Habitar",
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: "Satoshi",
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         automaticallyImplyLeading: false,

@@ -101,10 +101,10 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.surfaceContainer,
                 ),
                 color: timeOfDay[index].isSelected
-                    ? Theme.of(context).primaryColor
+                    ? Theme.of(context).colorScheme.primaryContainer
                     : Colors.transparent,
               ),
               child: Column(
@@ -114,8 +114,8 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
                     timeOfDay[index].timeIcon,
                     size: 36,
                     color: timeOfDay[index].isSelected
-                        ? AppColours.primaryUnfocused
-                        : Theme.of(context).primaryColor,
+                        ? Theme.of(context).colorScheme.onPrimaryContainer
+                        : Theme.of(context).colorScheme.onSurface,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -125,8 +125,8 @@ class _HabitReminderTimeState extends State<HabitReminderTime> {
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
                       color: timeOfDay[index].isSelected
-                          ? AppColours.primaryUnfocused
-                          : Theme.of(context).primaryColor,
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],

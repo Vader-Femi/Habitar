@@ -20,10 +20,9 @@ class SingleTodayHabit extends StatelessWidget {
         Expanded(child: Text(todayHabitEntity.habit)),
         Checkbox(
           value: todayHabitEntity.isSelected,
-          activeColor: AppColours.primaryUnfocused,
-          checkColor: Colors.white,
-          fillColor: WidgetStateProperty.all(AppColours.primaryUnfocused),
-          side: BorderSide(width: 2, color: AppColours.primaryUnfocused),
+          activeColor: Theme.of(context).colorScheme.surfaceContainer,
+          checkColor: Theme.of(context).colorScheme.onSurface,
+          fillColor: WidgetStateProperty.all(Theme.of(context).colorScheme.surfaceContainer,),
           onChanged: (isChecked) {
             getHabitsViewModel.tickHabit(
               habit: todayHabitEntity,

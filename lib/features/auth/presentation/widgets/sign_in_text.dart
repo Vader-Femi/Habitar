@@ -13,7 +13,6 @@ class SignInText extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 14,
-            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         TextButton(

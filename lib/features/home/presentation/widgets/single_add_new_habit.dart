@@ -15,17 +15,17 @@ class SingleAddNewHabit extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Expanded(child: Text("Add new habit",style: TextStyle(color: AppColours.primaryUnfocused),),),
+        Expanded(child: Text("Add new habit"),),
         Padding(
           padding: const EdgeInsets.fromLTRB(14, 2, 14, 2),
           child: GestureDetector(
             onTap: () => getHomeViewModel.selectTabAtIndex(1),
             child: Container(
               decoration: BoxDecoration(
-              color: AppColours.primaryUnfocused,
+              color: Theme.of(context).colorScheme.surfaceContainer,
                 borderRadius: BorderRadius.circular(3),
               ),
-              child: Icon(Icons.add, size: 19,color: Colors.white,),
+              child: Icon(Icons.add, size: 19),
             ),
           ),
         ),

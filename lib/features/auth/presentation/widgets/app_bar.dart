@@ -4,7 +4,7 @@ import '../../../../core/constants/constants.dart';
 
 class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
   final int pageNumber;
-  final double toolbarHeight = 68.0;
+  final double toolbarHeight = 90;
   final VoidCallback goBack;
 
   const AuthAppbar({super.key, required this.pageNumber, required this.goBack});
@@ -14,8 +14,7 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
     return Hero(
       tag: Constants.appBarHeroTag,
       child: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 30,
         centerTitle: false,
         toolbarHeight: toolbarHeight,
         title: Column(
@@ -30,7 +29,7 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
                     icon: Icon(
                       Icons.arrow_back,
                       size: 18,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                   Text(
@@ -39,7 +38,7 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
                       fontSize: 12,
                       fontFamily: "Satoshi",
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                 ],
@@ -51,7 +50,8 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
               child: LinearProgressIndicator(
                 value: pageNumber / 4,
                 borderRadius: BorderRadius.circular(7),
-                backgroundColor: AppColours.primaryUnfocused,
+                backgroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 minHeight: 8,
               ),
             )

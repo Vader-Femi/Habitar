@@ -33,27 +33,25 @@ class _HomePageState extends State<HomePage> {
         },
         body: Padding(
           padding:
-              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 20),
+              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
           child: switch (getHomeViewModel.selectedTabIndex.state) {
             0 => TodayHabitsTab(),
             1 => AddAHabitTab(),
             _ => TodayHabitsTab(),
           },
         ),
-        bottomNavigationBar: getHomeViewModel.selectedTabIndex.state == 1
-            ? null
-            : NavigationBar(
+        bottomNavigationBar: NavigationBar(
                 selectedIndex: getHomeViewModel.selectedTabIndex.state,
                 onDestinationSelected: (index) =>
                     getHomeViewModel.selectTabAtIndex(index),
-                height: 88,
-                indicatorColor: AppColours.primaryUnfocused,
+                // height: 88,
+                // indicatorColor: AppColours.primaryUnfocused,
                 // unselectedFontSize: 14,
                 // selectedFontSize: 14,
                 // showSelectedLabels: false,
                 // showUnselectedLabels: false,
                 // iconSize: 28,
-                elevation: 0,
+                elevation: 15,
                 destinations: [
                   NavigationDestination(
                     icon: Icon(Icons.home_outlined),
@@ -61,15 +59,9 @@ class _HomePageState extends State<HomePage> {
                     selectedIcon: Icon(Icons.home_outlined),
                   ),
                   NavigationDestination(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: Icon(
-                        Icons.add_circle_rounded,
-                        color: AppColours.primary,
-                        size: 40,
-                      ),
-                    ),
-                    label: '',
+                    icon: Icon(Icons.add),
+                    label: 'Add',
+                    selectedIcon: Icon(Icons.add),
                   ),
                   NavigationDestination(
                     icon: Icon(Icons.perm_identity_outlined),

@@ -27,9 +27,8 @@ class _SignInState extends State<SignIn> {
         ..add(const InitSignIn()),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
+          elevation: 30,
+          centerTitle: false,
           title: _headingText(context),
           automaticallyImplyLeading: false,
           leading: IconButton(
@@ -38,7 +37,7 @@ class _SignInState extends State<SignIn> {
             icon: Icon(
               Icons.arrow_back,
               size: 18,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
           ),
         ),
@@ -121,7 +120,8 @@ class _SignInState extends State<SignIn> {
           fontWeight: FontWeight.w700,
           fontSize: 20,
           letterSpacing: 1,
-          color: Theme.of(context).primaryColor),
+          color: Theme.of(context).colorScheme.primaryContainer,
+      ),
     );
   }
 
@@ -129,9 +129,6 @@ class _SignInState extends State<SignIn> {
     return TextField(
       decoration: const InputDecoration(
         hintText: "What is your email address?",
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColours.primaryUnfocused),
-        ),
       ),
       controller: _email,
     );
@@ -141,9 +138,6 @@ class _SignInState extends State<SignIn> {
     return TextField(
       decoration: const InputDecoration(
         hintText: "What your password?",
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColours.primaryUnfocused),
-        ),
       ),
       controller: _password,
       keyboardType: TextInputType.visiblePassword,
@@ -162,7 +156,6 @@ class _SignInState extends State<SignIn> {
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 14,
-            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         TextButton(

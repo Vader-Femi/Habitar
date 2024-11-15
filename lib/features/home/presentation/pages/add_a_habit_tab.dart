@@ -59,7 +59,7 @@ class _HabitNameField extends StatelessWidget {
             "Setup your habit preference",
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
               fontSize: 26,
               letterSpacing: 1,
             ),
@@ -68,9 +68,6 @@ class _HabitNameField extends StatelessWidget {
           TextField(
             decoration: const InputDecoration(
               hintText: "Touch grass",
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColours.primaryUnfocused),
-              ),
             ),
             controller: addNewHabitViewModel.getHabitController(),
           ),
@@ -114,10 +111,10 @@ class _TimeSelector extends StatelessWidget {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.surfaceContainer,
                         ),
                         color: addNewHabitViewModel.timeOfDay[index].isSelected
-                            ? Theme.of(context).primaryColor
+                            ? Theme.of(context).colorScheme.primaryContainer
                             : Colors.transparent,
                       ),
                       child: Column(
@@ -129,8 +126,10 @@ class _TimeSelector extends StatelessWidget {
                             size: 36,
                             color:
                                 addNewHabitViewModel.timeOfDay[index].isSelected
-                                    ? AppColours.primaryUnfocused
-                                    : Theme.of(context).primaryColor,
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer
+                                    : Theme.of(context).colorScheme.onSurface,
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -141,8 +140,10 @@ class _TimeSelector extends StatelessWidget {
                               fontSize: 14,
                               color: addNewHabitViewModel
                                       .timeOfDay[index].isSelected
-                                  ? AppColours.primaryUnfocused
-                                  : Theme.of(context).primaryColor,
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer
+                                  : Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -193,19 +194,18 @@ class _PeriodicitySelector extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.surfaceContainer,
                         ),
                         color: addNewHabitViewModel.weekdays[index].isSelected
-                            ? Theme.of(context).primaryColor
+                            ? Theme.of(context).colorScheme.primaryContainer
                             : Colors.transparent,
                       ),
                       child: Text(
                         addNewHabitViewModel.weekdays[index].dayTitle,
                         style: TextStyle(
                           color: addNewHabitViewModel.weekdays[index].isSelected
-                              ? Colors.white
-                              : Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
+                              ? Theme.of(context).colorScheme.onPrimaryContainer
+                              : Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),

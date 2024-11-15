@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/theme/app_colors.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../service_locator.dart';
 import '../bloc/sign_up/sign_up_bloc.dart';
 import '../bloc/sign_up/sign_up_event.dart';
@@ -41,7 +42,7 @@ class _SignUpState extends State<SignUp> {
           Navigator.pop(context);
         },),
         body: Padding(
-          padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
+          padding: const EdgeInsets.only(top: 45, left: 30, right: 30, bottom: 10),
           child: BlocBuilder<SignUpBloc, SignUpState>(
               builder: (context, state) {
                 if (state is SignUpLoading) {
@@ -108,9 +109,7 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Expanded(
-              child: SkipButton(),
-            ),
+            _signInButton(context),
             const SizedBox(width: 15),
             Expanded(
               child: NextButton(
@@ -127,8 +126,6 @@ class _SignUpState extends State<SignUp> {
             ),
           ],
         ),
-        const SizedBox(height: 5),
-        const SignInText(),
       ],
     );
   }
@@ -137,9 +134,6 @@ class _SignUpState extends State<SignUp> {
     return TextField(
       decoration: const InputDecoration(
         hintText: "Firstly, what is your firstname?",
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColours.primaryUnfocused),
-        ),
       ),
       controller: _name,
     );
@@ -149,9 +143,6 @@ class _SignUpState extends State<SignUp> {
     return TextField(
       decoration: const InputDecoration(
         hintText: "What is your email address?",
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColours.primaryUnfocused),
-        ),
       ),
       controller: _email,
     );
@@ -161,15 +152,30 @@ class _SignUpState extends State<SignUp> {
     return TextField(
       decoration: const InputDecoration(
         hintText: "What is your desired password?",
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColours.primaryUnfocused),
-        ),
       ),
       controller: _password,
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
       enableSuggestions: false,
       autocorrect: false,
+    );
+  }
+
+  Widget _signInButton(BuildContext context) {
+    return Expanded(
+      child: Hero(
+        tag: Constants.skipButtonHeroTag,
+        child: OutlinedButton(
+          onPressed: () => Navigator.pushNamed(context, '/SignIn'),
+          style: OutlinedButton.styleFrom(
+            elevation: 5,
+          ),
+          child: Text(
+            "Sign in",
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+        ),
+      ),
     );
   }
 }

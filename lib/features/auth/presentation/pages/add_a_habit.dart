@@ -90,9 +90,6 @@ class _AddAHabitState extends State<AddAHabit> {
     return TextField(
       decoration: const InputDecoration(
         hintText: "Learn to code?",
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColours.primaryUnfocused),
-        ),
       ),
       controller: _habit,
     );
@@ -133,20 +130,20 @@ class _AddAHabitState extends State<AddAHabit> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+                      color: Theme.of(context).colorScheme.surfaceContainer,
                     ),
                     color: dayOfWeek[index].isSelected ? Theme
                         .of(context)
-                        .primaryColor : Colors.transparent,
+                        .colorScheme.primaryContainer : Colors.transparent,
                   ),
                   child: Text(
                     dayOfWeek[index].dayTitle,
                     style: TextStyle(
-                      color: dayOfWeek[index].isSelected ? Colors.white : Theme
+                      color: dayOfWeek[index].isSelected ? Theme
                           .of(context)
-                          .primaryColor,
+                          .colorScheme.onPrimaryContainer : Theme
+                          .of(context)
+                          .colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
