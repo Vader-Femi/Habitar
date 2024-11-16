@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitar/core/constants/constants.dart';
 import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
 import 'package:habitar/features/home/presentation/state/get_habits_viewmodel.dart';
 import '../../../../config/theme/app_colors.dart';
@@ -18,14 +19,17 @@ class SingleAddNewHabit extends StatelessWidget {
         Expanded(child: Text("Add new habit"),),
         Padding(
           padding: const EdgeInsets.fromLTRB(14, 2, 14, 2),
-          child: GestureDetector(
-            onTap: () => getHomeViewModel.selectTabAtIndex(1),
-            child: Container(
-              decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(3),
+          child: Hero(
+            tag: Constants.nextButtonHeroTag,
+            child: GestureDetector(
+              onTap: () => getHomeViewModel.selectTabAtIndex(1),
+              child: Container(
+                decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                child: Icon(Icons.add, size: 19),
               ),
-              child: Icon(Icons.add, size: 19),
             ),
           ),
         ),

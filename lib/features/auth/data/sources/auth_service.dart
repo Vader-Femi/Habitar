@@ -17,7 +17,9 @@ class AuthServiceImpl extends AuthService {
   Future<DataState> signIn(SignInRequestEntity signInReq) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: signInReq.email, password: signInReq.password);
+        email: "test@test.com",//signInReq.email,
+        password: "testing123",//signInReq.password,
+      );
 
       return const DataSuccess("Sign up was successful");
     } on FirebaseAuthException catch (e) {
