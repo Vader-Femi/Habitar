@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
-import 'package:habitar/config/theme/app_colors.dart';
 import 'package:habitar/features/home/presentation/pages/add_a_habit_tab.dart';
+import 'package:habitar/features/home/presentation/pages/profile_tab.dart';
 import 'package:habitar/features/home/presentation/pages/today_habits_tab.dart';
 import 'package:habitar/features/home/presentation/widgets/add_new_habit_app_bar.dart';
 import '../state/home_viewmodel.dart';
 import '../widgets/home_app_bar.dart';
+import '../widgets/profile_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,22 +30,20 @@ class _HomePageState extends State<HomePage> {
         appBar: switch (getHomeViewModel.selectedTabIndex.state) {
           0 => HomeAppbar(),
           1 => AddNewHabitAppbar(),
+          2 => ProfileAppBar(),
           _ => HomeAppbar(),
         },
-        body: Padding(
-          padding:
-              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
-          child: switch (getHomeViewModel.selectedTabIndex.state) {
-            0 => TodayHabitsTab(),
-            1 => AddAHabitTab(),
-            _ => TodayHabitsTab(),
-          },
-        ),
+        body: switch (getHomeViewModel.selectedTabIndex.state) {
+          0 => TodayHabitsTab(),
+          1 => AddAHabitTab(),
+          2 => ProfileTab(),
+          _ => TodayHabitsTab(),
+        },
         bottomNavigationBar: NavigationBar(
                 selectedIndex: getHomeViewModel.selectedTabIndex.state,
                 onDestinationSelected: (index) =>
                     getHomeViewModel.selectTabAtIndex(index),
-                // height: 88,
+                height: 100,
                 // indicatorColor: AppColours.primaryUnfocused,
                 // unselectedFontSize: 14,
                 // selectedFontSize: 14,

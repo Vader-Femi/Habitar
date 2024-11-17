@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
-import '../../../../config/theme/app_colors.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../auth/presentation/widgets/next_button.dart';
-import '../state/add_new_habit_viewmodel.dart';
+import '../state/add_a_habit_viewmodel.dart';
 
 class AddAHabitTab extends StatelessWidget {
   const AddAHabitTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _HabitNameField(),
-        const SizedBox(height: 45),
-        _PeriodicitySelector(),
-        const SizedBox(height: 45),
-        _TimeSelector(),
-        Spacer(),
-        NextButton(
-          title: "Add a new habit",
-          onClick: () async {
-            var result = await addNewHabitViewModel.addANewHabit();
-            if (result is DataFailed) {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Error : ${(result).errorMessage}"),
-                ));
+    return Padding(
+      padding:
+      const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _HabitNameField(),
+          const SizedBox(height: 45),
+          _PeriodicitySelector(),
+          const SizedBox(height: 45),
+          _TimeSelector(),
+          Spacer(),
+          NextButton(
+            title: "Add a new habit",
+            onClick: () async {
+              var result = await addAHabitViewModel.addANewHabit();
+              if (result is DataFailed) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Error : ${(result).errorMessage}"),
+                  ));
+                }
               }
-            }
-            if (result is DataSuccess) {
-              getHomeViewModel.selectTabAtIndex(0);
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Done"),
-                ));
+              if (result is DataSuccess) {
+                getHomeViewModel.selectTabAtIndex(0);
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Done"),
+                  ));
+                }
               }
-            }
-          },
-        ),
-      ],
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -69,7 +72,7 @@ class _HabitNameField extends StatelessWidget {
             decoration: const InputDecoration(
               hintText: "Touch grass",
             ),
-            controller: addNewHabitViewModel.getHabitController(),
+            controller: addAHabitViewModel.getHabitController(),
           ),
         ],
       ),
@@ -100,10 +103,10 @@ class _TimeSelector extends StatelessWidget {
             builder: (BuildContext context) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
-                addNewHabitViewModel.timeOfDay.length,
+                addAHabitViewModel.timeOfDay.length,
                 (index) {
                   return GestureDetector(
-                    onTap: () => addNewHabitViewModel.toggleTImeOfDay(index),
+                    onTap: () => addAHabitViewModel.toggleTImeOfDay(index),
                     child: Container(
                       width: 100,
                       padding: const EdgeInsets.all(10),
@@ -113,7 +116,7 @@ class _TimeSelector extends StatelessWidget {
                         border: Border.all(
                           color: Theme.of(context).colorScheme.surfaceContainer,
                         ),
-                        color: addNewHabitViewModel.timeOfDay[index].isSelected
+                        color: addAHabitViewModel.timeOfDay[index].isSelected
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Colors.transparent,
                       ),
@@ -122,10 +125,10 @@ class _TimeSelector extends StatelessWidget {
                         children: [
                           const SizedBox(height: 4),
                           Icon(
-                            addNewHabitViewModel.timeOfDay[index].timeIcon,
+                            addAHabitViewModel.timeOfDay[index].timeIcon,
                             size: 36,
                             color:
-                                addNewHabitViewModel.timeOfDay[index].isSelected
+                                addAHabitViewModel.timeOfDay[index].isSelected
                                     ? Theme.of(context)
                                         .colorScheme
                                         .onPrimaryContainer
@@ -133,12 +136,12 @@ class _TimeSelector extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            addNewHabitViewModel.timeOfDay[index].timeTitle,
+                            addAHabitViewModel.timeOfDay[index].timeTitle,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
-                              color: addNewHabitViewModel
+                              color: addAHabitViewModel
                                       .timeOfDay[index].isSelected
                                   ? Theme.of(context)
                                       .colorScheme
@@ -184,10 +187,10 @@ class _PeriodicitySelector extends StatelessWidget {
             builder: (BuildContext context) => Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: List.generate(
-                addNewHabitViewModel.weekdays.length,
+                addAHabitViewModel.weekdays.length,
                 (index) {
                   return GestureDetector(
-                    onTap: () => addNewHabitViewModel.togglePeriodicity(index),
+                    onTap: () => addAHabitViewModel.togglePeriodicity(index),
                     child: Container(
                       margin: const EdgeInsets.only(right: 10),
                       padding: const EdgeInsets.all(9),
@@ -196,14 +199,14 @@ class _PeriodicitySelector extends StatelessWidget {
                         border: Border.all(
                           color: Theme.of(context).colorScheme.surfaceContainer,
                         ),
-                        color: addNewHabitViewModel.weekdays[index].isSelected
+                        color: addAHabitViewModel.weekdays[index].isSelected
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Colors.transparent,
                       ),
                       child: Text(
-                        addNewHabitViewModel.weekdays[index].dayTitle,
+                        addAHabitViewModel.weekdays[index].dayTitle,
                         style: TextStyle(
-                          color: addNewHabitViewModel.weekdays[index].isSelected
+                          color: addAHabitViewModel.weekdays[index].isSelected
                               ? Theme.of(context).colorScheme.onPrimaryContainer
                               : Theme.of(context).colorScheme.onSurface,
                         ),

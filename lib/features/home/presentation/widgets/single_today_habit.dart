@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:habitar/config/theme/app_colors.dart';
 import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
-import 'package:habitar/features/home/presentation/state/get_habits_viewmodel.dart';
-import '../../domain/entities/habit_entity.dart';
+import '../state/today_habits_viewmodel.dart';
 
 class SingleTodayHabit extends StatelessWidget {
   const SingleTodayHabit(
@@ -24,7 +22,7 @@ class SingleTodayHabit extends StatelessWidget {
           checkColor: Theme.of(context).colorScheme.onSurface,
           fillColor: WidgetStateProperty.all(Theme.of(context).colorScheme.surfaceContainer,),
           onChanged: (isChecked) {
-            getHabitsViewModel.tickHabit(
+            todayHabitsViewModel.tickHabit(
               habit: todayHabitEntity,
               index: index,
               isTicked: isChecked ?? false,

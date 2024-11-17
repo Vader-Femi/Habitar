@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habitar/core/constants/constants.dart';
-import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
-import 'package:habitar/features/home/presentation/state/get_habits_viewmodel.dart';
-import '../../../../config/theme/app_colors.dart';
-import '../../domain/entities/habit_entity.dart';
 import '../state/home_viewmodel.dart';
 
 class SingleAddNewHabit extends StatelessWidget {

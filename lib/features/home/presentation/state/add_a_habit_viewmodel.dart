@@ -10,9 +10,9 @@ import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
 import '../../domain/usecases/add_a_habit.dart';
 
-AddNewHabitViewModel get addNewHabitViewModel => Super.init(AddNewHabitViewModel());
+AddAHabitViewModel get addAHabitViewModel => Super.init(AddAHabitViewModel());
 
-class AddNewHabitViewModel{
+class AddAHabitViewModel{
 
   final TextEditingController _habit = TextEditingController();
   TextEditingController getHabitController() => _habit;
@@ -37,12 +37,12 @@ class AddNewHabitViewModel{
 
   final timeOfDay = <ReminderTimeOfDay>[
     ReminderTimeOfDay(
-        timeIcon: Icons.wb_sunny_rounded,
-        timeTitle: "Afternoon",
-        isSelected: false),
-    ReminderTimeOfDay(
         timeIcon: Icons.wb_twilight_rounded,
         timeTitle: "Morning",
+        isSelected: false),
+    ReminderTimeOfDay(
+        timeIcon: Icons.wb_sunny_rounded,
+        timeTitle: "Afternoon",
         isSelected: false),
     ReminderTimeOfDay(
         timeIcon: Icons.dark_mode_rounded,

@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
           onGenerateRoute: AppRoutes.onGenerateRoutes,
-          // home: const HomePage(),
-          home: const SplashPage(),
+          home: const HomePage(),
+          // home: const SplashPage(),
         ),
       ),
     );
