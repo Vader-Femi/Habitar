@@ -34,21 +34,14 @@ class _AddAHabitState extends State<AddAHabit> {
       },),
       body: Padding(
         padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _headingText(context),
-                  const SizedBox(height: 30),
-                  _habitField(context),
-                  const SizedBox(height: 65),
-                  _periodicitySelector(context),
-                ],
-              ),
-            ),
-            const Spacer(),
+            _headingText(context),
+            const SizedBox(height: 30),
+            _habitField(context),
+            const SizedBox(height: 65),
+            _periodicitySelector(context),
+            const SizedBox(height: 55),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

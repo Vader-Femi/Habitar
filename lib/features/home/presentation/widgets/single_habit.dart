@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:habitar/core/assets/app_vectors.dart';
 import '../../domain/entities/habit_entity.dart';
 
 class SingleHabit extends StatelessWidget {
-  const SingleHabit({super.key, required this.habitEntity});
+  const SingleHabit(
+      {super.key,
+      required this.habitEntity,
+      required this.timeOfDay,
+      required this.dayOfWeek});
 
   final HabitEntity habitEntity;
+  final String timeOfDay;
+  final String dayOfWeek;
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +30,51 @@ class SingleHabit extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(habitEntity.habit, style: TextStyle(color: Theme.of(context).colorScheme.secondary),),
-              SizedBox(
-                height: 20,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: habitEntity.selectedPeriodicity.length,
-                  itemBuilder: (context, periodIndex) {
-                    return Text(
-                      "${habitEntity.selectedPeriodicity[periodIndex]} ",
-                    );
-                  },
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      habitEntity.habit,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 16),
+                    ),
+                  ),
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          habitEntity.streak,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.surfaceTint),
+                        ),
+                        SizedBox(width: 5),
+                        SvgPicture.asset(AppVectors.appLogo, height: 15, width: 15,),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Flexible(
+                child: Text(
+                  timeOfDay,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.surfaceTint),
                 ),
               ),
-              SizedBox(
-                height: 20,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: habitEntity.selectedTimeOfDay.length,
-                  itemBuilder: (context, timeIndex) {
-                    return Text(
-                      "${habitEntity.selectedTimeOfDay[timeIndex]} ",
-                    );
-                  },
+              const SizedBox(height: 15),
+              Flexible(
+                child: Text(
+                  dayOfWeek,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.surfaceTint),
                 ),
               ),
             ],

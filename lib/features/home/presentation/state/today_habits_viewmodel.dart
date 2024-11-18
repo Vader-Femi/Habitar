@@ -12,19 +12,19 @@ class TodayHabitsViewModel {
 
   var habits = <TodayHabitEntity>[].rx;
 
-  Future<DataState> getHabits() async {
+  Future<DataState> getTodayHabits() async {
     var result = await sl<GetHabitsUseCase>().call();
 
     if (result is DataSuccess) {
       habits.clear();
 
-      final todayWeekdayInString = weekNames.entries
-          .firstWhere((element) => element.value == DateTime.now().weekday)
-          .key;
+      final todayWeekdayInStringLong = (weekNames
+          .firstWhere((element) => element.positionInWeek == DateTime.now().weekday)
+          .longName);
 
       for (var habitModel in result.data) {
         var habit = TodayHabitEntity.fromModel(habitModel);
-        if (habit.selectedPeriodicity.contains(todayWeekdayInString)) {
+        if (habit.habit.selectedPeriodicity.contains(todayWeekdayInStringLong)) {
           habits.add(habit);
         }
       }
@@ -38,7 +38,9 @@ class TodayHabitsViewModel {
     required int index,
     required bool isTicked,
   }) async {
-    var result = await sl<TickHabitsUseCase>().call(params: isTicked);
+    var result = await sl<TickHabitsUseCase>().call(params: habit.copyWith(isSelected: isTicked));
+
+    print(result);
 
     if (result is DataSuccess) {
       habits.remove(habit);

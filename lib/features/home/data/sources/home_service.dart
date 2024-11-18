@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
 import '../../../../core/res/data_state.dart';
 import '../../domain/entities/add_a_habit_req_entity.dart';
+import '../../domain/entities/today_habit_entity.dart';
 import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';
 import '../models/user_model.dart';
@@ -12,7 +14,7 @@ abstract class HomeService {
 
   Future<DataState> getHabits();
 
-  Future<DataState> tickHabit(bool isTicked);
+  Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity);
 
   Future<UserEntity> getUser();
 }
@@ -26,7 +28,7 @@ class HomeServiceImpl extends HomeService {
       await FirebaseFirestore.instance
           .collection(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
           .doc(newHabitReq.habit)
-          .set({newHabitReq.habit: newHabitReqModel.toJson()});
+          .set(newHabitReqModel.toJson());
 
       return const DataSuccess("Successfully Added");
     } on FirebaseException catch (e) {
@@ -48,7 +50,7 @@ class HomeServiceImpl extends HomeService {
           .get();
 
       for (var doc in snapshot.docs) {
-        var data = doc.data()[doc.id];
+        var data = doc.data();
         var habit = HabitModel.fromJson(data);
         habitModels.add(habit);
       }
@@ -60,7 +62,7 @@ class HomeServiceImpl extends HomeService {
   }
 
   @override
-  Future<DataState> tickHabit(bool isTicked) async {
+  Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity) async {
     try {
       var user = FirebaseAuth.instance.currentUser;
       if (user?.uid == null) {
@@ -68,27 +70,48 @@ class HomeServiceImpl extends HomeService {
             plugin: '', message: "Cannot find user. Please log in again");
       }
 
-      var snapshot = await FirebaseFirestore.instance
-          .collection("Users")
-          .doc(user!.uid)
+      // Set New Habit Model
+      var habitSnapshot = await FirebaseFirestore.instance
+          .collection(user!.uid)
+          .doc(todayHabitEntity.habit.habit)
           .get();
 
-      var userModel = UserModel.fromJson(snapshot.data() ?? {});
 
-      var newHabitsCompleted = isTicked
-          ? (int.parse(userModel.habitsCompleted)) + 1
-          : (int.parse(userModel.habitsCompleted)) - 1;
+      var habitModel = HabitModel.fromJson(habitSnapshot.data() ?? {});
+      var newStreak = todayHabitEntity.isSelected
+          ? (int.parse(habitModel.streak) + 1).toString()
+          : (int.parse(habitModel.streak) - 1).toString();
+      var newLastDateTicked = todayHabitEntity.isSelected ? getTodayDate() : "";
 
       FirebaseFirestore.instance
-          .collection("Users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection(user.uid)
+          .doc(todayHabitEntity.habit.habit)
           .set(
-            userModel
-                .copyWith(habitsCompleted: newHabitsCompleted.toString())
+            habitModel
+                .copyWith(streak: newStreak, lastDateTicked: newLastDateTicked)
                 .toJson(),
           );
 
-      return DataSuccess("Total Completed: $newHabitsCompleted");
+
+      // Update User's Total Completed
+      var userSnapshot = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user.uid)
+          .get();
+
+      var userModel = UserModel.fromJson(userSnapshot.data() ?? {});
+
+      var newTotalHabitsCompleted = todayHabitEntity.isSelected
+          ? (int.parse(userModel.habitsCompleted)) + 1
+          : (int.parse(userModel.habitsCompleted)) - 1;
+
+      FirebaseFirestore.instance.collection("Users").doc(user.uid).set(
+            userModel
+                .copyWith(habitsCompleted: newTotalHabitsCompleted.toString())
+                .toJson(),
+          );
+
+      return DataSuccess("Streak: $newStreak");
     } on FirebaseException catch (e) {
       return DataFailed(errorMessage: e.message ?? "Something went wrong");
     }

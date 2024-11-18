@@ -13,15 +13,14 @@ class AddAHabitTab extends StatelessWidget {
     return Padding(
       padding:
       const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           _HabitNameField(),
           const SizedBox(height: 45),
           _PeriodicitySelector(),
           const SizedBox(height: 45),
           _TimeSelector(),
-          Spacer(),
+          const SizedBox(height: 55),
           NextButton(
             title: "Add a new habit",
             onClick: () async {

@@ -6,13 +6,28 @@ class HabitModel extends HabitEntity{
     required super.habit,
     required super.selectedPeriodicity,
     required super.selectedTimeOfDay,
+    required super.streak,
+    required super.lastDateTicked,
 });
+
+  HabitModel copyWith(
+      {String? habit, List<String>? selectedPeriodicity, List<String>? selectedTimeOfDay, String? streak, String? lastDateTicked}) {
+    return HabitModel(
+      habit: habit ?? this.habit,
+      selectedPeriodicity: selectedPeriodicity ?? this.selectedPeriodicity,
+      selectedTimeOfDay: selectedTimeOfDay ?? this.selectedTimeOfDay,
+      streak: streak ?? this.streak,
+      lastDateTicked: lastDateTicked ?? this.lastDateTicked,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
       'habit': habit,
       'selectedPeriodicity': selectedPeriodicity,
       'selectedTimeOfDay': selectedTimeOfDay,
+      'streak': streak,
+      'lastDateTicked': lastDateTicked,
     };
   }
 
@@ -21,6 +36,8 @@ class HabitModel extends HabitEntity{
       habit: json["habit"],
       selectedPeriodicity: json["selectedPeriodicity"].cast<String>(),
       selectedTimeOfDay: json["selectedTimeOfDay"].cast<String>(),
+      streak: json["streak"],
+      lastDateTicked: json["lastDateTicked"],
     );
   }
 
@@ -31,6 +48,8 @@ class HabitModel extends HabitEntity{
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,
       selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
     );
   }
 

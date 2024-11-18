@@ -3,6 +3,7 @@ import 'package:flutter_super/flutter_super.dart';
 import 'package:collection/collection.dart';
 import 'package:habitar/features/home/domain/entities/add_a_habit_req_entity.dart';
 import '../../../../common/helpers/day_of_week.dart';
+import '../../../../common/helpers/get_today_date.dart';
 import '../../../../common/helpers/time_names.dart';
 import '../../../../common/helpers/time_of_day.dart';
 import '../../../../common/helpers/week_names.dart';
@@ -63,7 +64,7 @@ class AddAHabitViewModel{
     var selectedPeriodicity = <String>[];
     weekdays.forEachIndexed((index, element) {
       if(element.isSelected == true){
-        selectedPeriodicity.add(weekNames.keys.elementAt(index));
+        selectedPeriodicity.add(weekNames[index].longName) ;
       }
     });
     var selectedTimeOfDay = <String>[];
@@ -75,7 +76,9 @@ class AddAHabitViewModel{
     var addAHabitEntity = AddAHabitEntity(
       habit: _habit.text,
       selectedPeriodicity: selectedPeriodicity,
-      selectedTimeOfDay: selectedTimeOfDay
+      selectedTimeOfDay: selectedTimeOfDay,
+      streak: "0",
+      lastDateTicked: ""
     );
     return await sl<AddAHabitUseCase>().call(params: addAHabitEntity);
   }

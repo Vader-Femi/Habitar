@@ -15,14 +15,14 @@ class _TodayHabitsTabState extends State<TodayHabitsTab> {
   @override
   void initState() {
     super.initState();
-    todayHabitsViewModel.getHabits();
+    todayHabitsViewModel.getTodayHabits();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
+      const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 0),
       child: SuperBuilder(
         builder: (context) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,

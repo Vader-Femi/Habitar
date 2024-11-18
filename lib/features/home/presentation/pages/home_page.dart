@@ -39,36 +39,40 @@ class _HomePageState extends State<HomePage> {
           2 => ProfileTab(),
           _ => TodayHabitsTab(),
         },
-        bottomNavigationBar: NavigationBar(
-                selectedIndex: getHomeViewModel.selectedTabIndex.state,
-                onDestinationSelected: (index) =>
-                    getHomeViewModel.selectTabAtIndex(index),
-                height: 100,
-                // indicatorColor: AppColours.primaryUnfocused,
-                // unselectedFontSize: 14,
-                // selectedFontSize: 14,
-                // showSelectedLabels: false,
-                // showUnselectedLabels: false,
-                // iconSize: 28,
-                elevation: 15,
-                destinations: [
-                  NavigationDestination(
-                    icon: Icon(Icons.home_outlined),
-                    label: 'Home',
-                    selectedIcon: Icon(Icons.home_outlined),
+        bottomNavigationBar: Container(
+          color: Theme.of(context).colorScheme.surfaceContainer,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: NavigationBar(
+                    selectedIndex: getHomeViewModel.selectedTabIndex.state,
+                    onDestinationSelected: (index) =>
+                        getHomeViewModel.selectTabAtIndex(index),
+                    height: 70,
+                    // height: 88,
+                    // indicatorColor: AppColours.primaryUnfocused,
+                    // unselectedFontSize: 14,
+                    // selectedFontSize: 14,
+                    // showSelectedLabels: false,
+                    // showUnselectedLabels: false,
+                    // iconSize: 28,
+                    elevation: 15,
+                    destinations: [
+                      NavigationDestination(
+                        icon: Icon(Icons.home_outlined, size: 26),
+                        label: 'Home'
+                      ),
+                      NavigationDestination(
+                        icon: Icon(Icons.add, size: 26),
+                        label: 'Add'
+                      ),
+                      NavigationDestination(
+                        icon: Icon(Icons.perm_identity_outlined, size: 26),
+                        label: 'Profile'
+                      ),
+                    ],
                   ),
-                  NavigationDestination(
-                    icon: Icon(Icons.add),
-                    label: 'Add',
-                    selectedIcon: Icon(Icons.add),
-                  ),
-                  NavigationDestination(
-                    icon: Icon(Icons.perm_identity_outlined),
-                    label: 'Profile',
-                    selectedIcon: Icon(Icons.perm_identity_outlined),
-                  ),
-                ],
-              ),
+          ),
+        ),
       ),
     );
   }

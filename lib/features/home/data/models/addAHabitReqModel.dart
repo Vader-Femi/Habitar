@@ -6,6 +6,8 @@ class AddAHabitModel extends AddAHabitEntity{
     required super.habit,
     required super.selectedPeriodicity,
     required super.selectedTimeOfDay,
+    required super.streak,
+    required super.lastDateTicked
 });
 
   Map<String, dynamic> toJson() {
@@ -13,6 +15,8 @@ class AddAHabitModel extends AddAHabitEntity{
       'habit': habit,
       'selectedPeriodicity': selectedPeriodicity,
       'selectedTimeOfDay': selectedTimeOfDay,
+      'streak': streak,
+      "lastDateTicked": lastDateTicked,
     };
   }
 
@@ -21,6 +25,8 @@ class AddAHabitModel extends AddAHabitEntity{
       habit: json["habit"],
       selectedPeriodicity: json["selectedPeriodicity"].cast<String>(),
       selectedTimeOfDay: json["selectedTimeOfDay"].cast<String>(),
+      streak: json["streak"],
+      lastDateTicked: json["lastDateTicked"]
     );
   }
 
@@ -31,6 +37,8 @@ class AddAHabitModel extends AddAHabitEntity{
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,
       selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
     );
   }
 

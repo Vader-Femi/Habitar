@@ -15,7 +15,7 @@ class SingleTodayHabit extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Expanded(child: Text(todayHabitEntity.habit)),
+        Expanded(child: Text(todayHabitEntity.habit.habit)),
         Checkbox(
           value: todayHabitEntity.isSelected,
           activeColor: Theme.of(context).colorScheme.surfaceContainer,
