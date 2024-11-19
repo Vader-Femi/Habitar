@@ -22,26 +22,27 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-        const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 0),
-      child: ListView(
+    return SuperBuilder(
+      builder: (context) => ListView(
         children: [
           ProfileInfo(),
-          const SizedBox(height: 15),
-          Text(
-            "All Habits",
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              letterSpacing: 1,
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
+            child: Text(
+              "All Habits",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                letterSpacing: 1,
+              ),
             ),
           ),
-          const SizedBox(height: 10),
-          SuperBuilder(
-            builder: (context) => ListView.builder(
+          Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 13),
+            child: ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemCount: getProfileViewModel.habits.length,
@@ -50,10 +51,12 @@ class _ProfileTabState extends State<ProfileTab> {
                 var timeOfDay = "";
                 var dayOfWeek = "";
                 for (var time in habitEntity.selectedTimeOfDay) {
-                  timeOfDay += "$time${time == habitEntity.selectedTimeOfDay.last ? "" : ", "}";
+                  timeOfDay +=
+                      "$time${time == habitEntity.selectedTimeOfDay.last ? "" : ", "}";
                 }
                 for (var day in habitEntity.selectedPeriodicity) {
-                  dayOfWeek += "$day${day == habitEntity.selectedPeriodicity.last ? "" : ", "}";
+                  dayOfWeek +=
+                      "$day${day == habitEntity.selectedPeriodicity.last ? "" : ", "}";
                 }
                 return SingleHabit(
                   habitEntity: habitEntity,
@@ -63,7 +66,6 @@ class _ProfileTabState extends State<ProfileTab> {
               },
             ),
           ),
-          SizedBox(height: 13),
         ],
       ),
     );

@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
         appBar: switch (getHomeViewModel.selectedTabIndex.state) {
           0 => HomeAppbar(),
           1 => AddNewHabitAppbar(),
-          2 => ProfileAppBar(),
-          _ => HomeAppbar(),
+          // 2 => ProfileAppBar(),
+          _ => null,//HomeAppbar(),
         },
         body: switch (getHomeViewModel.selectedTabIndex.state) {
           0 => TodayHabitsTab(),

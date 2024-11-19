@@ -40,8 +40,6 @@ class TodayHabitsViewModel {
   }) async {
     var result = await sl<TickHabitsUseCase>().call(params: habit.copyWith(isSelected: isTicked));
 
-    print(result);
-
     if (result is DataSuccess) {
       habits.remove(habit);
       habits.insert(index, habit.copyWith(isSelected: isTicked));

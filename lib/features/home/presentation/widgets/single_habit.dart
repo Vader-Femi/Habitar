@@ -54,7 +54,7 @@ class SingleHabit extends StatelessWidget {
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.surfaceTint),
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: 1),
                         SvgPicture.asset(AppVectors.appLogo, height: 15, width: 15,),
                       ],
                     ),
