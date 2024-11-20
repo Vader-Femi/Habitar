@@ -20,6 +20,7 @@ abstract class HomeService {
 }
 
 class HomeServiceImpl extends HomeService {
+
   @override
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq) async {
     AddAHabitModel.fromEntity(newHabitReq);

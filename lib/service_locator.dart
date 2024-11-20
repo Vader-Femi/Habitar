@@ -5,6 +5,7 @@ import 'package:habitar/features/home/domain/repository/home.dart';
 import 'package:habitar/features/home/domain/usecases/add_a_habit.dart';
 import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import 'package:habitar/features/home/domain/usecases/tick_habits.dart';
+import 'core/usecase/is_user_logged_in.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
 import 'features/auth/data/sources/auth_service.dart';
 import 'features/auth/domain/repository/auth.dart';
@@ -18,12 +19,15 @@ final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
 
-  //Auth
+  sl.registerSingleton<IsUserLoggedIn>(
+      IsUserLoggedIn()
+  );
 
+  //Auth
   sl.registerSingleton<AuthService>(
     AuthServiceImpl()
   );
-  
+
   sl.registerSingleton<AuthRepository>(
     AuthRepositoryImpl(sl())
   );

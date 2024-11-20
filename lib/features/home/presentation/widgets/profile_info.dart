@@ -5,7 +5,7 @@ import 'package:habitar/core/assets/app_images.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/assets/app_vectors.dart';
 import '../../../../core/constants/constants.dart';
-import '../../../auth/presentation/widgets/next_button.dart';
+import '../../../../common/widgets/button/next_button.dart';
 import '../state/profile_viewmodel.dart';
 
 class ProfileInfo extends StatelessWidget {

@@ -10,6 +10,10 @@ analyzer
 3.3
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-6.7.0/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-6.7.0/lib/
+archive
+3.0
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.6.1/
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.6.1/lib/
 args
 3.3
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.6.0/
@@ -66,6 +70,10 @@ checked_yaml
 2.19
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/checked_yaml-2.0.3/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/checked_yaml-2.0.3/lib/
+cli_util
+3.4
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.4.2/
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.4.2/lib/
 clock
 2.12
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1/
@@ -178,6 +186,10 @@ flutter_hooks
 2.17
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_hooks-0.20.5/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_hooks-0.20.5/lib/
+flutter_launcher_icons
+3.0
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_launcher_icons-0.14.1/
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_launcher_icons-0.14.1/lib/
 flutter_lints
 3.5
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-5.0.0/
@@ -226,6 +238,10 @@ hydrated_bloc
 2.12
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/hydrated_bloc-9.1.5/
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/hydrated_bloc-9.1.5/lib/
+image
+2.15
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/image-4.3.0/
+file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/image-4.3.0/lib/
 io
 2.12
 file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/io-1.0.4/

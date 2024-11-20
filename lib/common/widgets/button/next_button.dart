@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../common/widgets/button/basic_app_button.dart';
-import '../../../../core/constants/constants.dart';
+import 'basic_app_button.dart';
+import '../../../core/constants/constants.dart';
 
 class NextButton extends StatelessWidget {
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/next_button.dart';
+import '../../../../common/widgets/button/next_button.dart';
 
 class AllSet extends StatefulWidget {
   const AllSet({super.key});

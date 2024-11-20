@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/res/data_state.dart';
-import '../../../auth/presentation/widgets/next_button.dart';
+import '../../../../common/widgets/button/next_button.dart';
 import '../state/add_a_habit_viewmodel.dart';
 
 class AddAHabitTab extends StatelessWidget {

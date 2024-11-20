@@ -7,7 +7,7 @@ import '../bloc/sign_up/sign_up_bloc.dart';
 import '../bloc/sign_up/sign_up_event.dart';
 import '../bloc/sign_up/sign_up_state.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/next_button.dart';
+import '../../../../common/widgets/button/next_button.dart';
 import '../widgets/sign_in_text.dart';
 import '../widgets/skip_button.dart';
 

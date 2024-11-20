@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/assets/app_images.dart';
 import '../../../../core/constants/constants.dart';
-import '../widgets/next_button.dart';
+import '../../../../common/widgets/button/next_button.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});

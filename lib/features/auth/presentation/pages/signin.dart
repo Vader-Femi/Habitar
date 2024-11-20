@@ -5,7 +5,7 @@ import '../../../../service_locator.dart';
 import '../bloc/sign_in/sign_in_bloc.dart';
 import '../bloc/sign_in/sign_in_event.dart';
 import '../bloc/sign_in/sign_in_state.dart';
-import '../widgets/next_button.dart';
+import '../../../../common/widgets/button/next_button.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});

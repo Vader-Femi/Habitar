@@ -9,6 +9,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'config/routes/AppRoutes.dart';
 import 'config/theme/AppTheme.dart';
+import 'core/usecase/is_user_logged_in.dart';
 import 'features/choose_mode/presentation/bloc/theme_cubit.dart';
 import 'features/splash/presentation/pages/splash.dart';
 import 'firebase_options.dart';
@@ -48,8 +49,8 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
           onGenerateRoute: AppRoutes.onGenerateRoutes,
-          home: const HomePage(),
-          // home: const SplashPage(),
+          // home: const HomePage(),
+          home: const SplashPage(),
         ),
       ),
     );
