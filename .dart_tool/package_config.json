@@ -26,6 +26,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "analyzer_plugin",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer_plugin-0.11.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "archive",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.6.1",
       "packageUri": "lib/",
@@ -108,6 +114,12 @@
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "charcode",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/charcode-1.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "checked_yaml",
@@ -196,6 +208,24 @@
     {
       "name": "dio_web_adapter",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/dio_web_adapter-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "drift",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/drift-2.21.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "drift_dev",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/drift_dev-2.21.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "drift_flutter",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/drift_flutter-0.2.1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -596,6 +626,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "recase",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/recase-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "retrofit",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/retrofit-4.4.1",
       "packageUri": "lib/",
@@ -642,6 +678,24 @@
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "sqlite3",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/sqlite3-2.4.7",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "sqlite3_flutter_libs",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/sqlite3_flutter_libs-0.5.26",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "sqlparser",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/sqlparser-0.39.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "stack_trace",
@@ -788,7 +842,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-11-20T10:26:31.182369Z",
+  "generated": "2024-11-21T18:14:01.039294Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///D:/Sdk/flutter",

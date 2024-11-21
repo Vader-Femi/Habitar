@@ -1,4 +1,7 @@
+import 'package:drift/drift.dart';
+
 import '../../domain/entities/habit_entity.dart';
+import '../db/habit_db.dart';
 
 class HabitModel extends HabitEntity{
 
@@ -31,6 +34,16 @@ class HabitModel extends HabitEntity{
     };
   }
 
+  HabitTableCompanion toHabitTableCompanion() {
+    return HabitTableCompanion.insert(
+      habit: habit,
+      selectedPeriodicity: selectedPeriodicity ,
+      selectedTimeOfDay: selectedTimeOfDay,
+      streak: streak,
+      lastDateTicked: lastDateTicked,
+    );
+  }
+
   factory HabitModel.fromJson(Map<String, dynamic> json) {
     return HabitModel(
       habit: json["habit"],
@@ -44,6 +57,17 @@ class HabitModel extends HabitEntity{
 
   factory HabitModel.fromEntity(
       HabitEntity entity) {
+    return HabitModel(
+      habit: entity.habit,
+      selectedPeriodicity: entity.selectedPeriodicity,
+      selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
+    );
+  }
+
+  factory HabitModel.fromHabitTableData(
+      HabitTableData entity) {
     return HabitModel(
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,

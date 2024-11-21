@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:habitar/features/home/data/db/habit_db.dart';
 import 'package:habitar/features/home/data/repository/home_repository_impl.dart';
 import 'package:habitar/features/home/data/sources/home_service.dart';
 import 'package:habitar/features/home/domain/repository/home.dart';
@@ -13,6 +14,9 @@ import 'features/auth/domain/usecases/signin.dart';
 import 'features/auth/domain/usecases/signup.dart';
 import 'features/auth/presentation/bloc/sign_in/sign_in_bloc.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_bloc.dart';
+import 'features/home/data/db/habitDBHelper.dart';
+import 'features/home/domain/usecases/add_habits_batch_to_db.dart';
+import 'features/home/domain/usecases/get_habit_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
 
 final sl = GetIt.instance;
@@ -47,6 +51,14 @@ Future<void> initializeDependencies() async {
 
 
   //Home
+  sl.registerSingleton<HabitDb>(
+      HabitDb()
+  );
+
+  sl.registerSingleton<HabitDBHelper>(
+      HabitDBHelper(sl())
+  );
+
   sl.registerSingleton<HomeService>(
       HomeServiceImpl()
   );
@@ -69,6 +81,14 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetUserUseCase>(
       GetUserUseCase(sl())
+  );
+
+  sl.registerSingleton<AddHabitsBatchToDbUseCase>(
+      AddHabitsBatchToDbUseCase(sl())
+  );
+
+  sl.registerSingleton<GetHabitsFromDBUseCase>(
+      GetHabitsFromDBUseCase(sl())
   );
 
 }
