@@ -5,14 +5,15 @@ import '../../../../service_locator.dart';
 import 'habit_db.dart';
 
 class HabitDBHelper {
-
   final HabitDb _habitDB;
+
   const HabitDBHelper(this._habitDB);
 
   Future<void> addHabit(HabitModel entry) {
     return _habitDB
         .into(_habitDB.habitTable)
-        .insert(entry.toHabitTableCompanion());
+        .insert(entry.toHabitTableCompanion(),
+    );
   }
 
   Future<void> insertMultipleHabits(List<HabitModel> entries) async {
@@ -46,12 +47,17 @@ class HabitDBHelper {
         .go();
   }
 
+  Future deleteAllHabits() {
+    return _habitDB.delete(_habitDB.habitTable).go();
+  }
+
   Future<List<HabitModel>> getHabitsAlphabetically() async {
     var habitTableData = await (_habitDB.select(_habitDB.habitTable)
           ..orderBy([(t) => OrderingTerm(expression: t.habit)]))
         .get();
 
-    return habitTableData.map((habit) => HabitModel.fromHabitTableData(habit) ).toList();
-
+    return habitTableData
+        .map((habit) => HabitModel.fromHabitTableData(habit))
+        .toList();
   }
 }

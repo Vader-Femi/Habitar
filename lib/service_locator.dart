@@ -16,6 +16,7 @@ import 'features/auth/presentation/bloc/sign_in/sign_in_bloc.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_bloc.dart';
 import 'features/home/data/db/habitDBHelper.dart';
 import 'features/home/domain/usecases/add_habits_batch_to_db.dart';
+import 'features/home/domain/usecases/delete_all_habits_in_db.dart';
 import 'features/home/domain/usecases/get_habit_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
 
@@ -83,12 +84,16 @@ Future<void> initializeDependencies() async {
       GetUserUseCase(sl())
   );
 
-  sl.registerSingleton<AddHabitsBatchToDbUseCase>(
-      AddHabitsBatchToDbUseCase(sl())
+  sl.registerSingleton<AddHabitsBatchToDBUseCase>(
+      AddHabitsBatchToDBUseCase(sl())
   );
 
   sl.registerSingleton<GetHabitsFromDBUseCase>(
       GetHabitsFromDBUseCase(sl())
+  );
+
+  sl.registerSingleton<DeleteAllHabitsInDBUseCase>(
+      DeleteAllHabitsInDBUseCase(sl())
   );
 
 }

@@ -28,6 +28,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> redirect() async {
+
     await Future.delayed(const Duration(seconds: 1));
     var isLoggedIn = await sl<IsUserLoggedIn>().call();
     if ( isLoggedIn == true){
