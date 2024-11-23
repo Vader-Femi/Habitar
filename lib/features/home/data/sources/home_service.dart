@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
 import '../../../../core/res/data_state.dart';
+import '../../../../service_locator.dart';
 import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
+import '../../domain/usecases/add_habits_batch_to_db.dart';
+import '../../domain/usecases/delete_all_habits_in_db.dart';
 import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';
 import '../models/user_model.dart';
@@ -12,7 +15,7 @@ import '../models/user_model.dart';
 abstract class HomeService {
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq);
 
-  Future<DataState> getHabits();
+  Future<DataState> getAllHabits();
 
   Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity);
 
@@ -20,7 +23,6 @@ abstract class HomeService {
 }
 
 class HomeServiceImpl extends HomeService {
-
   @override
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq) async {
     AddAHabitModel.fromEntity(newHabitReq);
@@ -38,7 +40,7 @@ class HomeServiceImpl extends HomeService {
   }
 
   @override
-  Future<DataState> getHabits() async {
+  Future<DataState> getAllHabits() async {
     try {
       if (FirebaseAuth.instance.currentUser?.uid == null) {
         throw FirebaseException(
@@ -55,6 +57,9 @@ class HomeServiceImpl extends HomeService {
         var habit = HabitModel.fromJson(data);
         habitModels.add(habit);
       }
+
+      await sl<DeleteAllHabitsInDBUseCase>().call();
+      await sl<AddHabitsBatchToDBUseCase>().call(params: habitModels);
 
       return DataSuccess(habitModels);
     } on FirebaseException catch (e) {
@@ -77,7 +82,6 @@ class HomeServiceImpl extends HomeService {
           .doc(todayHabitEntity.habit.habit)
           .get();
 
-
       var habitModel = HabitModel.fromJson(habitSnapshot.data() ?? {});
       var newStreak = todayHabitEntity.isSelected
           ? (int.parse(habitModel.streak) + 1).toString()
@@ -92,7 +96,6 @@ class HomeServiceImpl extends HomeService {
                 .copyWith(streak: newStreak, lastDateTicked: newLastDateTicked)
                 .toJson(),
           );
-
 
       // Update User's Total Completed
       var userSnapshot = await FirebaseFirestore.instance

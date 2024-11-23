@@ -6,7 +6,7 @@ import '../entities/today_habit_entity.dart';
 abstract class HomeRepository {
 
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq);
-  Future<DataState> getHabits();
+  Future<DataState> getAllHabits();
   Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity);
   Future<UserEntity> getUser();
 }

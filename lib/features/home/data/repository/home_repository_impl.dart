@@ -14,7 +14,7 @@ class HomeRepositoryImpl extends HomeRepository{
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq) => _homeService.addAHabit(newHabitReq);
 
   @override
-  Future<DataState> getHabits() => _homeService.getHabits();
+  Future<DataState> getAllHabits() => _homeService.getAllHabits();
 
   @override
   Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity) => _homeService.tickHabit(todayHabitEntity);
