@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     getHomeViewModel.getUser();
@@ -31,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           0 => HomeAppbar(),
           1 => AddNewHabitAppbar(),
           // 2 => ProfileAppBar(),
-          _ => null,//HomeAppbar(),
+          _ => null, //HomeAppbar(),
         },
         body: switch (getHomeViewModel.selectedTabIndex.state) {
           0 => TodayHabitsTab(),
@@ -39,11 +38,13 @@ class _HomePageState extends State<HomePage> {
           2 => ProfileTab(),
           _ => TodayHabitsTab(),
         },
-        bottomNavigationBar: Container(
-          color: Theme.of(context).colorScheme.surfaceContainer,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: NavigationBar(
+        bottomNavigationBar: getHomeViewModel.selectedTabIndex.state == 1
+            ? null
+            : Container(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: NavigationBar(
                     selectedIndex: getHomeViewModel.selectedTabIndex.state,
                     onDestinationSelected: (index) =>
                         getHomeViewModel.selectTabAtIndex(index),
@@ -58,21 +59,29 @@ class _HomePageState extends State<HomePage> {
                     elevation: 15,
                     destinations: [
                       NavigationDestination(
-                        icon: Icon(Icons.home_outlined, size: 26),
-                        label: 'Home'
+                          icon: Icon(Icons.home_outlined, size: 26),
+                          label: 'Home'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 19.5),
+                        // child: Container(
+                        // transform: Matrix4.translationValues(0, -23, 0),
+                        child: NavigationDestination(
+                          icon: Icon(
+                            Icons.add_circle_rounded,
+                            size: 55,
+                            color: Theme.of(context).colorScheme.inverseSurface,
+                          ),
+                          label: '',
+                        ),
+                        // ),
                       ),
                       NavigationDestination(
-                        icon: Icon(Icons.add, size: 26),
-                        label: 'Add'
-                      ),
-                      NavigationDestination(
-                        icon: Icon(Icons.perm_identity_outlined, size: 26),
-                        label: 'Profile'
-                      ),
+                          icon: Icon(Icons.perm_identity_outlined, size: 26),
+                          label: 'Profile'),
                     ],
                   ),
-          ),
-        ),
+                ),
+              ),
       ),
     );
   }
