@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:habitar/core/assets/app_vectors.dart';
 import 'package:habitar/features/home/presentation/pages/add_a_habit_tab.dart';
 import 'package:habitar/features/home/presentation/pages/profile_tab.dart';
 import 'package:habitar/features/home/presentation/pages/today_habits_tab.dart';
@@ -66,10 +68,14 @@ class _HomePageState extends State<HomePage> {
                         // child: Container(
                         // transform: Matrix4.translationValues(0, -23, 0),
                         child: NavigationDestination(
-                          icon: Icon(
-                            Icons.add_circle_rounded,
-                            size: 55,
-                            color: Theme.of(context).colorScheme.inverseSurface,
+                          icon: SvgPicture.asset(
+                            AppVectors.addSquare,
+                            width: 42,
+                            height: 42,
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).colorScheme.surfaceTint,
+                              BlendMode.srcIn,
+                            ),
                           ),
                           label: '',
                         ),
