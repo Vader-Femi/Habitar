@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -9,10 +11,9 @@ class NotificationService {
 
   // Init notification plugin
   static Future<void> init() async {
-
     // Define android init settings
     const AndroidInitializationSettings androidInitializationSettings =
-        AndroidInitializationSettings("@minimap/ic_launcher");
+        AndroidInitializationSettings("@mipmap/ic_launcher");
 
     // Define ios init settings
     const DarwinInitializationSettings iOSInitializationSettings =
@@ -38,7 +39,59 @@ class NotificationService {
         ?.requestNotificationsPermission();
   }
 
+  //Show an instant notification
+  Future<void> showInstantNotification(String title, String body) async {
+    //Define Notification Details
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: AndroidNotificationDetails(
+          "habit_reminders_id",
+          "Habit reminders",
+          importance: Importance.max,
+          priority: Priority.defaultPriority,
+        ),
+        iOS: DarwinNotificationDetails());
+    await flutterLocalNotificationsPlugin.show(
+        DateTime.now().microsecond, title, body, platformChannelSpecifics);
+  }
 
-  //
+  //Schedule notification
+  Future<void> scheduleSingleNotification({
+      required String title, required String body, required DateTime scheduleDate}) async {
+    //Define Notification Details
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: AndroidNotificationDetails(
+            "habit_reminders_id", "Habit reminders",
+            importance: Importance.max, priority: Priority.defaultPriority),
+        iOS: DarwinNotificationDetails());
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      DateTime.now().microsecond,
+      title,
+      body,
+      TZDateTime.from(scheduleDate, local),
+      platformChannelSpecifics,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.dateAndTime,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    );
+  }
 
+  Future<void> scheduleIntervalNotification({
+      required String title, required String body, RepeatInterval interval = RepeatInterval.weekly}) async {
+    //Define Notification Details
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: AndroidNotificationDetails(
+            "habit_reminders_id", "Habit reminders",
+            channelDescription: "These will enable you see reminders on your habits",
+            importance: Importance.max, priority: Priority.defaultPriority),
+        iOS: DarwinNotificationDetails());
+    await flutterLocalNotificationsPlugin.periodicallyShow(
+      DateTime.now().microsecond,
+      title,
+      body,
+      interval,
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    );
+  }
 }

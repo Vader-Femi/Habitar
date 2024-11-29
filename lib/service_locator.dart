@@ -6,6 +6,7 @@ import 'package:habitar/features/home/domain/repository/home.dart';
 import 'package:habitar/features/home/domain/usecases/add_a_habit.dart';
 import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import 'package:habitar/features/home/domain/usecases/tick_habits.dart';
+import 'package:habitar/features/notification/notification.dart';
 import 'core/usecase/is_user_logged_in.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
 import 'features/auth/data/sources/auth_service.dart';
@@ -26,6 +27,10 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<IsUserLoggedIn>(
       IsUserLoggedIn()
+  );
+
+  sl.registerSingleton<NotificationService>(
+    NotificationService()
   );
 
   //Auth
