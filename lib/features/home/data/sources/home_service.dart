@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habitar/common/helpers/get_today_date.dart';
+import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
+import 'package:collection/collection.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
+import '../../../notification/notification.dart';
 import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
@@ -60,6 +63,15 @@ class HomeServiceImpl extends HomeService {
 
       await sl<DeleteAllHabitsInDBUseCase>().call();
       await sl<AddHabitsBatchToDBUseCase>().call(params: habitModels);
+
+      var notificationService = sl<NotificationService>();
+      await notificationService.scheduleNotificationsForHabits(
+        habitModels
+            .map(
+              (habitModel) => HabitEntity.fromModel(habitModel),
+            )
+            .toList(),
+      );
 
       return DataSuccess(habitModels);
     } on FirebaseException catch (e) {

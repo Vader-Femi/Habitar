@@ -70,7 +70,7 @@ class AddAHabitViewModel{
     var selectedTimeOfDay = <String>[];
     timeOfDay.forEachIndexed((index, element) {
       if(element.isSelected == true){
-        selectedTimeOfDay.add(timeNames[index]);
+        selectedTimeOfDay.add(timeNames[index].name);
       }
     });
     var addAHabitEntity = AddAHabitEntity(

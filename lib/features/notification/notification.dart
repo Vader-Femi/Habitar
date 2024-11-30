@@ -1,6 +1,9 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:timezone/timezone.dart';
+
+import '../../common/helpers/time_names.dart';
+import '../../common/helpers/week_names.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -39,6 +42,11 @@ class NotificationService {
         ?.requestNotificationsPermission();
   }
 
+  //Cancel and delete all notifications
+  Future<void> cancelAndDeleteAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
   //Show an instant notification
   Future<void> showInstantNotification(String title, String body) async {
     //Define Notification Details
@@ -55,8 +63,10 @@ class NotificationService {
   }
 
   //Schedule notification
-  Future<void> scheduleSingleNotification({
-      required String title, required String body, required DateTime scheduleDate}) async {
+  Future<void> scheduleNotifications(
+      {String title = "Your habit reminder",
+      required String body,
+      required DateTime scheduleDateTime}) async {
     //Define Notification Details
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: AndroidNotificationDetails(
@@ -64,34 +74,47 @@ class NotificationService {
             importance: Importance.max, priority: Priority.defaultPriority),
         iOS: DarwinNotificationDetails());
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      DateTime.now().microsecond,
+      DateTime.now().microsecond + DateTime.now().millisecond,
       title,
-      body,
-      TZDateTime.from(scheduleDate, local),
+      "Remember to: $body",
+      TZDateTime.from(scheduleDateTime, local),
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.dateAndTime,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
   }
 
-  Future<void> scheduleIntervalNotification({
-      required String title, required String body, RepeatInterval interval = RepeatInterval.weekly}) async {
-    //Define Notification Details
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: AndroidNotificationDetails(
-            "habit_reminders_id", "Habit reminders",
-            channelDescription: "These will enable you see reminders on your habits",
-            importance: Importance.max, priority: Priority.defaultPriority),
-        iOS: DarwinNotificationDetails());
-    await flutterLocalNotificationsPlugin.periodicallyShow(
-      DateTime.now().microsecond,
-      title,
-      body,
-      interval,
-      platformChannelSpecifics,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-    );
+  //Schedule notification for habits
+  Future<void> scheduleNotificationsForHabits(List<HabitEntity> habits) async {
+    await cancelAndDeleteAllNotifications();
+
+    for (var habit in habits){
+      for (var day in habit.selectedPeriodicity) {
+        final desiredWeekDay =
+        (weekNames.firstWhere((element) => element.longName == day));
+
+        for (var time in habit.selectedTimeOfDay) {
+          final desiredDayTime =
+          (timeNames.firstWhere((element) => element.name == time));
+
+          var today = DateTime.now();
+          var todayWeekday = today.weekday;
+
+          var scheduleDateTime = today.copyWith(
+            hour: desiredDayTime.time,
+            day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
+          );
+
+          await scheduleNotifications(
+            body: habit.habit,
+            scheduleDateTime: scheduleDateTime,
+          );
+        }
+      }
+    }
+
   }
+
 }

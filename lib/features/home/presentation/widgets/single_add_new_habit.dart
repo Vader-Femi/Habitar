@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitar/core/constants/constants.dart';
-
-import '../../../../service_locator.dart';
-import '../../../notification/notification.dart';
+import '../state/home_viewmodel.dart';
 
 class SingleAddNewHabit extends StatelessWidget {
   const SingleAddNewHabit({super.key});
@@ -21,15 +19,7 @@ class SingleAddNewHabit extends StatelessWidget {
           child: Hero(
             tag: Constants.nextButtonHeroTag,
             child: GestureDetector(
-              // onTap: () => getHomeViewModel.selectTabAtIndex(1),
-              onTap: () {
-                var inst = sl<NotificationService>();
-                inst.scheduleSingleNotification(
-                  title: "Sample habit",
-                  body: "Sample hanbit body",
-                  scheduleDate: DateTime.now().add(Duration(seconds: 5)),
-                );
-              },
+              onTap: () => getHomeViewModel.selectTabAtIndex(1),
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surfaceContainer,
