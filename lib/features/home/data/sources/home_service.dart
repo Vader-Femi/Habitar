@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
-import 'package:collection/collection.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
 import '../../../notification/notification.dart';
@@ -65,7 +64,7 @@ class HomeServiceImpl extends HomeService {
       await sl<AddHabitsBatchToDBUseCase>().call(params: habitModels);
 
       var notificationService = sl<NotificationService>();
-      await notificationService.scheduleNotificationsForHabits(
+      notificationService.scheduleNotificationsForHabits(
         habitModels
             .map(
               (habitModel) => HabitEntity.fromModel(habitModel),

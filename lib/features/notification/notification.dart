@@ -1,7 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:timezone/timezone.dart';
-
 import '../../common/helpers/time_names.dart';
 import '../../common/helpers/week_names.dart';
 
@@ -9,8 +8,12 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  @pragma("vm:entry-point")
   static Future<void> onDidReceiveNotification(
-      NotificationResponse notificationResponse) async {}
+      NotificationResponse notificationResponse) async {
+
+    // Todo create a screen that shows Done with options to go to app or CLose app
+  }
 
   // Init notification plugin
   static Future<void> init() async {
@@ -73,6 +76,7 @@ class NotificationService {
             "habit_reminders_id", "Habit reminders",
             importance: Importance.max, priority: Priority.defaultPriority),
         iOS: DarwinNotificationDetails());
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
       DateTime.now().microsecond + DateTime.now().millisecond,
       title,
