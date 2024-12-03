@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habitar/config/theme/theme.dart';
-import 'app_colors.dart';
 
 class AppTheme {
   static final lightColourScheme = MaterialTheme.lightMediumContrastScheme();

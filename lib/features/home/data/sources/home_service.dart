@@ -64,7 +64,7 @@ class HomeServiceImpl extends HomeService {
       await sl<AddHabitsBatchToDBUseCase>().call(params: habitModels);
 
       var notificationService = sl<NotificationService>();
-      notificationService.scheduleNotificationsForHabits(
+      await notificationService.scheduleNotificationsForHabits(
         habitModels
             .map(
               (habitModel) => HabitEntity.fromModel(habitModel),
@@ -149,7 +149,7 @@ class HomeServiceImpl extends HomeService {
       var userModel = UserModel.fromJson(snapshot.data() ?? {});
 
       return UserEntity.fromModel(userModel);
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       return UserEntity(email: "", username: "", habitsCompleted: "-1");
     }
   }

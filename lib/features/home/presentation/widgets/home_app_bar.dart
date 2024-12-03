@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_super/flutter_super.dart';
-import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/constants/constants.dart';
 import 'app_bar_shape.dart';
 

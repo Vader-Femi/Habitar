@@ -46,44 +46,44 @@ class DefaultFirebaseOptions {
     messagingSenderId: '72924983874',
     projectId: 'habitar-c1f00',
     authDomain: 'habitar-c1f00.firebaseapp.com',
-    storageBucket: 'habitar-c1f00.appspot.com',
+    storageBucket: 'habitar-c1f00.firebasestorage.app',
     measurementId: 'G-WDRCK76W8M',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAkaoPYbm2gADXoBgbG_6nWYDhbXgfsTuQ',
-    appId: '1:72924983874:android:9b82a5a521318bb7ebf3db',
+    appId: '1:72924983874:android:7ccc3030d33627daebf3db',
     messagingSenderId: '72924983874',
     projectId: 'habitar-c1f00',
-    storageBucket: 'habitar-c1f00.appspot.com',
+    storageBucket: 'habitar-c1f00.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCcSytLWV5HInbuBtBIALe87rh2m_OTmec',
-    appId: '1:72924983874:ios:5bfadf38929f3500ebf3db',
+    appId: '1:72924983874:ios:c87349b811042878ebf3db',
     messagingSenderId: '72924983874',
     projectId: 'habitar-c1f00',
-    storageBucket: 'habitar-c1f00.appspot.com',
-    iosBundleId: 'com.example.myapplication',
+    storageBucket: 'habitar-c1f00.firebasestorage.app',
+    iosBundleId: 'com.habitar.habitar',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCcSytLWV5HInbuBtBIALe87rh2m_OTmec',
-    appId: '1:72924983874:ios:5bfadf38929f3500ebf3db',
+    appId: '1:72924983874:ios:c87349b811042878ebf3db',
     messagingSenderId: '72924983874',
     projectId: 'habitar-c1f00',
-    storageBucket: 'habitar-c1f00.appspot.com',
-    iosBundleId: 'com.example.myapplication',
+    storageBucket: 'habitar-c1f00.firebasestorage.app',
+    iosBundleId: 'com.habitar.habitar',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyCJH9fs7CB7faiW2XHxFLf5dbzeUaOPi44',
-    appId: '1:72924983874:web:72f44442ed48b16cebf3db',
+    appId: '1:72924983874:web:c164b164a0209e48ebf3db',
     messagingSenderId: '72924983874',
     projectId: 'habitar-c1f00',
     authDomain: 'habitar-c1f00.firebaseapp.com',
-    storageBucket: 'habitar-c1f00.appspot.com',
-    measurementId: 'G-ZQJ06B8922',
+    storageBucket: 'habitar-c1f00.firebasestorage.app',
+    measurementId: 'G-YYKQD0MHR4',
   );
 
 }

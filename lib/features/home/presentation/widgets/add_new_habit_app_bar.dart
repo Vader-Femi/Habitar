@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
-import '../../../../config/theme/app_colors.dart';
 import '../../../../core/constants/constants.dart';
 import 'app_bar_shape.dart';
 

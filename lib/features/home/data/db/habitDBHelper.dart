@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:habitar/features/home/data/models/HabitModel.dart';
 import 'package:habitar/features/home/data/models/updateAHabitReqModel.dart';
-import '../../../../service_locator.dart';
 import 'habit_db.dart';
 
 class HabitDBHelper {

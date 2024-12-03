@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_super/flutter_super.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitar/core/assets/app_images.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
@@ -80,7 +79,7 @@ class ProfileInfo extends StatelessWidget {
 }
 
 class _DeleteAccountButton extends StatelessWidget {
-  const _DeleteAccountButton({super.key});
+  const _DeleteAccountButton();
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +104,7 @@ class _DeleteAccountButton extends StatelessWidget {
 }
 
 class _LogOutButton extends StatelessWidget {
-  const _LogOutButton({super.key});
+  const _LogOutButton();
 
   @override
   Widget build(BuildContext context) {

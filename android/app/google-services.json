@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "72924983874",
+    "project_id": "habitar-c1f00",
+    "storage_bucket": "habitar-c1f00.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72924983874:android:9b82a5a521318bb7ebf3db",
+        "android_client_info": {
+          "package_name": "com.habitar.habitar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkaoPYbm2gADXoBgbG_6nWYDhbXgfsTuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72924983874:android:7ccc3030d33627daebf3db",
+        "android_client_info": {
+          "package_name": "com.habitar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkaoPYbm2gADXoBgbG_6nWYDhbXgfsTuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

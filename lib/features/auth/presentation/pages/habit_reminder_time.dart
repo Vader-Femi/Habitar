@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../common/helpers/time_of_day.dart';
-import '../../../../config/theme/app_colors.dart';
 import '../widgets/app_bar.dart';
 import '../../../../common/widgets/button/next_button.dart';
 import '../widgets/sign_in_text.dart';

@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 
 import '../../domain/entities/habit_entity.dart';
 import '../db/habit_db.dart';

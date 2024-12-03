@@ -4,7 +4,9 @@ import '../../domain/entities/add_a_habit_req_entity.dart';
 
 class UpdateAHabitReqModel extends UpdateAHabitReqEntity {
 
+  @override
   final String oldId;
+  @override
   final AddAHabitModel newHabit;
 
   UpdateAHabitReqModel({

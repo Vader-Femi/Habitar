@@ -49,7 +49,7 @@ class AddAHabitTab extends StatelessWidget {
 }
 
 class _HabitNameField extends StatelessWidget {
-  const _HabitNameField({super.key});
+  const _HabitNameField();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _HabitNameField extends StatelessWidget {
 }
 
 class _TimeSelector extends StatelessWidget {
-  const _TimeSelector({super.key});
+  const _TimeSelector();
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +164,7 @@ class _TimeSelector extends StatelessWidget {
 }
 
 class _PeriodicitySelector extends StatelessWidget {
-  const _PeriodicitySelector({super.key});
+  const _PeriodicitySelector();
 
   @override
   Widget build(BuildContext context) {

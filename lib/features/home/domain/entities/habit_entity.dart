@@ -9,6 +9,26 @@ class HabitEntity {
 
   const HabitEntity({required this.habit, required this.selectedPeriodicity, required this.selectedTimeOfDay, required this.streak, required this.lastDateTicked});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'habit': habit,
+      'selectedPeriodicity': selectedPeriodicity,
+      'selectedTimeOfDay': selectedTimeOfDay,
+      'streak': streak,
+      'lastDateTicked': lastDateTicked,
+    };
+  }
+
+  factory HabitEntity.fromJson(Map<String, dynamic> json) {
+    return HabitEntity(
+      habit: json["habit"],
+      selectedPeriodicity: json["selectedPeriodicity"].cast<String>(),
+      selectedTimeOfDay: json["selectedTimeOfDay"].cast<String>(),
+      streak: json["streak"],
+      lastDateTicked: json["lastDateTicked"],
+    );
+  }
+
   factory HabitEntity.fromModel(
       HabitModel entity) {
     return HabitEntity(

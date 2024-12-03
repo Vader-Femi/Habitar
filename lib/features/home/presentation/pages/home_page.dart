@@ -8,7 +8,6 @@ import 'package:habitar/features/home/presentation/pages/today_habits_tab.dart';
 import 'package:habitar/features/home/presentation/widgets/add_new_habit_app_bar.dart';
 import '../state/home_viewmodel.dart';
 import '../widgets/home_app_bar.dart';
-import '../widgets/profile_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
