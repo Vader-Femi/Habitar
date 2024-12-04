@@ -6,13 +6,13 @@ icons_launcher:
       image_path: "assets/images/app_logo.png"
       notification_image: "assets/images/app_logo.png"
 #      adaptive_background_color: '#ffffff'
-      adaptive_background_image: "assets/images/app_logo.png"
-      adaptive_foreground_image: "assets/images/app_logo.png"
+      adaptive_background_image: "assets/images/app_logo_bg.png"
+      adaptive_foreground_image: "assets/images/app_logo_white.png"
       adaptive_round_image: "assets/images/app_logo.png"
-      adaptive_monochrome_image: "assets/images/app_logo.png"
+      adaptive_monochrome_image: "assets/images/app_logo_white.png"
     ios:
       enable: true
-      image_path: "assets/images/app_logo.png"
+      image_path: "assets/images/app_logo_white.png"
       dark_path: "assets/images/app_logo.png"
       tinted_path: "assets/images/app_logo.png"
     web:
@@ -28,3 +28,35 @@ icons_launcher:
     linux:
       enable: false
       image_path: "assets/images/app_logo.png"
+
+
+#icons_launcher:
+#  image_path: "assets/images/app_logo.png"
+#  platforms:
+#    android:
+#      enable: true
+#      image_path: "assets/images/app_logo.png"
+#      notification_image: "assets/images/app_logo.png"
+##      adaptive_background_color: '#ffffff'
+#      adaptive_background_image: "assets/images/app_logo.png"
+#      adaptive_foreground_image: "assets/images/app_logo.png"
+#      adaptive_round_image: "assets/images/app_logo.png"
+#      adaptive_monochrome_image: "assets/images/app_logo.png"
+#    ios:
+#      enable: true
+#      image_path: "assets/images/app_logo.png"
+#      dark_path: "assets/images/app_logo.png"
+#      tinted_path: "assets/images/app_logo.png"
+#    web:
+#      enable: true
+#      image_path: "assets/images/app_logo.png"
+#      favicon_path: "assets/images/app_logo.png"
+#    macos:
+#      enable: false
+#      image_path: "assets/images/app_logo.png"
+#    windows:
+#      enable: false
+#      image_path: "assets/images/app_logo.png"
+#    linux:
+#      enable: false
+#      image_path: "assets/images/app_logo.png"
