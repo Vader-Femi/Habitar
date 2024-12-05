@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
@@ -10,6 +13,7 @@ import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
 import '../../domain/usecases/delete_all_habits_in_db.dart';
+import '../../domain/usecases/get_habit_from_db.dart';
 import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';
 import '../models/user_model.dart';
@@ -49,7 +53,7 @@ class HomeServiceImpl extends HomeService {
             plugin: '', message: "Cannot find user. Please log in again");
       }
 
-      var habitModels = <HabitModel>[];
+      var habitsFromRemote = <HabitModel>[];
       var snapshot = await FirebaseFirestore.instance
           .collection(FirebaseAuth.instance.currentUser!.uid)
           .get();
@@ -57,24 +61,52 @@ class HomeServiceImpl extends HomeService {
       for (var doc in snapshot.docs) {
         var data = doc.data();
         var habit = HabitModel.fromJson(data);
-        habitModels.add(habit);
+        habitsFromRemote.add(habit);
       }
 
-      await sl<DeleteAllHabitsInDBUseCase>().call();
-      await sl<AddHabitsBatchToDBUseCase>().call(params: habitModels);
+      var habitsFromDb = await sl<GetHabitsFromDBUseCase>().call();
 
+      compareAndUpdateDB(
+        habitsFromDb: habitsFromDb,
+        habitsFromRemote: habitsFromRemote,
+      );
+
+      return DataSuccess(habitsFromRemote);
+    } on FirebaseException catch (e) {
+      return DataFailed(errorMessage: e.message ?? "Something went wrong");
+    }
+  }
+
+  Future<void> compareAndUpdateDB({
+    required List<HabitModel> habitsFromDb,
+    required List<HabitModel> habitsFromRemote,
+  }) async {
+    var habitsFromDbInJson = StringBuffer();
+    var habitsFromRemoteInJson = StringBuffer();
+
+    for (var item in habitsFromDb) {
+      habitsFromDbInJson.writeln(item.toJson().toString());
+    }
+    for (var item in habitsFromRemote) {
+      habitsFromRemoteInJson.writeln(item.toJson().toString());
+    }
+
+    var isEqual = DeepCollectionEquality.unordered().equals(
+      habitsFromDbInJson.toString(),
+      habitsFromRemoteInJson.toString(),
+    );
+
+    if (isEqual == false) {
+      await sl<DeleteAllHabitsInDBUseCase>().call();
+      await sl<AddHabitsBatchToDBUseCase>().call(params: habitsFromRemote);
       var notificationService = sl<NotificationService>();
       await notificationService.scheduleNotificationsForHabits(
-        habitModels
+        habitsFromRemote
             .map(
               (habitModel) => HabitEntity.fromModel(habitModel),
             )
             .toList(),
       );
-
-      return DataSuccess(habitModels);
-    } on FirebaseException catch (e) {
-      return DataFailed(errorMessage: e.message ?? "Something went wrong");
     }
   }
 
