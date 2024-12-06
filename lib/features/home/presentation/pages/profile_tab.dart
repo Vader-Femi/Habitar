@@ -25,7 +25,7 @@ class _ProfileTabState extends State<ProfileTab> {
     return SuperBuilder(
       builder: (context) => ListView(
         children: [
-          ProfileInfo(),
+          ProfileInfo(userEntity: getHomeViewModel.user.state),  //Todo fix not updating
           Padding(
             padding:
                 const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
@@ -45,9 +45,9 @@ class _ProfileTabState extends State<ProfileTab> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              itemCount: getProfileViewModel.habits.length,
+              itemCount: getHomeViewModel.habits.length,
               itemBuilder: (context, index) {
-                var habitEntity = getProfileViewModel.habits[index];
+                var habitEntity = getHomeViewModel.habits[index];
                 var timeOfDay = "";
                 var dayOfWeek = "";
                 for (var time in habitEntity.selectedTimeOfDay) {

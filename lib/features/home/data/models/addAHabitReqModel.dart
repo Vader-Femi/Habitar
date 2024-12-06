@@ -1,3 +1,5 @@
+import 'package:habitar/features/home/data/models/HabitModel.dart';
+
 import '../../domain/entities/add_a_habit_req_entity.dart';
 
 class AddAHabitModel extends AddAHabitEntity{
@@ -33,6 +35,17 @@ class AddAHabitModel extends AddAHabitEntity{
 
   factory AddAHabitModel.fromEntity(
       AddAHabitEntity entity) {
+    return AddAHabitModel(
+      habit: entity.habit,
+      selectedPeriodicity: entity.selectedPeriodicity,
+      selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
+    );
+  }
+
+  factory AddAHabitModel.fromHabitModel(
+      HabitModel entity) {
     return AddAHabitModel(
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,

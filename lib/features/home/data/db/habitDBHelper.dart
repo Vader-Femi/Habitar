@@ -9,10 +9,9 @@ class HabitDBHelper {
   const HabitDBHelper(this._habitDB);
 
   Future<void> addHabit(HabitModel entry) {
-    return _habitDB
-        .into(_habitDB.habitTable)
-        .insert(entry.toHabitTableCompanion(),
-    );
+    return _habitDB.into(_habitDB.habitTable).insert(
+          entry.toHabitTableCompanion(),
+        );
   }
 
   Future<void> insertMultipleHabits(List<HabitModel> entries) async {
@@ -24,18 +23,18 @@ class HabitDBHelper {
     });
   }
 
-  Future updateHabit(UpdateAHabitReqModel entry) {
+  Future<void> updateHabit(UpdateAHabitReqModel updateAHabitReqModel) {
     return (_habitDB.update(_habitDB.habitTable)
           ..where(
-            (tbl) => tbl.habit.equals(entry.oldId),
+            (tbl) => tbl.habit.equals(updateAHabitReqModel.oldId),
           ))
         .write(
       HabitTableCompanion(
-        habit: Value(entry.newHabit.habit),
-        selectedPeriodicity: Value(entry.newHabit.selectedPeriodicity),
-        selectedTimeOfDay: Value(entry.newHabit.selectedTimeOfDay),
-        streak: Value(entry.newHabit.streak),
-        lastDateTicked: Value(entry.newHabit.lastDateTicked),
+        habit: Value(updateAHabitReqModel.newHabit.habit),
+        selectedPeriodicity: Value(updateAHabitReqModel.newHabit.selectedPeriodicity),
+        selectedTimeOfDay: Value(updateAHabitReqModel.newHabit.selectedTimeOfDay),
+        streak: Value(updateAHabitReqModel.newHabit.streak),
+        lastDateTicked: Value(updateAHabitReqModel.newHabit.lastDateTicked),
       ),
     );
   }
@@ -58,5 +57,13 @@ class HabitDBHelper {
     return habitTableData
         .map((habit) => HabitModel.fromHabitTableData(habit))
         .toList();
+  }
+
+  Stream<List<HabitTableData>> watchHabitsAlphabetically() {
+    var habitTableData = (_habitDB.select(_habitDB.habitTable)
+          ..orderBy([(t) => OrderingTerm(expression: t.habit)]))
+        .watch();
+
+    return habitTableData;
   }
 }

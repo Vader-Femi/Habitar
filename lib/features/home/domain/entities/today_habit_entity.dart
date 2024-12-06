@@ -1,5 +1,7 @@
 import 'package:habitar/common/helpers/get_today_date.dart';
+import 'package:habitar/features/home/data/db/habit_db.dart';
 import 'package:habitar/features/home/data/models/HabitModel.dart';
+import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 
 class TodayHabitEntity {
   final HabitModel habit;
@@ -18,9 +20,23 @@ class TodayHabitEntity {
     );
   }
 
-  factory TodayHabitEntity.fromModel(HabitModel entity) {
+  factory TodayHabitEntity.fromModel(HabitModel model) {
     return TodayHabitEntity(
-      habit: entity,
+      habit: model,
+      isSelected: model.lastDateTicked == getTodayDate() ? true : false,
+    );
+  }
+
+  factory TodayHabitEntity.fromEntity(HabitEntity entity) {
+    return TodayHabitEntity(
+      habit: HabitModel.fromEntity(entity),
+      isSelected: entity.lastDateTicked == getTodayDate() ? true : false,
+    );
+  }
+
+  factory TodayHabitEntity.fromHabitTableData(HabitTableData entity) {
+    return TodayHabitEntity(
+      habit: HabitModel.fromHabitTableData(entity),
       isSelected: entity.lastDateTicked == getTodayDate() ? true : false,
     );
   }

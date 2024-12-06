@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitar/core/assets/app_images.dart';
-import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/assets/app_vectors.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../common/widgets/button/next_button.dart';
+import '../../domain/entities/user.dart';
 import '../state/profile_viewmodel.dart';
 
 class ProfileInfo extends StatelessWidget {
-  const ProfileInfo({super.key});
+  const ProfileInfo({super.key, required this.userEntity});
+
+  final UserEntity userEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,13 @@ class ProfileInfo extends StatelessWidget {
           // const SizedBox(height: 11),
           Flexible(
             child: Text(
-              getHomeViewModel.user.state.username,
+              userEntity.username,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            getHomeViewModel.user.state.email,
+            userEntity.email,
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
@@ -51,7 +53,7 @@ class ProfileInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Total habit${(int.parse(getHomeViewModel.user.state.habitsCompleted) > 1) ? "s" : ""} ${getHomeViewModel.user.state.habitsCompleted} ",
+                "Total habit${(int.parse(userEntity.habitsCompleted) > 1) ? "s" : ""} ${userEntity.habitsCompleted} ",
                 style:
                     const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               ),

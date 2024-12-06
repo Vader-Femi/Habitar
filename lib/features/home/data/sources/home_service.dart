@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,14 +12,21 @@ import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
 import '../../domain/usecases/delete_all_habits_in_db.dart';
 import '../../domain/usecases/get_habit_from_db.dart';
+import '../../domain/usecases/update_habit_in_db.dart';
 import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';
+import '../models/updateAHabitReqModel.dart';
 import '../models/user_model.dart';
 
 abstract class HomeService {
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq);
 
   Future<DataState> getAllHabits();
+
+  Future<void> compareAndUpdateDB(
+    List<HabitModel> habitsFromDb,
+    List<HabitModel> habitsFromRemote,
+  );
 
   Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity);
 
@@ -67,8 +72,8 @@ class HomeServiceImpl extends HomeService {
       var habitsFromDb = await sl<GetHabitsFromDBUseCase>().call();
 
       compareAndUpdateDB(
-        habitsFromDb: habitsFromDb,
-        habitsFromRemote: habitsFromRemote,
+        habitsFromDb,
+        habitsFromRemote,
       );
 
       return DataSuccess(habitsFromRemote);
@@ -77,10 +82,11 @@ class HomeServiceImpl extends HomeService {
     }
   }
 
-  Future<void> compareAndUpdateDB({
-    required List<HabitModel> habitsFromDb,
-    required List<HabitModel> habitsFromRemote,
-  }) async {
+  @override
+  Future<void> compareAndUpdateDB(
+    List<HabitModel> habitsFromDb,
+    List<HabitModel> habitsFromRemote,
+  ) async {
     var habitsFromDbInJson = StringBuffer();
     var habitsFromRemoteInJson = StringBuffer();
 
@@ -130,15 +136,23 @@ class HomeServiceImpl extends HomeService {
           ? (int.parse(habitModel.streak) + 1).toString()
           : (int.parse(habitModel.streak) - 1).toString();
       var newLastDateTicked = todayHabitEntity.isSelected ? getTodayDate() : "";
+      var newHabitModel = habitModel.copyWith(
+          streak: newStreak, lastDateTicked: newLastDateTicked);
 
+      // Update remote db
       FirebaseFirestore.instance
           .collection(user.uid)
           .doc(todayHabitEntity.habit.habit)
           .set(
-            habitModel
-                .copyWith(streak: newStreak, lastDateTicked: newLastDateTicked)
-                .toJson(),
+            newHabitModel.toJson(),
           );
+
+      // Also update local db
+      await sl<UpdateHabitInDbUseCase>().call(
+        params: UpdateAHabitReqModel(
+            newHabit: AddAHabitModel.fromHabitModel(newHabitModel),
+            oldId: todayHabitEntity.habit.habit),
+      );
 
       // Update User's Total Completed
       var userSnapshot = await FirebaseFirestore.instance

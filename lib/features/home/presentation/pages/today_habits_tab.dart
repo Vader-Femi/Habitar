@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
+import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../state/today_habits_viewmodel.dart';
 import '../widgets/single_add_new_habit.dart';
 import '../widgets/single_today_habit.dart';
@@ -38,10 +39,10 @@ class _TodayHabitsTabState extends State<TodayHabitsTab> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: todayHabitsViewModel.habits.length,
+              itemCount: getHomeViewModel.todayHabits.length,
               itemBuilder: (context, index) {
                 return SingleTodayHabit(
-                  todayHabitEntity: todayHabitsViewModel.habits[index],
+                  todayHabitEntity: getHomeViewModel.todayHabits[index],
                   index: index,
                 );
               },

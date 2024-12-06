@@ -24,7 +24,6 @@ class SingleTodayHabit extends StatelessWidget {
           onChanged: (isChecked) {
             todayHabitsViewModel.tickHabit(
               habit: todayHabitEntity,
-              index: index,
               isTicked: isChecked ?? false,
             );
           },

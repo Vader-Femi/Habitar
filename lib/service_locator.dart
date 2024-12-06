@@ -20,6 +20,8 @@ import 'features/home/domain/usecases/add_habits_batch_to_db.dart';
 import 'features/home/domain/usecases/delete_all_habits_in_db.dart';
 import 'features/home/domain/usecases/get_habit_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
+import 'features/home/domain/usecases/update_habit_in_db.dart';
+import 'features/home/domain/usecases/watch_habit_from_db.dart';
 
 final sl = GetIt.instance;
 
@@ -97,8 +99,16 @@ Future<void> initializeDependencies() async {
       GetHabitsFromDBUseCase(sl())
   );
 
+  sl.registerSingleton<WatchHabitsFromDBUseCase>(
+      WatchHabitsFromDBUseCase(sl())
+  );
+
   sl.registerSingleton<DeleteAllHabitsInDBUseCase>(
       DeleteAllHabitsInDBUseCase(sl())
+  );
+
+  sl.registerSingleton<UpdateHabitInDbUseCase>(
+      UpdateHabitInDbUseCase(sl())
   );
 
 }
