@@ -18,17 +18,17 @@ class AppTheme {
     //   // bodyLarge: TextStyle(color: AppColours.primary),
     // ),
     inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(8),
-      ),
-    )
-        // //   hintStyle: TextStyle(
-        // //     // color: AppColours.primary,
-        // //     fontWeight: FontWeight.w500,
-        // //   ),
-        // //   // focusColor: AppColours.primary,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
         ),
+      ),
+      // //   hintStyle: TextStyle(
+      // //     // color: AppColours.primary,
+      // //     fontWeight: FontWeight.w500,
+      // //   ),
+      // //   // focusColor: AppColours.primary,
+    ),
     // textButtonTheme: TextButtonThemeData(
     //   style: TextButton.styleFrom(
     //     foregroundColor: AppColours.textButtonLight,
@@ -55,11 +55,10 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: lightColourScheme.primaryContainer,
-            textStyle: TextStyle(
-        //     //   fontSize: 16,
-        //     //   fontWeight: FontWeight.bold,
-              color: lightColourScheme.onPrimaryContainer
-            ),
+        textStyle: TextStyle(
+            //     //   fontSize: 16,
+            //     //   fontWeight: FontWeight.bold,
+            color: lightColourScheme.onPrimaryContainer),
         minimumSize: const Size.fromHeight(48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -119,11 +118,10 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: darkColourScheme.primaryContainer,
-            textStyle: TextStyle(
-        //       fontSize: 16,
-        //       fontWeight: FontWeight.bold,
-              color: darkColourScheme.onPrimaryContainer
-            ),
+        textStyle: TextStyle(
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.bold,
+            color: darkColourScheme.onPrimaryContainer),
         minimumSize: const Size.fromHeight(48),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

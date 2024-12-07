@@ -1,6 +1,7 @@
+import 'package:flutter_super/flutter_super.dart';
 import '../../data/models/user_model.dart';
 
-class UserEntity {
+class UserEntity with SuperModel {
   final String username;
   final String email;
   final String habitsCompleted;
@@ -15,4 +16,7 @@ class UserEntity {
       habitsCompleted: entity.habitsCompleted,
     );
   }
+
+  @override
+  List<Object?> get props => [username, email, habitsCompleted];
 }

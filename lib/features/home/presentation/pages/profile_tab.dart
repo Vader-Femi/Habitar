@@ -25,7 +25,7 @@ class _ProfileTabState extends State<ProfileTab> {
     return SuperBuilder(
       builder: (context) => ListView(
         children: [
-          ProfileInfo(userEntity: getHomeViewModel.user.state),  //Todo fix not updating
+          ProfileInfo(userEntity: getHomeViewModel.user.state),
           Padding(
             padding:
                 const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),

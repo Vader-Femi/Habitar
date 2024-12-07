@@ -16,7 +16,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
   @override
   void initState() {
     super.initState();
@@ -31,62 +30,60 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-      sl<SignUpBloc>()
-        ..add(const InitSignUp()),
+      create: (_) => sl<SignUpBloc>()..add(const InitSignUp()),
       child: Scaffold(
-        appBar: AuthAppbar(pageNumber: 1, goBack: () {
-          Navigator.pop(context);
-        },),
+        appBar: AuthAppbar(
+          pageNumber: 1,
+          goBack: () {
+            Navigator.pop(context);
+          },
+        ),
         body: Padding(
-          padding: const EdgeInsets.only(top: 45, left: 30, right: 30, bottom: 10),
-          child: BlocBuilder<SignUpBloc, SignUpState>(
-              builder: (context, state) {
-                if (state is SignUpLoading) {
-                  return Container(
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator(),
-                  );
-                }
+          padding:
+              const EdgeInsets.only(top: 45, left: 30, right: 30, bottom: 10),
+          child:
+              BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+            if (state is SignUpLoading) {
+              return Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              );
+            }
 
-                if (state is SignUpInit) {
-                  return _buildBody(context);
-                }
+            if (state is SignUpInit) {
+              return _buildBody(context, state);
+            }
 
-                if (state is SignUpSuccess) {
-                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                    Navigator.pushNamed(
-                        context, '/AddFirstHabit');
-                  });
+            if (state is SignUpSuccess) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                Navigator.pushNamed(context, '/AddFirstHabit');
+              });
 
-                  return _buildBody(context);
-                }
+              return _buildBody(context, state);
+            }
 
-                if (state is ShowPasswordChanged) {
-                  return _buildBody(context);
-                }
+            if (state is ShowPasswordChanged) {
+              return _buildBody(context, state);
+            }
 
-                if (state is SignUpError) {
+            if (state is SignUpError) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Error : ${state.errorMessage}"),
+                ));
+              });
 
-                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Error : ${state.errorMessage}"),
-                    ));
-                  });
+              return _buildBody(context, state);
+            }
 
-                  return _buildBody(context);
-                }
-
-
-                return _buildBody(context);
-              }
-          ),
+            return _buildBody(context, state);
+          }),
         ),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, SignUpState state) {
     return Column(
       children: [
         SingleChildScrollView(
@@ -96,7 +93,7 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(height: 45),
               _emailField(context),
               const SizedBox(height: 45),
-              _passwordField(context),
+              _passwordField(context, state),
               const SizedBox(height: 45),
             ],
           ),
@@ -112,12 +109,10 @@ class _SignUpState extends State<SignUp> {
               child: NextButton(
                 title: "Proceed",
                 onClick: () async {
-                  BlocProvider.of<SignUpBloc>(context).add(
-                      TrySignUp(
-                          name: _name.text,
-                          email: _email.text,
-                          password: _password.text
-                      ));
+                  BlocProvider.of<SignUpBloc>(context).add(TrySignUp(
+                      name: _name.text,
+                      email: _email.text,
+                      password: _password.text));
                 },
               ),
             ),
@@ -130,7 +125,7 @@ class _SignUpState extends State<SignUp> {
   Widget _fullNameField(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
-        hintText: "Firstly, what is your firstname?",
+        labelText: "Firstname",
       ),
       controller: _name,
     );
@@ -139,20 +134,29 @@ class _SignUpState extends State<SignUp> {
   Widget _emailField(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
-        hintText: "What is your email address?",
+        labelText: "Email",
       ),
       controller: _email,
     );
   }
 
-  Widget _passwordField(BuildContext context) {
+  Widget _passwordField(BuildContext context, SignUpState state) {
+    var showPassword = state.showPassword;
+
     return TextField(
-      decoration: const InputDecoration(
-        hintText: "What is your desired password?",
+      decoration: InputDecoration(
+        labelText: "Password",
+        suffixIcon: IconButton(
+            onPressed: () {
+              BlocProvider.of<SignUpBloc>(context).add(
+                UpdateShowPassword(!showPassword),
+              );
+            },
+            icon: Icon(showPassword ? Icons.visibility : Icons.visibility_off)),
       ),
       controller: _password,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: showPassword,
       enableSuggestions: false,
       autocorrect: false,
     );

@@ -43,10 +43,14 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> redirect() async {
     await Future.delayed(const Duration(seconds: 1));
     var isLoggedIn = await sl<IsUserLoggedIn>().call();
-    if (isLoggedIn == true) {
-      Navigator.pushReplacementNamed(context, '/Home');
-    } else {
-      Navigator.pushReplacementNamed(context, '/GetStarted');
-    }
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // Navigator.pushReplacementNamed(context, '/SignUp');
+      if (isLoggedIn == true) {
+        Navigator.pushReplacementNamed(context, '/Home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/GetStarted');
+      }
+    });
   }
 }

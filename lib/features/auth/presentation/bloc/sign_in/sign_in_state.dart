@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 
 abstract class SignInState extends Equatable {
 
-  final bool? showPassword;
+  final bool showPassword;
   final String ? errorMessage;
 
-  const SignInState({this.errorMessage, this.showPassword});
+  const SignInState({this.errorMessage, this.showPassword = true});
 
   @override
-  List<Object?> get props => [showPassword!, errorMessage!];
+  List<Object?> get props => [showPassword, errorMessage];
 }
 
 class ShowPasswordChanged extends SignInState {

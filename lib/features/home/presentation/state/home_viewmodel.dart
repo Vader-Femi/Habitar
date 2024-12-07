@@ -13,14 +13,16 @@ HomeViewModel get getHomeViewModel => Super.init(HomeViewModel());
 class HomeViewModel {
   var selectedTabIndex = 0.rx;
 
-  var user = UserEntity(
-    username: "",
-    email: "",
-    habitsCompleted: "-1",
-  ).rx;
+  final user = RxT<UserEntity>(
+    UserEntity(
+      username: "",
+      email: "",
+      habitsCompleted: "-1",
+    ),
+  );
 
-  var habits = <HabitEntity>[].rx;
-  var todayHabits = <TodayHabitEntity>[].rx;
+  final habits = <HabitEntity>[].rx;
+  final todayHabits = <TodayHabitEntity>[].rx;
 
   Future<void> setListener() async {
     var habitsFromDb = await sl<WatchHabitsFromDBUseCase>().call();
@@ -40,7 +42,8 @@ class HomeViewModel {
 
       for (var habitTable in habitTableData) {
         var todayHabit = TodayHabitEntity.fromHabitTableData(habitTable);
-        if (todayHabit.habit.selectedPeriodicity.contains(todayWeekdayInStringLong)) {
+        if (todayHabit.habit.selectedPeriodicity
+            .contains(todayWeekdayInStringLong)) {
           todayHabits.add(todayHabit);
         }
       }
@@ -50,14 +53,6 @@ class HomeViewModel {
   void selectTabAtIndex(int index) => selectedTabIndex.state = index;
 
   Future<void> getUser() async {
-    // user = (await sl<GetUserUseCase>().call()).rx;
-    var result = await sl<GetUserUseCase>().call();
-
-
-    user = UserEntity(
-      username: result.username,
-      email: result.email,
-      habitsCompleted: result.habitsCompleted,
-    ).rx;
+    user.state = (await sl<GetUserUseCase>().call());
   }
 }
