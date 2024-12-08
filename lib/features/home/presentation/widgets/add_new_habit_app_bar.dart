@@ -11,7 +11,7 @@ class AddNewHabitAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: Constants.appBarHeroTag,
+      tag: Constants.topWidgetTag,
       child: AppBar(
         elevation: 30,
         centerTitle: false,

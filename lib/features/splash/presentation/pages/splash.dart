@@ -33,8 +33,6 @@ class _SplashPageState extends State<SplashPage> {
             width: 300,
             fit: BoxFit.fitWidth,
           ),
-
-          // SvgPicture.asset(AppVectors.appLogoWhite, width: 120),
         ),
       ),
     );
@@ -45,7 +43,6 @@ class _SplashPageState extends State<SplashPage> {
     var isLoggedIn = await sl<IsUserLoggedIn>().call();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Navigator.pushReplacementNamed(context, '/SignUp');
       if (isLoggedIn == true) {
         Navigator.pushReplacementNamed(context, '/Home');
       } else {

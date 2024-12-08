@@ -5,6 +5,7 @@ import '../bloc/sign_in/sign_in_bloc.dart';
 import '../bloc/sign_in/sign_in_event.dart';
 import '../bloc/sign_in/sign_in_state.dart';
 import '../../../../common/widgets/button/next_button.dart';
+import '../widgets/app_bar.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -21,28 +22,20 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-      sl<SignInBloc>()
-        ..add(const InitSignIn()),
+      create: (_) => sl<SignInBloc>()..add(const InitSignIn()),
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 30,
-          centerTitle: false,
-          title: _headingText(context),
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                context, "/GetStarted", (r) => false),
-            icon: Icon(
-              Icons.arrow_back,
-              size: 18,
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
-          ),
+        appBar: AuthAppbar(
+          title: "Welcome Back",
+          goBack: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/GetStarted", (r) => false);
+          },
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 30, top: 30, right: 30),
-          child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+          padding:
+              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 30),
+          child:
+              BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
             if (state is SignInLoading) {
               return Container(
                 alignment: Alignment.center,
@@ -51,19 +44,20 @@ class _SignInState extends State<SignIn> {
             }
 
             if (state is SignInInit) {
-              return _buildBody(context);
+              return _buildBody(context, state);
             }
 
             if (state is SignInSuccess) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/Home", (r) => false);
               });
 
-              return _buildBody(context);
+              return _buildBody(context, state);
             }
 
             if (state is ShowPasswordChanged) {
-              return _buildBody(context);
+              return _buildBody(context, state);
             }
 
             if (state is SignInError) {
@@ -73,17 +67,17 @@ class _SignInState extends State<SignIn> {
                 ));
               });
 
-              return _buildBody(context);
+              return _buildBody(context, state);
             }
 
-            return _buildBody(context);
+            return _buildBody(context, state);
           }),
         ),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, SignInState state) {
     return Column(
       children: [
         SingleChildScrollView(
@@ -91,7 +85,7 @@ class _SignInState extends State<SignIn> {
             children: [
               _emailField(context),
               const SizedBox(height: 45),
-              _passwordField(context),
+              _passwordField(context, state),
               const SizedBox(height: 45),
             ],
           ),
@@ -111,19 +105,6 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget _headingText(BuildContext context) {
-    return Text(
-      "Welcome Back",
-      textAlign: TextAlign.start,
-      style: TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 20,
-          letterSpacing: 1,
-          color: Theme.of(context).colorScheme.primaryContainer,
-      ),
-    );
-  }
-
   Widget _emailField(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
@@ -133,14 +114,24 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget _passwordField(BuildContext context) {
+  Widget _passwordField(BuildContext context, SignInState state) {
+    var showPassword = state.showPassword;
+
     return TextField(
-      decoration: const InputDecoration(
-        hintText: "What your password?",
+      decoration: InputDecoration(
+        labelText: "Password",
+        suffixIcon: IconButton(
+          onPressed: () {
+            BlocProvider.of<SignInBloc>(context).add(
+              UpdateShowPassword(!showPassword),
+            );
+          },
+          icon: Icon(showPassword ? Icons.visibility : Icons.visibility_off),
+        ),
       ),
       controller: _password,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
+      obscureText: showPassword,
       enableSuggestions: false,
       autocorrect: false,
     );

@@ -183,36 +183,39 @@ class _PeriodicitySelector extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           SuperBuilder(
-            builder: (BuildContext context) => Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: List.generate(
-                addAHabitViewModel.weekdays.length,
-                (index) {
-                  return GestureDetector(
-                    onTap: () => addAHabitViewModel.togglePeriodicity(index),
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      padding: const EdgeInsets.all(9),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.surfaceContainer,
-                        ),
-                        color: addAHabitViewModel.weekdays[index].isSelected
-                            ? Theme.of(context).colorScheme.primaryContainer
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        addAHabitViewModel.weekdays[index].dayTitle,
-                        style: TextStyle(
+            builder: (BuildContext context) => SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(
+                  addAHabitViewModel.weekdays.length,
+                  (index) {
+                    return GestureDetector(
+                      onTap: () => addAHabitViewModel.togglePeriodicity(index),
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.all(9),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.surfaceContainer,
+                          ),
                           color: addAHabitViewModel.weekdays[index].isSelected
-                              ? Theme.of(context).colorScheme.onPrimaryContainer
-                              : Theme.of(context).colorScheme.onSurface,
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : Colors.transparent,
+                        ),
+                        child: Text(
+                          addAHabitViewModel.weekdays[index].weekNames.letter,
+                          style: TextStyle(
+                            color: addAHabitViewModel.weekdays[index].isSelected
+                                ? Theme.of(context).colorScheme.onPrimaryContainer
+                                : Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),

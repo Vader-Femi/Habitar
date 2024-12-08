@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../features/auth/presentation/pages/add_a_habit.dart';
 import '../../features/auth/presentation/pages/all_set.dart';
 import '../../features/auth/presentation/pages/get_started.dart';
-import '../../features/auth/presentation/pages/habit_reminder_time.dart';
 import '../../features/auth/presentation/pages/signin.dart';
 import '../../features/auth/presentation/pages/signup.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/splash/presentation/pages/splash.dart';
-
 
 class AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {
@@ -18,26 +15,20 @@ class AppRoutes {
       case '/GetStarted':
         return _materialRoute(const GetStartedPage());
 
-      case '/SignIn':
-        return _materialRoute(const SignIn());
-
       case '/SignUp':
         return _materialRoute(const SignUp());
 
-      case '/AddFirstHabit':
-        return _materialRoute(const AddAHabit());
-
-      case '/SetFirstHabitReminder':
-        return _materialRoute(const HabitReminderTime());
-
       case '/AllSet':
         return _materialRoute(const AllSet());
+
+      case '/SignIn':
+        return _materialRoute(const SignIn());
 
       case '/Home':
         return _materialRoute(const HomePage());
         
       default:
-        return _materialRoute(const SplashPage());
+        return _materialRoute(const GetStartedPage());
     }
   }
 

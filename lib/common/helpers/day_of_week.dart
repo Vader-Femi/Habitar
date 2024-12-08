@@ -1,26 +1,28 @@
+import 'package:habitar/common/helpers/week_names.dart';
+
 class ReminderDayOfWeek {
-  final String dayTitle;
+  final WeekNames weekNames;
   final bool isSelected;
 
-  ReminderDayOfWeek copyWith({String? dayTitle, bool? isSelected}) {
+  ReminderDayOfWeek copyWith({WeekNames? weekNames, bool? isSelected}) {
     return ReminderDayOfWeek(
-        dayTitle: dayTitle ?? this.dayTitle,
+        weekNames: weekNames ?? this.weekNames,
         isSelected: isSelected ?? this.isSelected);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'dayTitle': dayTitle,
+      'weekNames': weekNames,
       'isSelected': isSelected,
     };
   }
 
   factory ReminderDayOfWeek.fromJson(Map<String, dynamic> json) {
     return ReminderDayOfWeek(
-      dayTitle: json["dayTitle"],
+      weekNames: json["weekNames"],
       isSelected: json["isSelected"],
     );
   }
 
-  ReminderDayOfWeek({required this.dayTitle, required this.isSelected});
+  ReminderDayOfWeek({required this.weekNames, required this.isSelected});
 }

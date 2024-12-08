@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitar/core/constants/constants.dart';
 import '../widgets/app_bar.dart';
 import '../../../../common/widgets/button/next_button.dart';
 
@@ -14,14 +15,9 @@ class _AllSetState extends State<AllSet> {
 
   @override
   Widget build(BuildContext context) {
-    //Todo Fix all auth UIs up to this point.
-
     return Scaffold(
-      appBar: AuthAppbar(pageNumber: 4, goBack: () {
-        Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
-      },),
       body: Padding(
-        padding: const EdgeInsets.only(top: 45, left: 30, right: 30, bottom: 30),
+        padding: const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -47,7 +43,9 @@ class _AllSetState extends State<AllSet> {
   }
 
   Widget _tick(BuildContext context) {
-    return Icon(Icons.check_circle_outline_rounded, size: 150,color: Theme.of(context).colorScheme.primary,);
+    return Hero(
+      tag: Constants.topWidgetTag,
+        child: Icon(Icons.check_circle_outline_rounded, size: 150,color: Theme.of(context).colorScheme.primary,));
   }
 
   Widget _text(BuildContext context) {

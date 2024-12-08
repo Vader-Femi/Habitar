@@ -12,7 +12,7 @@ class GetStartedPage extends StatelessWidget {
       body: Stack(
         children: [
           Hero(
-            tag: Constants.headingHeroTag,
+            tag: Constants.topWidgetTag,
             child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(

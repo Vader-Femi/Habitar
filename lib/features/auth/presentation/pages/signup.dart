@@ -33,14 +33,14 @@ class _SignUpState extends State<SignUp> {
       create: (_) => sl<SignUpBloc>()..add(const InitSignUp()),
       child: Scaffold(
         appBar: AuthAppbar(
-          pageNumber: 1,
+          title: "Create an account",
           goBack: () {
             Navigator.pop(context);
           },
         ),
         body: Padding(
           padding:
-              const EdgeInsets.only(top: 45, left: 30, right: 30, bottom: 10),
+              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 30),
           child:
               BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
             if (state is SignUpLoading) {
@@ -56,7 +56,7 @@ class _SignUpState extends State<SignUp> {
 
             if (state is SignUpSuccess) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.pushNamed(context, '/AddFirstHabit');
+                Navigator.pushNamed(context, '/AllSet');
               });
 
               return _buildBody(context, state);
@@ -147,12 +147,13 @@ class _SignUpState extends State<SignUp> {
       decoration: InputDecoration(
         labelText: "Password",
         suffixIcon: IconButton(
-            onPressed: () {
-              BlocProvider.of<SignUpBloc>(context).add(
-                UpdateShowPassword(!showPassword),
-              );
-            },
-            icon: Icon(showPassword ? Icons.visibility : Icons.visibility_off)),
+          onPressed: () {
+            BlocProvider.of<SignUpBloc>(context).add(
+              UpdateShowPassword(!showPassword),
+            );
+          },
+          icon: Icon(showPassword ? Icons.visibility : Icons.visibility_off),
+        ),
       ),
       controller: _password,
       keyboardType: TextInputType.visiblePassword,

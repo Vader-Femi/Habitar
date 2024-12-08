@@ -18,13 +18,13 @@ class AddAHabitViewModel{
   TextEditingController getHabitController() => _habit;
 
   final weekdays = <ReminderDayOfWeek>[
-    ReminderDayOfWeek(dayTitle: "M", isSelected: true),
-    ReminderDayOfWeek(dayTitle: "T", isSelected: false),
-    ReminderDayOfWeek(dayTitle: "W", isSelected: true),
-    ReminderDayOfWeek(dayTitle: "T", isSelected: false),
-    ReminderDayOfWeek(dayTitle: "F", isSelected: true),
-    ReminderDayOfWeek(dayTitle: "S", isSelected: false),
-    ReminderDayOfWeek(dayTitle: "S", isSelected: false),
+    ReminderDayOfWeek(weekNames: weekNames[0], isSelected: true),
+    ReminderDayOfWeek(weekNames: weekNames[1], isSelected: false),
+    ReminderDayOfWeek(weekNames: weekNames[2], isSelected: true),
+    ReminderDayOfWeek(weekNames: weekNames[3], isSelected: false),
+    ReminderDayOfWeek(weekNames: weekNames[4], isSelected: true),
+    ReminderDayOfWeek(weekNames: weekNames[5], isSelected: false),
+    ReminderDayOfWeek(weekNames: weekNames[6], isSelected: false),
   ].rx;
 
   void togglePeriodicity(int index) {
@@ -63,7 +63,7 @@ class AddAHabitViewModel{
     var selectedPeriodicity = <String>[];
     weekdays.forEachIndexed((index, element) {
       if(element.isSelected == true){
-        selectedPeriodicity.add(weekNames[index].longName) ;
+        selectedPeriodicity.add(element.weekNames.longName) ;
       }
     });
     var selectedTimeOfDay = <String>[];
