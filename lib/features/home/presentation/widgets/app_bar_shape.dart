@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppBarShape extends OutlinedBorder {
   @override
-  OutlinedBorder copyWith({BorderSide? side}) => this; //todo
+  OutlinedBorder copyWith({BorderSide? side}) => this;
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
