@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habitar/core/navigation/navigation_service.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
+import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
 import 'package:timezone/timezone.dart';
 import '../../common/helpers/time_names.dart';
 import '../../common/helpers/week_names.dart';
+import '../../service_locator.dart';
+import '../home/domain/usecases/tick_habits.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -11,20 +18,22 @@ class NotificationService {
   @pragma('vm:entry-point')
   static Future<void> onDidReceiveNotification(
       NotificationResponse notificationResponse) async {
+    // Todo contribute by editing notificationResponse.notificationResponseType
     // Todo create a screen that shows Done with options to go to app or CLose app
 
-    // final String? payload = notificationResponse.payload;
-    // if (notificationResponse.payload != null) {
-    //   debugPrint('notification payload: $payload');
-    // }
-    // await Navigator.push(
-    //   context,
-    //   MaterialPageRoute<void>(builder: (context) => SecondScreen(payload)),
-    // );
-  }
+    if (notificationResponse.actionId == "mark_as_done_id") {
 
-  static notificationTapBackground(NotificationResponse notificationResponse) {
-    // Todo create a screen that shows Done with options to go to app or CLose app
+      var habit = HabitEntity.fromJson(jsonDecode(notificationResponse.payload.toString()));
+
+      await sl<TickHabitsUseCase>().call(params: TodayHabitEntity.fromEntity(habit));
+    }
+
+    if (notificationResponse.actionId == "open_id") {
+      if (NavigationService.navigatorKey.currentContext != null) {
+        await Navigator.pushNamed(
+            NavigationService.navigatorKey.currentContext!, "/Home");
+      }
+    }
   }
 
   //Define Notification Details
@@ -36,6 +45,10 @@ class NotificationService {
       importance: Importance.max,
       priority: Priority.defaultPriority,
       ticker: "Ticker",
+      actions: <AndroidNotificationAction>[
+        AndroidNotificationAction('open_id', 'Open'),
+        AndroidNotificationAction('mark_as_done_id', 'Mark as done'),
+      ],
     ),
     iOS: DarwinNotificationDetails(
       threadIdentifier: 'habit_reminders_id',
@@ -68,7 +81,7 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotification,
-      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+      onDidReceiveBackgroundNotificationResponse: onDidReceiveNotification,
     );
 
     // Request notification permission from android
@@ -99,9 +112,13 @@ class NotificationService {
   }
 
   //Show an instant notification
-  Future<void> showInstantNotification(String title, String body) async {
+  Future<void> showInstantNotification({String title = "Your habit reminder", required HabitEntity habit}) async {
     await flutterLocalNotificationsPlugin.show(
-        DateTime.now().microsecond, title, body, platformChannelSpecifics);
+        payload: habit.toJson().toString(),
+        DateTime.now().microsecond,
+        title,
+        "Remember: ${habit.habit}",
+        platformChannelSpecifics);
   }
 
   //Schedule notification
@@ -110,7 +127,6 @@ class NotificationService {
     required HabitEntity habit,
     required DateTime scheduleDateTime,
   }) async {
-
     await flutterLocalNotificationsPlugin.zonedSchedule(
       DateTime.now().microsecond,
       title,
@@ -132,9 +148,8 @@ class NotificationService {
     for (var habit in habits) {
       for (var day in habit.selectedPeriodicity) {
         for (var time in habit.selectedTimeOfDay) {
-
           var desiredWeekDay =
-          (weekNames.firstWhere((element) => element.longName == day));
+              (weekNames.firstWhere((element) => element.longName == day));
 
           var desiredDayTime =
               (timeNames.firstWhere((element) => element.name == time));

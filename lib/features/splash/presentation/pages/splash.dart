@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/assets/app_images.dart';
-import '../../../../core/assets/app_vectors.dart';
 import '../../../../core/usecase/is_user_logged_in.dart';
 import '../../../../service_locator.dart';
 

@@ -29,7 +29,7 @@ class _TodayHabitsTabState extends State<TodayHabitsTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Today, I have:",
+              "Today, you have:",
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w500,

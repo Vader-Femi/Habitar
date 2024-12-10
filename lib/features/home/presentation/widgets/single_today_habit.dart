@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
+import '../../../../service_locator.dart';
+import '../../../notification/notification.dart';
+import '../state/home_viewmodel.dart';
 import '../state/today_habits_viewmodel.dart';
 
 class SingleTodayHabit extends StatelessWidget {
@@ -22,10 +25,11 @@ class SingleTodayHabit extends StatelessWidget {
           checkColor: Theme.of(context).colorScheme.onSurface,
           fillColor: WidgetStateProperty.all(Theme.of(context).colorScheme.surfaceContainer,),
           onChanged: (isChecked) {
-            todayHabitsViewModel.tickHabit(
-              habit: todayHabitEntity,
-              isTicked: isChecked ?? false,
-            );
+            sl<NotificationService>().showInstantNotification(habit: getHomeViewModel.habits[0]);
+            // todayHabitsViewModel.tickHabit(
+            //   habit: todayHabitEntity,
+            //   isTicked: isChecked ?? false,
+            // );
           },
         ),
       ],

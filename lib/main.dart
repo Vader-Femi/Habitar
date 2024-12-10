@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest.dart';
 import 'config/routes/AppRoutes.dart';
 import 'config/theme/AppTheme.dart';
+import 'core/navigation/navigation_service.dart';
 import 'features/choose_mode/presentation/bloc/theme_cubit.dart';
 import 'features/splash/presentation/pages/splash.dart';
 import 'firebase_options.dart';
@@ -33,7 +34,6 @@ void main() async {
 
   initializeTimeZones(); // must be from package:timezone/data/latest.dart
   await NotificationService.init();
-
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
       providers: [BlocProvider(create: (_) => ThemeCubit())],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (BuildContext context, ThemeMode mode) => MaterialApp(
+          navigatorKey: NavigationService.navigatorKey, // GlobalKey()
           title: 'Habitar',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,

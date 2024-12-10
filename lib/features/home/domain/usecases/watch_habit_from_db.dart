@@ -1,5 +1,4 @@
 import 'package:habitar/features/home/data/db/habitDBHelper.dart';
-import 'package:habitar/features/home/data/models/HabitModel.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../data/db/habit_db.dart';
 

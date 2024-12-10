@@ -23,6 +23,7 @@ class HabitModel extends HabitEntity{
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'habit': habit,

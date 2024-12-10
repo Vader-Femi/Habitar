@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habitar/core/constants/constants.dart';
-import '../widgets/app_bar.dart';
 import '../../../../common/widgets/button/next_button.dart';
 
 class AllSet extends StatefulWidget {

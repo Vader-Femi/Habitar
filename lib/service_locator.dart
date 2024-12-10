@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:habitar/core/navigation/navigation_service.dart';
 import 'package:habitar/features/home/data/db/habit_db.dart';
 import 'package:habitar/features/home/data/repository/home_repository_impl.dart';
 import 'package:habitar/features/home/data/sources/home_service.dart';
