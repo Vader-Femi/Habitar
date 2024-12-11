@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:habitar/features/home/domain/entities/habit_entity.dart';
+import 'package:habitar/features/home/presentation/pages/update_habit_page.dart';
 import '../../features/auth/presentation/pages/all_set.dart';
 import '../../features/auth/presentation/pages/get_started.dart';
 import '../../features/auth/presentation/pages/signin.dart';
@@ -26,6 +28,10 @@ class AppRoutes {
 
       case '/Home':
         return _materialRoute(const HomePage());
+
+      case '/UpdateHabit':
+        var oldHabit = settings.arguments as HabitEntity;
+        return _materialRoute(UpdateHabitPage(oldHabit: oldHabit));
         
       default:
         return _materialRoute(const GetStartedPage());

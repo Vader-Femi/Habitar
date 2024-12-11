@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/constants/constants.dart';
-import '../../../home/presentation/widgets/app_bar_shape.dart';
+import 'app_bar_shape.dart';
 
-class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final double toolbarHeight = 90;
-  final VoidCallback goBack;
+class UpdateHabitAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const UpdateHabitAppBar({super.key});
 
-  const AuthAppbar({super.key, required this.title, required this.goBack});
+  final double toolbarHeight = 90.0;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +18,16 @@ class AuthAppbar extends StatelessWidget implements PreferredSizeWidget {
         toolbarHeight: toolbarHeight,
         shape: AppBarShape(),
         title: Text(
-          title,
+          "Update habit",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
             fontSize: 20,
+            fontFamily: "Satoshi",
+            fontWeight: FontWeight.bold,
           ),
         ),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          onPressed: () => goBack(),
+          onPressed: () => Navigator.of(context).pop(),
           icon: Icon(
             Icons.arrow_back,
             size: 20,

@@ -31,8 +31,10 @@ class HabitDBHelper {
         .write(
       HabitTableCompanion(
         habit: Value(updateAHabitReqModel.newHabit.habit),
-        selectedPeriodicity: Value(updateAHabitReqModel.newHabit.selectedPeriodicity),
-        selectedTimeOfDay: Value(updateAHabitReqModel.newHabit.selectedTimeOfDay),
+        selectedPeriodicity:
+            Value(updateAHabitReqModel.newHabit.selectedPeriodicity),
+        selectedTimeOfDay:
+            Value(updateAHabitReqModel.newHabit.selectedTimeOfDay),
         streak: Value(updateAHabitReqModel.newHabit.streak),
         lastDateTicked: Value(updateAHabitReqModel.newHabit.lastDateTicked),
       ),
@@ -47,6 +49,18 @@ class HabitDBHelper {
 
   Future deleteAllHabits() {
     return _habitDB.delete(_habitDB.habitTable).go();
+  }
+
+  Future<HabitModel?> getSingleHabit(String habit) async {
+    var habitTableData = await (_habitDB.select(_habitDB.habitTable)
+          ..where((habitItem) => habitItem.habit.equals(habit)))
+        .getSingleOrNull();
+
+    if (habitTableData != null) {
+      return HabitModel.fromHabitTableData(habitTableData);
+    } else {
+      return null;
+    }
   }
 
   Future<List<HabitModel>> getHabitsAlphabetically() async {

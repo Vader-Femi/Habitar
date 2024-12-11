@@ -11,7 +11,7 @@ import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
 import '../../domain/usecases/delete_all_habits_in_db.dart';
-import '../../domain/usecases/get_habit_from_db.dart';
+import '../../domain/usecases/get_habits_from_db.dart';
 import '../../domain/usecases/update_habit_in_db.dart';
 import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';

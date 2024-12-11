@@ -40,7 +40,13 @@ void main() async {
           : await getTemporaryDirectory(),
   );
 
-  await initializeDependencies();
+  try {
+    await initializeDependencies();
+  } catch (e) {
+    if (kDebugMode) {
+      print("Failed to init dependencies. Dependencies might already be initialized ${e.toString()}");
+    }
+  }
 
   initializeTimeZones(); // must be from package:timezone/data/latest.dart
   await NotificationService.init();

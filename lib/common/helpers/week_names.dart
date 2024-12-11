@@ -1,7 +1,7 @@
 class WeekNames{
   final String letter;
   final String shortName;
-  final String longName;
+  final String longName; // This is what I actually use
   final int positionInWeek;
 
   WeekNames({required this.shortName, required this.longName, required this.positionInWeek, required this.letter});

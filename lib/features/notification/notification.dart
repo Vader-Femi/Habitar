@@ -3,15 +3,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/core/navigation/navigation_service.dart';
+import 'package:habitar/features/home/data/models/HabitModel.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
 import 'package:timezone/timezone.dart';
 import '../../common/helpers/time_names.dart';
 import '../../common/helpers/week_names.dart';
 import '../../firebase_options.dart';
+import '../../main.dart';
 import '../../service_locator.dart';
+import '../home/domain/usecases/get_single_habit_from_db.dart';
 import '../home/domain/usecases/tick_habits.dart';
+import '../home/presentation/state/home_viewmodel.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -31,21 +36,33 @@ class NotificationService {
         await initializeDependencies();
       } catch (e) {
         if (kDebugMode) {
-          print("Failed to init dependencies. Dependencies might already be initialized ${e.toString()}");
+          print(
+              "Failed to init dependencies. Dependencies might already be initialized ${e.toString()}");
         }
       }
 
       var habitEntity = HabitEntity.fromJson(
           jsonDecode(notificationResponse.payload.toString()));
+      var todayHabitEntity =
+          TodayHabitEntity.fromEntity(habitEntity).copyWith(isSelected: true);
 
-      await sl<TickHabitsUseCase>().call(params: TodayHabitEntity.fromEntity(habitEntity));
+      var habitFromDB = await sl<GetSingleHabitFromDBUseCase>()
+          .call(params: todayHabitEntity.habit.habit);
+      if (habitFromDB?.lastDateTicked != getTodayDate()) {
+        await sl<TickHabitsUseCase>().call(params: todayHabitEntity);
+      }
     }
 
     if (notificationResponse.actionId == "open_id") {
+      print("Step 1");
       if (NavigationService.navigatorKey.currentContext != null) {
-        await Navigator.pushNamed(
-            NavigationService.navigatorKey.currentContext!, "/Home");
+        print("Step 2");
+        await NavigationService.navigatorKey.currentState?.pushNamed("/Home");
+        print("Step 3");
+        // await Navigator.pushNamed(
+        //     NavigationService.navigatorKey.currentContext!, "/Home");
       }
+      print("Step 4");
     }
   }
 
@@ -59,7 +76,7 @@ class NotificationService {
       priority: Priority.defaultPriority,
       ticker: "Ticker",
       actions: <AndroidNotificationAction>[
-        AndroidNotificationAction('open_id', 'Open'),
+        // AndroidNotificationAction('open_id', 'Open'), Todo setup later
         AndroidNotificationAction('mark_as_done_id', 'Mark as done'),
       ],
     ),

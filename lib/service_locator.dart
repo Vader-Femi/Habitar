@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:habitar/core/navigation/navigation_service.dart';
 import 'package:habitar/features/home/data/db/habit_db.dart';
 import 'package:habitar/features/home/data/repository/home_repository_impl.dart';
 import 'package:habitar/features/home/data/sources/home_service.dart';
@@ -19,8 +18,10 @@ import 'features/auth/presentation/bloc/sign_up/sign_up_bloc.dart';
 import 'features/home/data/db/habitDBHelper.dart';
 import 'features/home/domain/usecases/add_habits_batch_to_db.dart';
 import 'features/home/domain/usecases/delete_all_habits_in_db.dart';
-import 'features/home/domain/usecases/get_habit_from_db.dart';
+import 'features/home/domain/usecases/delete_single_habit_from_db.dart';
+import 'features/home/domain/usecases/get_habits_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
+import 'features/home/domain/usecases/get_single_habit_from_db.dart';
 import 'features/home/domain/usecases/update_habit_in_db.dart';
 import 'features/home/domain/usecases/watch_habit_from_db.dart';
 
@@ -100,8 +101,16 @@ Future<void> initializeDependencies() async {
       GetHabitsFromDBUseCase(sl())
   );
 
+  sl.registerSingleton<GetSingleHabitFromDBUseCase>(
+      GetSingleHabitFromDBUseCase(sl())
+  );
+
   sl.registerSingleton<WatchHabitsFromDBUseCase>(
       WatchHabitsFromDBUseCase(sl())
+  );
+
+  sl.registerSingleton<DeleteSingleHabitFromDbUseCase>(
+      DeleteSingleHabitFromDbUseCase(sl())
   );
 
   sl.registerSingleton<DeleteAllHabitsInDBUseCase>(
