@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habitar/core/navigation/navigation_service.dart';
@@ -8,6 +9,7 @@ import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
 import 'package:timezone/timezone.dart';
 import '../../common/helpers/time_names.dart';
 import '../../common/helpers/week_names.dart';
+import '../../firebase_options.dart';
 import '../../service_locator.dart';
 import '../home/domain/usecases/tick_habits.dart';
 
@@ -18,14 +20,25 @@ class NotificationService {
   @pragma('vm:entry-point')
   static Future<void> onDidReceiveNotification(
       NotificationResponse notificationResponse) async {
-    // Todo contribute by editing notificationResponse.notificationResponseType
-    // Todo create a screen that shows Done with options to go to app or CLose app
+    // Todo check out notificationResponse.notificationResponseType
 
     if (notificationResponse.actionId == "mark_as_done_id") {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-      var habit = HabitEntity.fromJson(jsonDecode(notificationResponse.payload.toString()));
+      try {
+        await initializeDependencies();
+      } catch (e) {
+        if (kDebugMode) {
+          print("Failed to init dependencies. Dependencies might already be initialized ${e.toString()}");
+        }
+      }
 
-      await sl<TickHabitsUseCase>().call(params: TodayHabitEntity.fromEntity(habit));
+      var habitEntity = HabitEntity.fromJson(
+          jsonDecode(notificationResponse.payload.toString()));
+
+      await sl<TickHabitsUseCase>().call(params: TodayHabitEntity.fromEntity(habitEntity));
     }
 
     if (notificationResponse.actionId == "open_id") {
@@ -112,9 +125,11 @@ class NotificationService {
   }
 
   //Show an instant notification
-  Future<void> showInstantNotification({String title = "Your habit reminder", required HabitEntity habit}) async {
+  Future<void> showInstantNotification(
+      {String title = "Your habit reminder",
+      required HabitEntity habit}) async {
     await flutterLocalNotificationsPlugin.show(
-        payload: habit.toJson().toString(),
+        payload: json.encode(habit.toJson()),
         DateTime.now().microsecond,
         title,
         "Remember: ${habit.habit}",
@@ -131,7 +146,7 @@ class NotificationService {
       DateTime.now().microsecond,
       title,
       "Remember: ${habit.habit}",
-      payload: habit.toJson().toString(),
+      payload: json.encode(habit.toJson()),
       TZDateTime.from(scheduleDateTime, local),
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:

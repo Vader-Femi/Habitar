@@ -20,8 +20,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
-
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -31,9 +29,6 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-
-  initializeTimeZones(); // must be from package:timezone/data/latest.dart
-  await NotificationService.init();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -47,6 +42,8 @@ void main() async {
 
   await initializeDependencies();
 
+  initializeTimeZones(); // must be from package:timezone/data/latest.dart
+  await NotificationService.init();
 
   runApp(const SuperApp(child: MyApp()));
 }
