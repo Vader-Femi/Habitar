@@ -1,6 +1,8 @@
 import 'package:habitar/features/home/data/models/HabitModel.dart';
 
 import '../../domain/entities/add_a_habit_req_entity.dart';
+import '../../domain/entities/habit_entity.dart';
+import '../../domain/entities/update_a_habit_req_entity.dart';
 
 class AddAHabitModel extends AddAHabitEntity{
 
@@ -12,6 +14,17 @@ class AddAHabitModel extends AddAHabitEntity{
     required super.lastDateTicked
 });
 
+  AddAHabitModel copyWith(
+      {String? habit, List<String>? selectedPeriodicity, List<String>? selectedTimeOfDay, String? streak, String? lastDateTicked}) {
+    return AddAHabitModel(
+      habit: habit ?? this.habit,
+      selectedPeriodicity: selectedPeriodicity ?? this.selectedPeriodicity,
+      selectedTimeOfDay: selectedTimeOfDay ?? this.selectedTimeOfDay,
+      streak: streak ?? this.streak,
+      lastDateTicked: lastDateTicked ?? this.lastDateTicked,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'habit': habit,
@@ -21,6 +34,7 @@ class AddAHabitModel extends AddAHabitEntity{
       "lastDateTicked": lastDateTicked,
     };
   }
+
 
   factory AddAHabitModel.fromJson(Map<String, dynamic> json) {
     return AddAHabitModel(
@@ -41,6 +55,28 @@ class AddAHabitModel extends AddAHabitEntity{
       selectedTimeOfDay: entity.selectedTimeOfDay,
       streak: entity.streak,
       lastDateTicked: entity.lastDateTicked,
+    );
+  }
+
+  factory AddAHabitModel.fromHabitEntity(
+      HabitEntity entity) {
+    return AddAHabitModel(
+      habit: entity.habit,
+      selectedPeriodicity: entity.selectedPeriodicity,
+      selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
+    );
+  }
+
+  factory AddAHabitModel.fromUpdateAHabitReqEntity(
+      UpdateAHabitReqEntity entity) {
+    return AddAHabitModel(
+      habit: entity.newHabit.habit,
+      selectedPeriodicity: entity.newHabit.selectedPeriodicity,
+      selectedTimeOfDay: entity.newHabit.selectedTimeOfDay,
+      streak: entity.newHabit.streak,
+      lastDateTicked: entity.newHabit.lastDateTicked,
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
+import 'package:habitar/features/home/domain/entities/update_a_habit_req_entity.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
@@ -11,6 +12,7 @@ import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
 import '../../domain/usecases/delete_all_habits_in_db.dart';
+import '../../domain/usecases/get_habits.dart';
 import '../../domain/usecases/get_habits_from_db.dart';
 import '../../domain/usecases/update_habit_in_db.dart';
 import '../models/HabitModel.dart';
@@ -30,13 +32,16 @@ abstract class HomeService {
 
   Future<DataState> tickHabit(TodayHabitEntity todayHabitEntity);
 
+  Future<DataState> updateHabit(UpdateAHabitReqEntity updateAHabitReqEntity);
+
+  Future<DataState> deleteHabit(HabitEntity habitEntity);
+
   Future<UserEntity> getUser();
 }
 
 class HomeServiceImpl extends HomeService {
   @override
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq) async {
-    AddAHabitModel.fromEntity(newHabitReq);
     var newHabitReqModel = AddAHabitModel.fromEntity(newHabitReq);
     try {
       await FirebaseFirestore.instance
@@ -197,6 +202,71 @@ class HomeServiceImpl extends HomeService {
       return UserEntity.fromModel(userModel);
     } on FirebaseException {
       return UserEntity(email: "", username: "", habitsCompleted: "-1");
+    }
+  }
+
+  @override
+  Future<DataState> deleteHabit(HabitEntity habitEntity) async {
+    var newHabitReqModel = AddAHabitModel.fromHabitEntity(habitEntity);
+    try {
+      await FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
+          .doc(newHabitReqModel.habit)
+          .delete();
+
+      await sl<GetHabitsUseCase>().call();
+
+      return const DataSuccess("Successfully Added");
+    } on FirebaseException catch (e) {
+      return DataFailed(errorMessage: e.message ?? "Something went wrong");
+    }
+  }
+
+  @override
+  Future<DataState> updateHabit(
+      UpdateAHabitReqEntity updateAHabitReqEntity) async {
+    var firestoreInstance = FirebaseFirestore.instance;
+    try {
+      await //Get old doc details
+          firestoreInstance
+              .collection(
+                  FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
+              .doc(updateAHabitReqEntity.oldId)
+              .get()
+              .then(
+        (doc) async {
+          if (doc.data() != null && doc.exists) {
+            var data = doc.data();
+            var habit = HabitModel.fromJson(data!);
+
+            //Deletes the old doc
+            await firestoreInstance
+                .collection(FirebaseAuth.instance.currentUser?.uid ??
+                "Unknown users")
+                .doc(updateAHabitReqEntity.oldId)
+                .delete();
+
+            //Creates new doc with old streak and lastDateTicked
+            var newHabitReqModel =
+                AddAHabitModel.fromUpdateAHabitReqEntity(updateAHabitReqEntity)
+                    .copyWith(
+                        streak: habit.streak,
+                        lastDateTicked: habit.lastDateTicked);
+
+            await firestoreInstance
+                .collection(
+                    FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
+                .doc(updateAHabitReqEntity.newHabit.habit)
+                .set(newHabitReqModel.toJson());
+          }
+        },
+      );
+
+      await sl<GetHabitsUseCase>().call();
+
+      return const DataSuccess("Successfully Added");
+    } on FirebaseException catch (e) {
+      return DataFailed(errorMessage: e.message ?? "Something went wrong");
     }
   }
 }

@@ -27,8 +27,7 @@ class _SignInState extends State<SignIn> {
         appBar: AuthAppbar(
           title: "Welcome Back",
           goBack: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/GetStarted", (r) => false);
+            Navigator.pop(context);
           },
         ),
         body: Padding(

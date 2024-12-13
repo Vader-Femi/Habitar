@@ -6,6 +6,7 @@ import 'package:habitar/features/home/domain/repository/home.dart';
 import 'package:habitar/features/home/domain/usecases/add_a_habit.dart';
 import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import 'package:habitar/features/home/domain/usecases/tick_habits.dart';
+import 'package:habitar/features/home/domain/usecases/update_habit.dart';
 import 'package:habitar/features/notification/notification.dart';
 import 'core/usecase/is_user_logged_in.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
@@ -18,6 +19,7 @@ import 'features/auth/presentation/bloc/sign_up/sign_up_bloc.dart';
 import 'features/home/data/db/habitDBHelper.dart';
 import 'features/home/domain/usecases/add_habits_batch_to_db.dart';
 import 'features/home/domain/usecases/delete_all_habits_in_db.dart';
+import 'features/home/domain/usecases/delete_habit.dart';
 import 'features/home/domain/usecases/delete_single_habit_from_db.dart';
 import 'features/home/domain/usecases/get_habits_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
@@ -87,6 +89,14 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<TickHabitsUseCase>(
       TickHabitsUseCase(sl())
+  );
+
+  sl.registerSingleton<DeleteHabitUseCase>(
+      DeleteHabitUseCase(sl())
+  );
+
+  sl.registerSingleton<UpdateHabitUseCase>(
+      UpdateHabitUseCase(sl())
   );
 
   sl.registerSingleton<GetUserUseCase>(

@@ -18,7 +18,6 @@ class UpdateHabitPage extends StatefulWidget {
 }
 
 class _UpdateHabitPageState extends State<UpdateHabitPage> {
-
   @override
   void initState() {
     updateHabitViewmodel.initHabit(widget.oldHabit);
@@ -47,7 +46,24 @@ class _UpdateHabitPageState extends State<UpdateHabitPage> {
                   child: Hero(
                     tag: Constants.skipButtonHeroTag,
                     child: OutlinedButton(
-                      onPressed: () => updateHabitViewmodel.deleteHabit(),
+                      onPressed: () async {
+                        var result = await updateHabitViewmodel.deleteHabit();
+                        if (result is DataFailed) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Error : ${(result).errorMessage}"),
+                            ));
+                          }
+                        }
+                        if (result is DataSuccess) {
+                          if (context.mounted) {
+                            Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Deleted"),
+                            ));
+                          }
+                        }
+                      },
                       style: OutlinedButton.styleFrom(
                         elevation: 5,
                       ),
@@ -73,10 +89,10 @@ class _UpdateHabitPageState extends State<UpdateHabitPage> {
                         }
                       }
                       if (result is DataSuccess) {
-                        getHomeViewModel.selectTabAtIndex(0);
                         if (context.mounted) {
+                          Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Done"),
+                            content: Text("Updated"),
                           ));
                         }
                       }

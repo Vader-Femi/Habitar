@@ -10,32 +10,37 @@ class AllSet extends StatefulWidget {
 }
 
 class _AllSetState extends State<AllSet> {
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _tick(context),
-                  const SizedBox(height: 20),
-                  _text(context),
-                ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (_, __) {
+        Navigator.pushNamedAndRemoveUntil(context, "/Home", (r) => false);
+      },
+      child: Scaffold(
+        body: Padding(
+          padding:
+              const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Spacer(),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _tick(context),
+                    const SizedBox(height: 20),
+                    _text(context),
+                  ],
+                ),
               ),
-            ),
-            const Spacer(flex: 2),
-            NextButton(
-              title: "Start Tracking",
-              onClick: () => Navigator.pushNamed(context, "/Home"),
-            ),
-          ],
+              const Spacer(flex: 2),
+              NextButton(
+                  title: "Start Tracking",
+                  onClick: () => Navigator.pushNamedAndRemoveUntil(
+                      context, "/Home", (r) => false)),
+            ],
+          ),
         ),
       ),
     );
@@ -43,8 +48,12 @@ class _AllSetState extends State<AllSet> {
 
   Widget _tick(BuildContext context) {
     return Hero(
-      tag: Constants.topWidgetTag,
-        child: Icon(Icons.check_circle_outline_rounded, size: 150,color: Theme.of(context).colorScheme.primary,));
+        tag: Constants.topWidgetTag,
+        child: Icon(
+          Icons.check_circle_outline_rounded,
+          size: 150,
+          color: Theme.of(context).colorScheme.primary,
+        ));
   }
 
   Widget _text(BuildContext context) {

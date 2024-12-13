@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import 'package:collection/collection.dart';
 import 'package:habitar/features/home/domain/entities/add_a_habit_req_entity.dart';
-import 'package:habitar/features/home/domain/usecases/delete_single_habit_from_db.dart';
+import 'package:habitar/features/home/domain/usecases/delete_habit.dart';
+import 'package:habitar/features/home/domain/usecases/update_habit.dart';
 import '../../../../common/helpers/day_of_week.dart';
 import '../../../../common/helpers/time_names.dart';
 import '../../../../common/helpers/time_of_day.dart';
 import '../../../../common/helpers/week_names.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
-import '../../data/models/HabitModel.dart';
 import '../../domain/entities/habit_entity.dart';
-import '../../domain/usecases/add_a_habit.dart';
+import '../../domain/entities/update_a_habit_req_entity.dart';
 
 UpdateHabitViewmodel get updateHabitViewmodel =>
     Super.init(UpdateHabitViewmodel());
 
 class UpdateHabitViewmodel {
-  RxT<HabitEntity> oldHabit = HabitEntity(
-          habit: "",
-          selectedTimeOfDay: [],
-          lastDateTicked: "",
-          selectedPeriodicity: [],
-          streak: "")
-      .rx;
+  var oldHabit = HabitEntity(
+    habit: "",
+    selectedTimeOfDay: [],
+    lastDateTicked: "",
+    selectedPeriodicity: [],
+    streak: "",
+  );
 
   final TextEditingController _habit = TextEditingController();
 
@@ -67,7 +67,7 @@ class UpdateHabitViewmodel {
   }
 
   void initHabit(HabitEntity oldHabit) {
-
+    this.oldHabit = oldHabit;
     _habit.text = oldHabit.habit;
 
     weekdays.forEachIndexed((index, element) {
@@ -78,8 +78,7 @@ class UpdateHabitViewmodel {
     });
 
     timeOfDay.forEachIndexed((index, element) {
-      var isSelected =
-      oldHabit.selectedTimeOfDay.contains(element.timeTitle);
+      var isSelected = oldHabit.selectedTimeOfDay.contains(element.timeTitle);
       timeOfDay.removeAt(index);
       timeOfDay.insert(index, element.copyWith(isSelected: isSelected));
     });
@@ -98,16 +97,22 @@ class UpdateHabitViewmodel {
         selectedTimeOfDay.add(timeNames[index].name);
       }
     });
-    var updateAHabitEntity = AddAHabitEntity(
+
+    var updateAHabitEntity = UpdateAHabitReqEntity(
+      oldId: oldHabit.habit,
+      newHabit: AddAHabitEntity(
         habit: _habit.text,
         selectedPeriodicity: selectedPeriodicity,
         selectedTimeOfDay: selectedTimeOfDay,
-        streak: "0",
-        lastDateTicked: "");
-    return await sl<AddAHabitUseCase>().call(params: updateAHabitEntity);
+        streak: "",
+        lastDateTicked: "",
+      ),
+    );
+
+    return await sl<UpdateHabitUseCase>().call(params: updateAHabitEntity);
   }
 
-  Future<void> deleteHabit() async {
-    // return sl<DeleteSingleHabitFromDbUseCase>().call(params: habitModel);
+  Future<DataState> deleteHabit() async {
+    return await sl<DeleteHabitUseCase>().call(params: oldHabit);
   }
 }
