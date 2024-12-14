@@ -5,6 +5,7 @@ import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/update_a_habit_req_entity.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
+import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
 import '../../../notification/notification.dart';
@@ -15,6 +16,7 @@ import '../../domain/usecases/delete_all_habits_in_db.dart';
 import '../../domain/usecases/get_habits.dart';
 import '../../domain/usecases/get_habits_from_db.dart';
 import '../../domain/usecases/update_habit_in_db.dart';
+import '../../presentation/state/home_viewmodel.dart';
 import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';
 import '../models/updateAHabitReqModel.dart';
@@ -37,6 +39,8 @@ abstract class HomeService {
   Future<DataState> deleteHabit(HabitEntity habitEntity);
 
   Future<UserEntity> getUser();
+
+  Future<DataState> updateUserProfile(String userName);
 }
 
 class HomeServiceImpl extends HomeService {
@@ -216,7 +220,7 @@ class HomeServiceImpl extends HomeService {
 
       await sl<GetHabitsUseCase>().call();
 
-      return const DataSuccess("Successfully Added");
+      return const DataSuccess("Successfully Deleted");
     } on FirebaseException catch (e) {
       return DataFailed(errorMessage: e.message ?? "Something went wrong");
     }
@@ -264,7 +268,43 @@ class HomeServiceImpl extends HomeService {
 
       await sl<GetHabitsUseCase>().call();
 
-      return const DataSuccess("Successfully Added");
+      return const DataSuccess("Successfully Updated");
+    } on FirebaseException catch (e) {
+      return DataFailed(errorMessage: e.message ?? "Something went wrong");
+    }
+  }
+
+  @override
+  Future<DataState> updateUserProfile(
+      String userName) async {
+    var firestoreInstance = FirebaseFirestore.instance;
+
+    try {
+      await //Get old details
+          firestoreInstance
+              .collection("Users")
+              .doc(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
+              .get()
+              .then(
+        (doc) async {
+          if (doc.data() != null && doc.exists) {
+            var data = doc.data();
+            var userModel = UserModel.fromJson(data!).copyWith(
+              username: userName
+            );
+
+            //Update userName
+            await firestoreInstance
+                .collection("Users")
+                .doc(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
+                .set(userModel.toJson());
+          }
+        },
+      );
+
+      getHomeViewModel.getUser();
+
+      return const DataSuccess("Successfully Updated");
     } on FirebaseException catch (e) {
       return DataFailed(errorMessage: e.message ?? "Something went wrong");
     }

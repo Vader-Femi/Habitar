@@ -13,4 +13,5 @@ abstract class HomeRepository {
   Future<DataState> updateHabit(UpdateAHabitReqEntity updateAHabitReqEntity);
   Future<DataState> deleteHabit(HabitEntity habitEntity);
   Future<UserEntity> getUser();
+  Future<DataState> updateUserProfile(String userName);
 }

@@ -33,4 +33,8 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<DataState> updateHabit(UpdateAHabitReqEntity updateAHabitReqEntity) =>
       _homeService.updateHabit(updateAHabitReqEntity);
+
+  @override
+  Future<DataState> updateUserProfile(String userName) =>
+      _homeService.updateUserProfile(userName);
 }

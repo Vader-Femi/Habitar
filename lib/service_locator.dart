@@ -25,6 +25,7 @@ import 'features/home/domain/usecases/get_habits_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
 import 'features/home/domain/usecases/get_single_habit_from_db.dart';
 import 'features/home/domain/usecases/update_habit_in_db.dart';
+import 'features/home/domain/usecases/update_user_profile.dart';
 import 'features/home/domain/usecases/watch_habit_from_db.dart';
 
 final sl = GetIt.instance;
@@ -101,6 +102,10 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetUserUseCase>(
       GetUserUseCase(sl())
+  );
+
+  sl.registerSingleton<UpdateUserProfileUseCase>(
+      UpdateUserProfileUseCase(sl())
   );
 
   sl.registerSingleton<AddHabitsBatchToDBUseCase>(
