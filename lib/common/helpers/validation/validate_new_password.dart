@@ -1,11 +1,11 @@
 import 'package:habitar/common/helpers/validation/validation_result.dart';
 
-class ValidatePassword {
+class ValidateNewPassword {
 
-  const ValidatePassword();
+  const ValidateNewPassword();
 
-  ValidationResult execute(String email) {
-    if (email.isEmpty) {
+  ValidationResult execute(String password) {
+    if (password.isEmpty) {
       return ValidationResult(
           false,
           "Password cannot be empty"
@@ -14,7 +14,7 @@ class ValidatePassword {
 
     var passwordRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 
-    if (passwordRegExp.hasMatch(email)) {
+    if (passwordRegExp.hasMatch(password)) {
       return ValidationResult(
           false,
           "Must contain a 1 upper case, 1 lowercase, 1 number, 1 special character, and 8 characters"

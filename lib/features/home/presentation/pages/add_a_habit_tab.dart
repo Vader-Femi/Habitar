@@ -10,39 +10,45 @@ class AddAHabitTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-      const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
-      child: ListView(
-        children: [
-          _HabitNameField(),
-          const SizedBox(height: 45),
-          _PeriodicitySelector(),
-          const SizedBox(height: 45),
-          _TimeSelector(),
-          const SizedBox(height: 55),
-          NextButton(
-            title: "Add a new habit",
-            onClick: () async {
-              var result = await addAHabitViewModel.addANewHabit();
-              if (result is DataFailed) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Error : ${(result).errorMessage}"),
-                  ));
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (_, __) {
+        getHomeViewModel.selectTabAtIndex(0);
+      },
+      child: Padding(
+        padding:
+        const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 10),
+        child: ListView(
+          children: [
+            _HabitNameField(),
+            const SizedBox(height: 45),
+            _PeriodicitySelector(),
+            const SizedBox(height: 45),
+            _TimeSelector(),
+            const SizedBox(height: 55),
+            NextButton(
+              title: "Add a new habit",
+              onClick: () async {
+                var result = await addAHabitViewModel.addANewHabit();
+                if (result is DataFailed) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Error : ${(result).errorMessage}"),
+                    ));
+                  }
                 }
-              }
-              if (result is DataSuccess) {
-                getHomeViewModel.selectTabAtIndex(0);
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Done"),
-                  ));
+                if (result is DataSuccess) {
+                  getHomeViewModel.selectTabAtIndex(0);
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Done"),
+                    ));
+                  }
                 }
-              }
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
