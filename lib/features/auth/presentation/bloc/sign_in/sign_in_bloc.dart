@@ -1,6 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habitar/common/helpers/validation/validate_email.dart';
+import 'package:habitar/common/helpers/validation/validate_login_password.dart';
 import 'package:habitar/features/auth/presentation/bloc/sign_in/sign_in_event.dart';
 import '../../../../../core/res/data_state.dart';
+import '../../../../../service_locator.dart';
 import '../../../domain/entities/SignInRequestEntity.dart';
 import '../../../domain/usecases/signin.dart';
 import 'sign_in_state.dart';
@@ -20,6 +23,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   void onSignIn(TrySignIn event, Emitter<SignInState> emit) async {
+
+    //Todo uncomment code
+    // var validateEmail = sl<ValidateEmail>().execute(event.email);
+    // if (!validateEmail.isSuccessful){
+    //   return emit(SignInError(validateEmail.error ?? "Something went wrong with the email"));
+    // }
+    //
+    // var validatePassword = sl<ValidateLoginPassword>().execute(event.password);
+    // if (!validatePassword.isSuccessful){
+    //   return emit(SignInError(validatePassword.error ?? "Something went wrong with the password"));
+    // }
+
     emit(const SignInLoading());
 
     final dataState = await _signInUseCase.call(

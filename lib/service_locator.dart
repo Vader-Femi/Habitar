@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:habitar/common/helpers/validation/validate_email.dart';
+import 'package:habitar/common/helpers/validation/validate_habit.dart';
+import 'package:habitar/common/helpers/validation/validate_login_password.dart';
+import 'package:habitar/common/helpers/validation/validate_new_password.dart';
+import 'package:habitar/common/helpers/validation/validate_username.dart';
 import 'package:habitar/features/home/data/db/habit_db.dart';
 import 'package:habitar/features/home/data/repository/home_repository_impl.dart';
 import 'package:habitar/features/home/data/sources/home_service.dart';
@@ -134,6 +139,26 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<UpdateHabitInDbUseCase>(
       UpdateHabitInDbUseCase(sl())
+  );
+
+  sl.registerSingleton<ValidateEmail>(
+      ValidateEmail()
+  );
+
+  sl.registerSingleton<ValidateHabit>(
+      ValidateHabit()
+  );
+
+  sl.registerSingleton<ValidateLoginPassword>(
+      ValidateLoginPassword()
+  );
+
+  sl.registerSingleton<ValidateNewPassword>(
+      ValidateNewPassword()
+  );
+
+  sl.registerSingleton<ValidateUsername>(
+      ValidateUsername()
   );
 
 }

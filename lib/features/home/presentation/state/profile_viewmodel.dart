@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
+import 'package:habitar/common/helpers/validation/validate_username.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
@@ -29,11 +30,18 @@ class ProfileViewModel {
   }
 
   Future<DataState> updateProfile() async {
-    var result =
-        await sl<UpdateUserProfileUseCase>().call(params: _userName.text);
+    var validateUsername = sl<ValidateUsername>().execute(_userName.text);
+    if (!validateUsername.isSuccessful) {
+      return DataFailed(
+          errorMessage: validateUsername.error ??
+              "Something went wrong with the username");
+    } else {
+      var result =
+          await sl<UpdateUserProfileUseCase>().call(params: _userName.text);
 
-    toggleEditingProfile();
-    return result;
+      toggleEditingProfile();
+      return result;
+    }
   }
 
   Future<DataState> logOut() async {
