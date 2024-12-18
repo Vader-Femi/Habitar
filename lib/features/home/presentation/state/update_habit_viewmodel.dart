@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
 import 'package:collection/collection.dart';
+import 'package:form_validation/form_validation.dart';
 import 'package:habitar/features/home/domain/entities/add_a_habit_req_entity.dart';
 import 'package:habitar/features/home/domain/usecases/delete_habit.dart';
 import 'package:habitar/features/home/domain/usecases/update_habit.dart';
@@ -85,6 +86,28 @@ class UpdateHabitViewmodel {
   }
 
   Future<DataState> updateHabit() async {
+
+    //Old way
+    // var validateHabit = sl<ValidateHabit>().execute(_habit.text);
+    // if (!validateHabit.isSuccessful){
+    //   return DataFailed( errorMessage:  validateHabit.error ?? "Something went wrong with the habit");
+    // }
+
+    final habitValidator = Validator(
+      validators: [
+        const MinLengthValidator(length: 1),
+        const RequiredValidator(),
+      ],
+    );
+    var habitValidatorError = habitValidator.validate(
+      label: 'Habit is required',
+      value: _habit.text,
+    );
+
+    if (habitValidatorError != null){
+      return DataFailed( errorMessage:  habitValidatorError ?? "Something went wrong with the habit");
+    }
+
     var selectedPeriodicity = <String>[];
     weekdays.forEachIndexed((index, element) {
       if (element.isSelected == true) {

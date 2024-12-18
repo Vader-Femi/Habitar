@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_super/flutter_super.dart';
+import 'package:form_validation/form_validation.dart';
 import 'package:habitar/common/helpers/validation/validate_username.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/res/data_state.dart';
@@ -30,11 +31,29 @@ class ProfileViewModel {
   }
 
   Future<DataState> updateProfile() async {
-    var validateUsername = sl<ValidateUsername>().execute(_userName.text);
-    if (!validateUsername.isSuccessful) {
-      return DataFailed(
-          errorMessage: validateUsername.error ??
-              "Something went wrong with the username");
+    final usernameValidator = Validator(
+      validators: [
+        const MinLengthValidator(length: 1),
+        const RequiredValidator(),
+      ],
+    );
+    var usernameValidatorError = usernameValidator.validate(
+      label: 'Username is required',
+      value: _userName.text,
+    );
+
+    if (usernameValidatorError != null){
+      return DataFailed( errorMessage:  usernameValidatorError ?? "Something went wrong with the habit");
+
+    // Old way
+    // var validateUsername = sl<ValidateUsername>().execute(_userName.text);
+    // if (!validateUsername.isSuccessful) {
+    //   return DataFailed(
+    //       errorMessage: validateUsername.error ??
+    //           "Something went wrong with the username");
+
+
+
     } else {
       var result =
           await sl<UpdateUserProfileUseCase>().call(params: _userName.text);

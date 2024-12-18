@@ -125,7 +125,7 @@ class _SignUpState extends State<SignUp> {
   Widget _fullNameField(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
-        labelText: "Firstname",
+        labelText: "Username",
       ),
       controller: _name,
     );

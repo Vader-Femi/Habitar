@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_validation/form_validation.dart';
 import 'package:habitar/common/helpers/validation/validate_new_password.dart';
 import 'package:habitar/features/auth/presentation/bloc/sign_up/sign_up_event.dart';
 import 'package:habitar/features/auth/presentation/bloc/sign_up/sign_up_state.dart';
@@ -24,15 +25,62 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void onSignUp(TrySignUp event, Emitter<SignUpState> emit) async {
 
-    var validateEmail = sl<ValidateEmail>().execute(event.email);
-    if (!validateEmail.isSuccessful){
-      return emit(SignUpError(validateEmail.error ?? "Something went wrong with the email"));
+    final usernameValidator = Validator(
+      validators: [
+        const MinLengthValidator(length: 1),
+        const RequiredValidator(),
+      ],
+    );
+    var usernameValidatorError = usernameValidator.validate(
+      label: 'Username is required',
+      value: event.name,
+    );
+
+    if (usernameValidatorError != null){
+      return emit(SignUpError(usernameValidatorError ?? "Something went wrong with the email"));
     }
 
-    var validatePassword = sl<ValidateNewPassword>().execute(event.password);
-    if (!validatePassword.isSuccessful){
-      return emit(SignUpError(validatePassword.error ?? "Something went wrong with the password"));
+    final emailValidator = Validator(
+      validators: [
+        const EmailValidator(),
+        const RequiredValidator(),
+      ],
+    );
+    var emailValidatorError = emailValidator.validate(
+      label: 'Must be a valid email',
+      value: event.email,
+    );
+
+    if (emailValidatorError != null){
+      return emit(SignUpError(emailValidatorError ?? "Something went wrong with the email"));
     }
+
+    final passwordValidator = Validator(
+      validators: [
+        const MinLengthValidator(length: 8),
+        const RequiredValidator(),
+      ],
+    );
+    var passwordValidatorError = passwordValidator.validate(
+      label: 'Password must be at least 8 characters',
+      value: event.password,
+    );
+
+    if (passwordValidatorError != null){
+      return emit(SignUpError(passwordValidatorError ?? "Something went wrong with the email"));
+    }
+
+
+    //Old way
+    // var validateEmail = sl<ValidateEmail>().execute(event.email);
+    // if (!validateEmail.isSuccessful){
+    //   return emit(SignUpError(validateEmail.error ?? "Something went wrong with the email"));
+    // }
+    //
+    // var validatePassword = sl<ValidateNewPassword>().execute(event.password);
+    // if (!validatePassword.isSuccessful){
+    //   return emit(SignUpError(validatePassword.error ?? "Something went wrong with the password"));
+    // }
 
     emit(const SignUpLoading());
 

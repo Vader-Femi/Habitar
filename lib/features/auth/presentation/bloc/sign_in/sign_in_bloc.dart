@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_validation/form_validation.dart';
 import 'package:habitar/common/helpers/validation/validate_email.dart';
 import 'package:habitar/common/helpers/validation/validate_login_password.dart';
 import 'package:habitar/features/auth/presentation/bloc/sign_in/sign_in_event.dart';
@@ -25,6 +26,39 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   void onSignIn(TrySignIn event, Emitter<SignInState> emit) async {
 
     //Todo uncomment code
+    // final emailValidator = Validator(
+    //   validators: [
+    //     const EmailValidator(),
+    //     const RequiredValidator(),
+    //   ],
+    // );
+    // var emailValidatorError = emailValidator.validate(
+    //   label: 'Must be a valid email',
+    //   value: event.email,
+    // );
+    //
+    // if (emailValidatorError != null){
+    //   return emit(SignInError(emailValidatorError ?? "Something went wrong with the email"));
+    // }
+    //
+    // final passwordValidator = Validator(
+    //   validators: [
+    //     const MinLengthValidator(length: 1),
+    //     const RequiredValidator(),
+    //   ],
+    // );
+    // var passwordValidatorError = passwordValidator.validate(
+    //   label: 'Password is required',
+    //   value: event.password,
+    // );
+    //
+    // if (passwordValidatorError != null){
+    //   return emit(SignInError(passwordValidatorError ?? "Something went wrong with the email"));
+    // }
+
+
+
+    //Old version
     // var validateEmail = sl<ValidateEmail>().execute(event.email);
     // if (!validateEmail.isSuccessful){
     //   return emit(SignInError(validateEmail.error ?? "Something went wrong with the email"));

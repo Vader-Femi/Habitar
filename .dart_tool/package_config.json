@@ -416,6 +416,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "form_validation",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/form_validation-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "frontend_server_client",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/frontend_server_client-4.0.0",
       "packageUri": "lib/",
@@ -482,6 +488,12 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.20.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "io",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/io-1.0.4",
       "packageUri": "lib/",
@@ -496,6 +508,12 @@
     {
       "name": "json_annotation",
       "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "json_class",
+      "rootUri": "file:///C:/Users/Nosa/AppData/Local/Pub/Cache/hosted/pub.dev/json_class-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -914,7 +932,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-12-03T12:55:17.397776Z",
+  "generated": "2024-12-18T10:44:07.509067Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///D:/Sdk/flutter",
