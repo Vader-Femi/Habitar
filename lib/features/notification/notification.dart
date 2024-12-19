@@ -54,15 +54,11 @@ class NotificationService {
     }
 
     if (notificationResponse.actionId == "open_id") {
-      print("Step 1");
       if (NavigationService.navigatorKey.currentContext != null) {
-        print("Step 2");
         await NavigationService.navigatorKey.currentState?.pushNamed("/Home");
-        print("Step 3");
         // await Navigator.pushNamed(
         //     NavigationService.navigatorKey.currentContext!, "/Home");
       }
-      print("Step 4");
     }
   }
 
