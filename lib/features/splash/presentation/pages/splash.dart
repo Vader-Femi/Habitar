@@ -41,8 +41,8 @@ class _SplashPageState extends State<SplashPage> {
     // await Future.delayed(const Duration(seconds: 1));
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (isLoggedIn == true) {
-        Navigator.pushReplacementNamed(context, '/SignUp');
-        // Navigator.pushReplacementNamed(context, '/Home');
+        // Navigator.pushReplacementNamed(context, '/SignUp');
+        Navigator.pushReplacementNamed(context, '/Home');
       } else {
         Navigator.pushReplacementNamed(context, '/GetStarted');
       }
