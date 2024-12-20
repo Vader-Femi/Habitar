@@ -8,18 +8,8 @@ import '../bloc/sign_up/sign_up_state.dart';
 import '../widgets/app_bar.dart';
 import '../../../../common/widgets/button/next_button.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
-
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class SignUp extends StatelessWidget {
+  SignUp({super.key});
 
   final TextEditingController _name = TextEditingController();
 
@@ -31,18 +21,53 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<SignUpBloc>()..add(const InitSignUp()),
-      child: Scaffold(
-        appBar: AuthAppbar(
-          title: "Create an account",
-          goBack: () {
-            Navigator.pop(context);
-          },
-        ),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 30),
-          child:
-              BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AuthAppbar(
+              title: "Create an account",
+              goBack: () {
+                Navigator.pop(context);
+              },
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(
+                  top: 5, left: 20, right: 20, bottom: 30),
+              child: BlocBuilder<SignUpBloc, SignUpState>(
+                  builder: (context, state) {
+
+                if (state is SignUpInit) {
+                  return _buildBody(context, state);
+                }
+
+                if (state is SignUpSuccess) {
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    Navigator.pushNamed(context, '/AllSet');
+                  });
+
+                  return _buildBody(context, state);
+                }
+
+                if (state is ShowPasswordChanged) {
+                  return _buildBody(context, state);
+                }
+
+                if (state is SignUpError) {
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Error : ${state.errorMessage}"),
+                    ));
+                  });
+
+                  return _buildBody(context, state);
+                }
+
+                return _buildBody(context, state);
+              }),
+            ),
+          ),
+
+          BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
             if (state is SignUpLoading) {
               return Container(
                 alignment: Alignment.center,
@@ -50,35 +75,9 @@ class _SignUpState extends State<SignUp> {
               );
             }
 
-            if (state is SignUpInit) {
-              return _buildBody(context, state);
-            }
-
-            if (state is SignUpSuccess) {
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.pushNamed(context, '/AllSet');
-              });
-
-              return _buildBody(context, state);
-            }
-
-            if (state is ShowPasswordChanged) {
-              return _buildBody(context, state);
-            }
-
-            if (state is SignUpError) {
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Error : ${state.errorMessage}"),
-                ));
-              });
-
-              return _buildBody(context, state);
-            }
-
-            return _buildBody(context, state);
+            return Container();
           }),
-        ),
+        ],
       ),
     );
   }

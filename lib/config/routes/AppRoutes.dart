@@ -18,7 +18,7 @@ class AppRoutes {
         return _materialRoute(const GetStartedPage());
 
       case '/SignUp':
-        return _materialRoute(const SignUp());
+        return _materialRoute(SignUp());
 
       case '/AllSet':
         return _materialRoute(const AllSet());
