@@ -9,7 +9,7 @@ import '../../../../common/widgets/button/next_button.dart';
 import '../widgets/app_bar.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  SignIn({super.key});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -23,58 +23,66 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<SignInBloc>()..add(const InitSignIn()),
-      child: Scaffold(
-        appBar: AuthAppbar(
-          title: "Welcome Back",
-          goBack: () {
-            Navigator.pop(context);
-          },
-        ),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 30),
-          child:
-              BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
-            if (state is SignInLoading) {
-              return Container(
-                alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
-              );
-            }
+        create: (_) => sl<SignInBloc>()..add(const InitSignIn()),
+        child: Stack(
+          children: [
+            Scaffold(
+              appBar: AuthAppbar(
+                title: "Welcome Back",
+                goBack: () {
+                  Navigator.pop(context);
+                },
+              ),
+              body: Padding(
+                padding: const EdgeInsets.only(
+                    top: 5, left: 20, right: 20, bottom: 30),
+                child: BlocBuilder<SignInBloc, SignInState>(
+                    builder: (context, state) {
 
-            if (state is SignInInit) {
-              return _buildBody(context, state);
-            }
+                  if (state is SignInInit) {
+                    return _buildBody(context, state);
+                  }
 
-            if (state is SignInSuccess) {
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, "/Home", (r) => false);
-              });
+                  if (state is SignInSuccess) {
+                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/Home", (r) => false);
+                    });
 
-              return _buildBody(context, state);
-            }
+                    return _buildBody(context, state);
+                  }
 
-            if (state is ShowPasswordChanged) {
-              return _buildBody(context, state);
-            }
+                  if (state is ShowPasswordChanged) {
+                    return _buildBody(context, state);
+                  }
 
-            if (state is SignInError) {
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Error : ${state.errorMessage}"),
-                ));
-              });
+                  if (state is SignInError) {
+                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Error : ${state.errorMessage}"),
+                      ));
+                    });
 
-              return _buildBody(context, state);
-            }
+                    return _buildBody(context, state);
+                  }
 
-            return _buildBody(context, state);
-          }),
-        ),
-      ),
-    );
+                  return _buildBody(context, state);
+                }),
+              ),
+            ),
+
+            BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+              if (state is SignInLoading) {
+                return Container(
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(),
+                );
+              }
+
+              return Container();
+            }),
+          ],
+        ));
   }
 
   Widget _buildBody(BuildContext context, SignInState state) {

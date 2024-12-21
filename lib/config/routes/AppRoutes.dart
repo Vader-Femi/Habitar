@@ -24,7 +24,7 @@ class AppRoutes {
         return _materialRoute(const AllSet());
 
       case '/SignIn':
-        return _materialRoute(const SignIn());
+        return _materialRoute(SignIn());
 
       case '/Home':
         return _materialRoute(const HomePage());
