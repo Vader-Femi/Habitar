@@ -1,22 +1,18 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/core/navigation/navigation_service.dart';
-import 'package:habitar/features/home/data/models/HabitModel.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/today_habit_entity.dart';
 import 'package:timezone/timezone.dart';
 import '../../common/helpers/time_names.dart';
 import '../../common/helpers/week_names.dart';
 import '../../firebase_options.dart';
-import '../../main.dart';
 import '../../service_locator.dart';
 import '../home/domain/usecases/get_single_habit_from_db.dart';
 import '../home/domain/usecases/tick_habits.dart';
-import '../home/presentation/state/home_viewmodel.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -143,7 +139,7 @@ class NotificationService {
       required HabitEntity habit}) async {
     await flutterLocalNotificationsPlugin.show(
         payload: json.encode(habit.toJson()),
-        DateTime.now().microsecond,
+        habit.habit.hashCode,
         title,
         "Remember: ${habit.habit}",
         platformChannelSpecifics);
@@ -155,8 +151,9 @@ class NotificationService {
     required HabitEntity habit,
     required DateTime scheduleDateTime,
   }) async {
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      DateTime.now().microsecond,
+      habit.habit.hashCode,
       title,
       "Remember: ${habit.habit}",
       payload: json.encode(habit.toJson()),
