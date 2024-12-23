@@ -1,5 +1,7 @@
 import 'package:habitar/features/home/data/models/HabitModel.dart';
 
+import 'add_a_habit_req_entity.dart';
+
 class HabitEntity {
   final String habit;
   final List<String> selectedPeriodicity;
@@ -31,6 +33,17 @@ class HabitEntity {
 
   factory HabitEntity.fromModel(
       HabitModel entity) {
+    return HabitEntity(
+      habit: entity.habit,
+      selectedPeriodicity: entity.selectedPeriodicity,
+      selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
+    );
+  }
+
+  factory HabitEntity.fromAddAHabitEntity(
+      AddAHabitEntity entity) {
     return HabitEntity(
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,

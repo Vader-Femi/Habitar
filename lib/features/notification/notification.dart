@@ -138,11 +138,12 @@ class NotificationService {
       {String title = "Your habit reminder",
       required HabitEntity habit}) async {
     await flutterLocalNotificationsPlugin.show(
-        payload: json.encode(habit.toJson()),
         habit.habit.hashCode,
         title,
         "Remember: ${habit.habit}",
-        platformChannelSpecifics);
+        platformChannelSpecifics,
+        payload: json.encode(habit.toJson()),
+    );
   }
 
   //Schedule notification
@@ -156,14 +157,48 @@ class NotificationService {
       habit.habit.hashCode,
       title,
       "Remember: ${habit.habit}",
-      payload: json.encode(habit.toJson()),
       TZDateTime.from(scheduleDateTime, local),
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exact,//inexactAllowWhileIdle,
+      payload: json.encode(habit.toJson()),
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
+  }
+
+  Future<void> cancelScheduledNotification({
+    required int id,
+  }) async {
+
+    await flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  //Schedule notification for habit
+  Future<void> scheduleNotificationsForHabit(HabitEntity habit) async {
+
+    for (var day in habit.selectedPeriodicity) {
+      for (var time in habit.selectedTimeOfDay) {
+        var desiredWeekDay =
+        (weekNames.firstWhere((element) => element.longName == day));
+
+        var desiredDayTime =
+        (timeNames.firstWhere((element) => element.name == time));
+
+        var today = DateTime.now();
+        var todayWeekday = today.weekday;
+
+        var scheduleDateTime = today.copyWith(
+          hour: desiredDayTime.time,
+          day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
+        );
+
+        await scheduleNotifications(
+          habit: habit,
+          scheduleDateTime: scheduleDateTime,
+        );
+      }
+    }
   }
 
   //Schedule notification for habits

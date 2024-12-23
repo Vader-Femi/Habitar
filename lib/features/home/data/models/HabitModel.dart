@@ -1,4 +1,5 @@
 
+import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/habit_entity.dart';
 import '../db/habit_db.dart';
 
@@ -57,6 +58,17 @@ class HabitModel extends HabitEntity{
 
   factory HabitModel.fromEntity(
       HabitEntity entity) {
+    return HabitModel(
+      habit: entity.habit,
+      selectedPeriodicity: entity.selectedPeriodicity,
+      selectedTimeOfDay: entity.selectedTimeOfDay,
+      streak: entity.streak,
+      lastDateTicked: entity.lastDateTicked,
+    );
+  }
+
+  factory HabitModel.fromAddAHabitEntity(
+      AddAHabitEntity entity) {
     return HabitModel(
       habit: entity.habit,
       selectedPeriodicity: entity.selectedPeriodicity,

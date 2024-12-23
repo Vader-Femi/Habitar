@@ -5,6 +5,7 @@ import 'package:habitar/common/helpers/get_today_date.dart';
 import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/update_a_habit_req_entity.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
+import 'package:habitar/features/home/domain/usecases/delete_single_habit_from_db.dart';
 import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
@@ -12,6 +13,7 @@ import '../../../notification/notification.dart';
 import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
+import '../../domain/usecases/add_habits_to_db.dart';
 import '../../domain/usecases/delete_all_habits_in_db.dart';
 import '../../domain/usecases/get_habits.dart';
 import '../../domain/usecases/get_habits_from_db.dart';
@@ -44,14 +46,28 @@ abstract class HomeService {
 }
 
 class HomeServiceImpl extends HomeService {
+
   @override
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq) async {
     var newHabitReqModel = AddAHabitModel.fromEntity(newHabitReq);
+    var habitModel = HabitModel.fromAddAHabitEntity(newHabitReq);
+
     try {
+      //Add To remote db
       await FirebaseFirestore.instance
           .collection(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
           .doc(newHabitReq.habit)
           .set(newHabitReqModel.toJson());
+
+
+      //Reschedule notifications
+      var notificationService = sl<NotificationService>();
+      await notificationService.scheduleNotificationsForHabit(
+        HabitEntity.fromModel(habitModel),
+      );
+
+      //Add to local db
+      await sl<AddHabitsToDBUseCase>().call(params: habitModel);
 
       return const DataSuccess("Successfully Added");
     } on FirebaseException catch (e) {
@@ -156,6 +172,13 @@ class HomeServiceImpl extends HomeService {
             newHabitModel.toJson(),
           );
 
+      //Reschedule notifications with new habit
+      var notificationService = sl<NotificationService>();
+      await notificationService.cancelScheduledNotification(id: habitModel.habit.hashCode);
+      await notificationService.scheduleNotificationsForHabit(
+        HabitEntity.fromModel(newHabitModel),
+      );
+
       // Also update local db
       await sl<UpdateHabitInDbUseCase>().call(
         params: UpdateAHabitReqModel(
@@ -212,13 +235,22 @@ class HomeServiceImpl extends HomeService {
   @override
   Future<DataState> deleteHabit(HabitEntity habitEntity) async {
     var newHabitReqModel = AddAHabitModel.fromHabitEntity(habitEntity);
+    var habitModel = HabitModel.fromEntity(habitEntity);
     try {
+
+      //Delete from remote db
       await FirebaseFirestore.instance
           .collection(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
           .doc(newHabitReqModel.habit)
           .delete();
 
-      await sl<GetHabitsUseCase>().call();
+
+      //Cancel notifications
+      var notificationService = sl<NotificationService>();
+      await notificationService.cancelScheduledNotification(id: habitModel.habit.hashCode);
+
+      //Delete from local db
+      await sl<DeleteSingleHabitFromDbUseCase>().call(params: habitModel);
 
       return const DataSuccess("Successfully Deleted");
     } on FirebaseException catch (e) {
@@ -231,6 +263,7 @@ class HomeServiceImpl extends HomeService {
       UpdateAHabitReqEntity updateAHabitReqEntity) async {
     var firestoreInstance = FirebaseFirestore.instance;
     try {
+
       await //Get old doc details
           firestoreInstance
               .collection(
@@ -241,7 +274,7 @@ class HomeServiceImpl extends HomeService {
         (doc) async {
           if (doc.data() != null && doc.exists) {
             var data = doc.data();
-            var habit = HabitModel.fromJson(data!);
+            var oldHabit = HabitModel.fromJson(data!);
 
             //Deletes the old doc
             await firestoreInstance
@@ -250,23 +283,38 @@ class HomeServiceImpl extends HomeService {
                 .doc(updateAHabitReqEntity.oldId)
                 .delete();
 
-            //Creates new doc with old streak and lastDateTicked
+            //Update with old streak and lastDateTicked
             var newHabitReqModel =
                 AddAHabitModel.fromUpdateAHabitReqEntity(updateAHabitReqEntity)
                     .copyWith(
-                        streak: habit.streak,
-                        lastDateTicked: habit.lastDateTicked);
+                        streak: oldHabit.streak,
+                        lastDateTicked: oldHabit.lastDateTicked);
 
             await firestoreInstance
                 .collection(
                     FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
                 .doc(updateAHabitReqEntity.newHabit.habit)
                 .set(newHabitReqModel.toJson());
+
+            //Reschedule notifications with updated habit
+            var notificationService = sl<NotificationService>();
+            await notificationService.cancelScheduledNotification(id: oldHabit.habit.hashCode);
+            var fromAddAHabitEntity = AddAHabitEntity.fromModel(newHabitReqModel);
+            await notificationService.scheduleNotificationsForHabit(
+              HabitEntity.fromAddAHabitEntity(fromAddAHabitEntity),
+            );
+
+            //update local db with updated habit
+            await sl<UpdateHabitInDbUseCase>().call(
+              params: UpdateAHabitReqModel(
+                  newHabit: newHabitReqModel,
+                  oldId: updateAHabitReqEntity.oldId),
+            );
+
+
           }
         },
       );
-
-      await sl<GetHabitsUseCase>().call();
 
       return const DataSuccess("Successfully Updated");
     } on FirebaseException catch (e) {

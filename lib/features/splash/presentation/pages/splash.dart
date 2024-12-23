@@ -39,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> redirect() async {
     var isLoggedIn = await sl<IsUserLoggedIn>().call();
     // await Future.delayed(const Duration(seconds: 1));
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (isLoggedIn == true) {
         // Navigator.pushReplacementNamed(context, '/SignIn');
         Navigator.pushReplacementNamed(context, '/Home');
