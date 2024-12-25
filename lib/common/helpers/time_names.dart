@@ -8,6 +8,6 @@ class TimeNames{
 
 final timeNames = [
   TimeNames(name: "Morning", time: 8, positionInDay: 1),
-  TimeNames(name: "Afternoon", time: 13, positionInDay: 2),
-  TimeNames(name: "Evening", time: 18, positionInDay: 3),
+  TimeNames(name: "Afternoon", time: 12, positionInDay: 2),
+  TimeNames(name: "Evening", time: 19, positionInDay: 3),
 ];

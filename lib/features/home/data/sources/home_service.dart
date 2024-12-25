@@ -9,7 +9,6 @@ import 'package:habitar/features/home/domain/usecases/delete_single_habit_from_d
 import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
-import '../../../notification/notification.dart';
 import '../../domain/entities/add_a_habit_req_entity.dart';
 import '../../domain/entities/today_habit_entity.dart';
 import '../../domain/usecases/add_habits_batch_to_db.dart';
@@ -23,6 +22,7 @@ import '../models/HabitModel.dart';
 import '../models/addAHabitReqModel.dart';
 import '../models/updateAHabitReqModel.dart';
 import '../models/user_model.dart';
+import '../notification/notification.dart';
 
 abstract class HomeService {
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq);
@@ -173,8 +173,9 @@ class HomeServiceImpl extends HomeService {
           );
 
       //Reschedule notifications with new habit
+      //This one is actually pointless for now
       var notificationService = sl<NotificationService>();
-      await notificationService.cancelScheduledNotification(id: habitModel.habit.hashCode);
+      await notificationService.cancelScheduledNotifications(habitModel);
       await notificationService.scheduleNotificationsForHabit(
         HabitEntity.fromModel(newHabitModel),
       );
@@ -247,7 +248,7 @@ class HomeServiceImpl extends HomeService {
 
       //Cancel notifications
       var notificationService = sl<NotificationService>();
-      await notificationService.cancelScheduledNotification(id: habitModel.habit.hashCode);
+      await notificationService.cancelScheduledNotifications(habitEntity);
 
       //Delete from local db
       await sl<DeleteSingleHabitFromDbUseCase>().call(params: habitModel);
@@ -298,10 +299,10 @@ class HomeServiceImpl extends HomeService {
 
             //Reschedule notifications with updated habit
             var notificationService = sl<NotificationService>();
-            await notificationService.cancelScheduledNotification(id: oldHabit.habit.hashCode);
-            var fromAddAHabitEntity = AddAHabitEntity.fromModel(newHabitReqModel);
+            await notificationService.cancelScheduledNotifications(HabitEntity.fromModel(oldHabit));
+            var addAHabitEntity = AddAHabitEntity.fromModel(newHabitReqModel);
             await notificationService.scheduleNotificationsForHabit(
-              HabitEntity.fromAddAHabitEntity(fromAddAHabitEntity),
+              HabitEntity.fromAddAHabitEntity(addAHabitEntity),
             );
 
             //update local db with updated habit
