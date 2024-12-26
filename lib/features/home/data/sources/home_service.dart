@@ -6,6 +6,7 @@ import 'package:habitar/features/home/domain/entities/habit_entity.dart';
 import 'package:habitar/features/home/domain/entities/update_a_habit_req_entity.dart';
 import 'package:habitar/features/home/domain/entities/user.dart';
 import 'package:habitar/features/home/domain/usecases/delete_single_habit_from_db.dart';
+import 'package:habitar/features/home/domain/usecases/get_single_habit_from_db.dart';
 import 'package:habitar/features/home/domain/usecases/get_user.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
@@ -46,7 +47,6 @@ abstract class HomeService {
 }
 
 class HomeServiceImpl extends HomeService {
-
   @override
   Future<DataState> addAHabit(AddAHabitEntity newHabitReq) async {
     var newHabitReqModel = AddAHabitModel.fromEntity(newHabitReq);
@@ -58,7 +58,6 @@ class HomeServiceImpl extends HomeService {
           .collection(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
           .doc(newHabitReq.habit)
           .set(newHabitReqModel.toJson());
-
 
       //Reschedule notifications
       var notificationService = sl<NotificationService>();
@@ -173,7 +172,7 @@ class HomeServiceImpl extends HomeService {
           );
 
       //Reschedule notifications with new habit
-      //This one is actually pointless for now
+      //I thing this one might actually be pointless for now
       var notificationService = sl<NotificationService>();
       await notificationService.cancelScheduledNotifications(habitModel);
       await notificationService.scheduleNotificationsForHabit(
@@ -238,13 +237,11 @@ class HomeServiceImpl extends HomeService {
     var newHabitReqModel = AddAHabitModel.fromHabitEntity(habitEntity);
     var habitModel = HabitModel.fromEntity(habitEntity);
     try {
-
       //Delete from remote db
       await FirebaseFirestore.instance
           .collection(FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
           .doc(newHabitReqModel.habit)
           .delete();
-
 
       //Cancel notifications
       var notificationService = sl<NotificationService>();
@@ -264,8 +261,7 @@ class HomeServiceImpl extends HomeService {
       UpdateAHabitReqEntity updateAHabitReqEntity) async {
     var firestoreInstance = FirebaseFirestore.instance;
     try {
-
-      await //Get old doc details
+      await //Get old doc details from remote db
           firestoreInstance
               .collection(
                   FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
@@ -279,8 +275,8 @@ class HomeServiceImpl extends HomeService {
 
             //Deletes the old doc
             await firestoreInstance
-                .collection(FirebaseAuth.instance.currentUser?.uid ??
-                "Unknown users")
+                .collection(
+                    FirebaseAuth.instance.currentUser?.uid ?? "Unknown users")
                 .doc(updateAHabitReqEntity.oldId)
                 .delete();
 
@@ -297,9 +293,19 @@ class HomeServiceImpl extends HomeService {
                 .doc(updateAHabitReqEntity.newHabit.habit)
                 .set(newHabitReqModel.toJson());
 
-            //Reschedule notifications with updated habit
+            //Get old doc details from local db and reschedule notifications with updated habit
             var notificationService = sl<NotificationService>();
-            await notificationService.cancelScheduledNotifications(HabitEntity.fromModel(oldHabit));
+            var oldHabitFromLocalDB = await sl<GetSingleHabitFromDBUseCase>()
+                .call(params: updateAHabitReqEntity.oldId);
+            // If is not in local db, then cancel from remote
+            if (oldHabitFromLocalDB == null) {
+              await notificationService.cancelScheduledNotifications(
+                  HabitEntity.fromModel(oldHabit));
+            } else {
+              await notificationService
+                  .cancelScheduledNotifications(oldHabitFromLocalDB);
+            }
+            //The reschedule
             var addAHabitEntity = AddAHabitEntity.fromModel(newHabitReqModel);
             await notificationService.scheduleNotificationsForHabit(
               HabitEntity.fromAddAHabitEntity(addAHabitEntity),
@@ -311,8 +317,6 @@ class HomeServiceImpl extends HomeService {
                   newHabit: newHabitReqModel,
                   oldId: updateAHabitReqEntity.oldId),
             );
-
-
           }
         },
       );
@@ -324,8 +328,7 @@ class HomeServiceImpl extends HomeService {
   }
 
   @override
-  Future<DataState> updateUserProfile(
-      String userName) async {
+  Future<DataState> updateUserProfile(String userName) async {
     var firestoreInstance = FirebaseFirestore.instance;
 
     try {
@@ -338,9 +341,8 @@ class HomeServiceImpl extends HomeService {
         (doc) async {
           if (doc.data() != null && doc.exists) {
             var data = doc.data();
-            var userModel = UserModel.fromJson(data!).copyWith(
-              username: userName
-            );
+            var userModel =
+                UserModel.fromJson(data!).copyWith(username: userName);
 
             //Update userName
             await firestoreInstance
