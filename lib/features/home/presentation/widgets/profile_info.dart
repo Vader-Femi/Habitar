@@ -3,6 +3,7 @@ import 'package:flutter_super/flutter_super.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitar/core/assets/app_images.dart';
 import 'package:habitar/core/res/data_state.dart';
+import 'package:habitar/features/home/presentation/widgets/log_out_alert_dialog.dart';
 import '../../../../core/assets/app_vectors.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../common/widgets/button/next_button.dart';
@@ -50,18 +51,22 @@ class ProfileInfo extends StatelessWidget {
                   TextButton(
                       onPressed: () async {
                         if (getProfileViewModel.editingProfile.state) {
-                          var result = await getProfileViewModel.updateProfile();
-                          if (result is DataFailed){
+                          var result =
+                              await getProfileViewModel.updateProfile();
+                          if (result is DataFailed) {
                             if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text("Error : ${(result).errorMessage}"),
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    Text("Error : ${(result).errorMessage}"),
                               ));
                             }
                           }
 
-                          if (result is DataSuccess){
+                          if (result is DataSuccess) {
                             if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: Text("Updated"),
                               ));
                             }
@@ -213,7 +218,10 @@ class _LogOutButton extends StatelessWidget {
       child: NextButton(
         title: "Log out",
         onClick: () async {
-          getProfileViewModel.logOut();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => LogOutAlertDialog(),
+          );
         },
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:habitar/common/helpers/validation/validate_email.dart';
 import 'package:habitar/common/helpers/validation/validate_habit.dart';
@@ -30,6 +31,7 @@ import 'features/home/domain/usecases/delete_single_habit_from_db.dart';
 import 'features/home/domain/usecases/get_habits_from_db.dart';
 import 'features/home/domain/usecases/get_habits.dart';
 import 'features/home/domain/usecases/get_single_habit_from_db.dart';
+import 'features/home/domain/usecases/log_out.dart';
 import 'features/home/domain/usecases/update_habit_in_db.dart';
 import 'features/home/domain/usecases/update_user_profile.dart';
 import 'features/home/domain/usecases/watch_habit_from_db.dart';
@@ -37,6 +39,10 @@ import 'features/home/domain/usecases/watch_habit_from_db.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+
+  sl.registerSingleton<FirebaseAuth>( // I created this late that's why it's not being used everywhere
+      FirebaseAuth.instance
+  );
 
   sl.registerSingleton<IsUserLoggedIn>(
       IsUserLoggedIn()
@@ -144,6 +150,10 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<UpdateHabitInDbUseCase>(
       UpdateHabitInDbUseCase(sl())
+  );
+
+  sl.registerSingleton<LogOutUseCase>(
+      LogOutUseCase(sl())
   );
 
   sl.registerSingleton<ValidateEmail>(

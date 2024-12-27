@@ -6,6 +6,7 @@ import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
 import '../../domain/usecases/get_habits.dart';
+import '../../domain/usecases/log_out.dart';
 import '../../domain/usecases/update_user_profile.dart';
 
 ProfileViewModel get getProfileViewModel => Super.init(ProfileViewModel());
@@ -63,9 +64,7 @@ class ProfileViewModel {
     }
   }
 
-  Future<DataState> logOut() async {
-    return DataFailed();
-  }
+  Future<void> logOut() async => await sl<LogOutUseCase>().call();
 
   Future<DataState> deleteAccount() async {
     return DataFailed();
