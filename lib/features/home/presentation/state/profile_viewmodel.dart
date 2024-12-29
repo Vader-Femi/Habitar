@@ -5,6 +5,7 @@ import 'package:habitar/common/helpers/validation/validate_username.dart';
 import 'package:habitar/features/home/presentation/state/home_viewmodel.dart';
 import '../../../../core/res/data_state.dart';
 import '../../../../service_locator.dart';
+import '../../domain/usecases/delete_account.dart';
 import '../../domain/usecases/get_habits.dart';
 import '../../domain/usecases/log_out.dart';
 import '../../domain/usecases/update_user_profile.dart';
@@ -66,7 +67,6 @@ class ProfileViewModel {
 
   Future<void> logOut() async => await sl<LogOutUseCase>().call();
 
-  Future<DataState> deleteAccount() async {
-    return DataFailed();
-  }
+  Future<void> deleteAccount() async => await sl<DeleteAccountUseCase>().call();
+
 }

@@ -44,6 +44,8 @@ abstract class HomeService {
   Future<UserEntity> getUser();
 
   Future<DataState> updateUserProfile(String userName);
+
+  Future<DataState> deleteAccount();
 }
 
 class HomeServiceImpl extends HomeService {
@@ -356,6 +358,46 @@ class HomeServiceImpl extends HomeService {
       getHomeViewModel.getUser();
 
       return const DataSuccess("Successfully Updated");
+    } on FirebaseException catch (e) {
+      return DataFailed(errorMessage: e.message ?? "Something went wrong");
+    }
+  }
+
+  @override
+  Future<DataState> deleteAccount() async {
+    try {
+      if (FirebaseAuth.instance.currentUser?.uid == null) {
+        throw FirebaseException(
+            plugin: '', message: "Cannot find user. Please log in again");
+      }
+
+      //Nuke local db
+      await sl<DeleteAllHabitsInDBUseCase>().call();
+
+      //Delete habits from firebase collection
+      final habitsCollection = await FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      final habitsBatch = FirebaseFirestore.instance.batch();
+      for (final doc in habitsCollection.docs) {
+        habitsBatch.delete(doc.reference);
+      }
+      await habitsBatch.commit();
+
+      // Delete user from firebase collection
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .delete();
+
+      //Delete user from firebase auth
+      await FirebaseAuth.instance.currentUser?.delete();
+
+      //Cancel all notifications
+      var notificationService = sl<NotificationService>();
+      await notificationService.cancelAndDeleteAllNotifications();
+
+      return const DataSuccess("Successfully Deleted");
     } on FirebaseException catch (e) {
       return DataFailed(errorMessage: e.message ?? "Something went wrong");
     }

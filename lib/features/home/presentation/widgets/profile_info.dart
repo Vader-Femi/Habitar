@@ -3,6 +3,7 @@ import 'package:flutter_super/flutter_super.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habitar/core/assets/app_images.dart';
 import 'package:habitar/core/res/data_state.dart';
+import 'package:habitar/features/home/presentation/widgets/delete_account_alert_dialog.dart';
 import 'package:habitar/features/home/presentation/widgets/log_out_alert_dialog.dart';
 import '../../../../core/assets/app_vectors.dart';
 import '../../../../core/constants/constants.dart';
@@ -193,8 +194,11 @@ class _DeleteAccountButton extends StatelessWidget {
       child: Hero(
         tag: Constants.skipButtonHeroTag,
         child: OutlinedButton(
-          onPressed: () {
-            getProfileViewModel.deleteAccount();
+          onPressed:() async {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => DeleteAccountAlertDialog(),
+            );
           },
           style: OutlinedButton.styleFrom(
             elevation: 5,

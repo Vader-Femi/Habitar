@@ -25,36 +25,35 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   void onSignIn(TrySignIn event, Emitter<SignInState> emit) async {
 
-    //Todo uncomment code
-    // final emailValidator = Validator(
-    //   validators: [
-    //     const EmailValidator(),
-    //     const RequiredValidator(),
-    //   ],
-    // );
-    // var emailValidatorError = emailValidator.validate(
-    //   label: 'Must be a valid email',
-    //   value: event.email,
-    // );
-    //
-    // if (emailValidatorError != null){
-    //   return emit(SignInError(emailValidatorError ?? "Something went wrong with the email"));
-    // }
-    //
-    // final passwordValidator = Validator(
-    //   validators: [
-    //     const MinLengthValidator(length: 1),
-    //     const RequiredValidator(),
-    //   ],
-    // );
-    // var passwordValidatorError = passwordValidator.validate(
-    //   label: 'Password is required',
-    //   value: event.password,
-    // );
-    //
-    // if (passwordValidatorError != null){
-    //   return emit(SignInError(passwordValidatorError ?? "Something went wrong with the email"));
-    // }
+    final emailValidator = Validator(
+      validators: [
+        const EmailValidator(),
+        const RequiredValidator(),
+      ],
+    );
+    var emailValidatorError = emailValidator.validate(
+      label: 'Must be a valid email',
+      value: event.email,
+    );
+
+    if (emailValidatorError != null){
+      return emit(SignInError(emailValidatorError ?? "Something went wrong with the email"));
+    }
+
+    final passwordValidator = Validator(
+      validators: [
+        const MinLengthValidator(length: 1),
+        const RequiredValidator(),
+      ],
+    );
+    var passwordValidatorError = passwordValidator.validate(
+      label: 'Password is required',
+      value: event.password,
+    );
+
+    if (passwordValidatorError != null){
+      return emit(SignInError(passwordValidatorError ?? "Something went wrong with the email"));
+    }
 
 
 

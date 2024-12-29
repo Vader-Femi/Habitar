@@ -37,4 +37,8 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<DataState> updateUserProfile(String userName) =>
       _homeService.updateUserProfile(userName);
+
+  @override
+  Future<DataState> deleteAccount() =>
+      _homeService.deleteAccount();
 }

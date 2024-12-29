@@ -19,24 +19,34 @@ class LogOutAlertDialog extends StatelessWidget {
       content: Text(message),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       actions: [
-        OutlinedButton(
-          onPressed: () async {
-            await getProfileViewModel.logOut();
-            Navigator.pushReplacementNamed(context, '/GetStarted');
-          },
-          style: OutlinedButton.styleFrom(
-            elevation: 5,
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () async {
+                    await getProfileViewModel.logOut();
+                    Navigator.pushReplacementNamed(context, '/GetStarted');
+                  },
+                  style: OutlinedButton.styleFrom(
+                    elevation: 5,
+                  ),
+                  child: Text(
+                    positiveBtnText,
+                    style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: NextButton(
+                  title: negativeBtnText,
+                  onClick: () => Navigator.pop(context),
+                ),
+              ),
+            ],
           ),
-          child: Text(
-            positiveBtnText,
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
-          ),
-        ),
-        SizedBox(height: 5),
-        NextButton(
-          title: negativeBtnText,
-          onClick: () => Navigator.pop(context),
-        ),
+        )
       ],
     );
   }

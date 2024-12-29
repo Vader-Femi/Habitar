@@ -16,9 +16,21 @@ class AuthServiceImpl extends AuthService {
   Future<DataState> signIn(SignInRequestEntity signInReq) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: "test@test.com",//signInReq.email, //Todo uncomment code
-        password: "testing123",//signInReq.password, //Todo uncomment code
+        email: signInReq.email,
+        password: signInReq.password,
       );
+
+      // Test version 1
+      // await FirebaseAuth.instance.signInWithEmailAndPassword(
+      //   email: "test@test.com",
+      //   password: "testing123",
+      // );
+
+      // Test version 2
+      // await FirebaseAuth.instance.signInWithEmailAndPassword(
+      //   email: "email@email.com",
+      //   password: "testing123",
+      // );
 
       return const DataSuccess("Sign up was successful");
     } on FirebaseAuthException catch (e) {
@@ -48,6 +60,30 @@ class AuthServiceImpl extends AuthService {
                     habitsCompleted: "0")
                 .toJson(),
           );
+
+      //Test version 1
+      // var data = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //     email: "email@email.com", password: "testing123");
+      //
+      // FirebaseFirestore.instance.collection("Users").doc(data.user?.uid).set(
+      //       UserModel(
+      //               username: "Temporary Tester 1",
+      //               email: data.user?.email ?? signUpReq.email,
+      //               habitsCompleted: "0")
+      //           .toJson(),
+      //     );
+
+      //Test version 2
+      // var data = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //     email: "email@email.com", password: "testing123");
+      //
+      // FirebaseFirestore.instance.collection("Users").doc(data.user?.uid).set(
+      //       UserModel(
+      //               username: "Temporary Tester 2",
+      //               email: data.user?.email ?? signUpReq.email,
+      //               habitsCompleted: "0")
+      //           .toJson(),
+      //     );
 
       return const DataSuccess("Sign up was successful");
     } on FirebaseAuthException catch (e) {
