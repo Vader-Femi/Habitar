@@ -163,7 +163,7 @@ class NotificationService {
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
       UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.exact, //inexactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       payload: json.encode(habit.toJson()),
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
