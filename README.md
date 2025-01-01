@@ -1,3 +1,9 @@
+<img src="assets/images/app_logo.png" alt="App Logo" width="700" />
+
+<a href="https://github.com/Vader-Femi/Habitar/" target="_blank"
+rel="nofollow noopener noreferrer" aria-label="Live Demo"><u>Live Demo 🚀(Coming soon)</u></a>
+
+
 # Habitar
 
 A habit-tracking app using Flutter, configured with [Bloc], [Hydrated Bloc], and [Flutter Super] for a robust and dynamic state management. 
@@ -18,9 +24,9 @@ Incorporated push notifications with [flutter_local_notifications] to remind use
 <br />
 <div>
   &emsp;&emsp;&emsp;
-  <img src="" alt="Light theme" width="330">
+  <img src="assets/images/app_light_mode.png" alt="Light theme" width="330">
   &emsp;&emsp;&emsp;&emsp;
-  <img src="" alt="Dark theme" width="320">  
+  <img src="assets/images/app_dark_mode.png" alt="Dark theme" width="320">  
 </div>
 <br />
 
@@ -38,3 +44,33 @@ run the code generation tool
 flutter pub run build_runner build
 ```
 
+### ApiService
+
+Abstraction over the firebase communication that defines (all) firebase functions.
+Network functions return DataSuccess or DataFailed which are implementations of the abstract [DataState] class
+
+- [AuthService] - Firebase Auth related functions
+- [HomeService] - Habit and Firebase Firestore related functions
+- [DataState] - An abstract class of Generic type that contains the network response or error
+
+[AuthService]: lib/features/auth/data/sources/auth_service.dart
+[HomeService]: lib/features/home/data/sources/home_service.dart
+[DataState]: lib/core/res/data_state.dart/sources/home_service.dart
+
+## Dependency Management
+
+Dependencies are managed in the [`service_locator.dart`][service_locator] file. This sample uses [GetIt], a lightweight service locator.
+
+[service_locator]: ./lib/service_locator.dart
+[GetIt]: https://pub.dev/packages/get_it
+
+
+## Features
+This app has 2 feature [Auth] and [Home]...TBD
+
+[Auth]: lib/features/auth
+[Home]: lib/features/home
+
+## Logger
+
+This project uses firebase [crashlytics] to log error and crashes
