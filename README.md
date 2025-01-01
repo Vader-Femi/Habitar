@@ -1,4 +1,4 @@
-<img src="assets/images/app_logo.png" alt="App Logo" width="700" />
+<img src="assets/images/app_logo.png" alt="App Logo" width="200" />
 
 <a href="https://github.com/Vader-Femi/Habitar/" target="_blank"
 rel="nofollow noopener noreferrer" aria-label="Live Demo"><u>Live Demo 🚀(Coming soon)</u></a>
