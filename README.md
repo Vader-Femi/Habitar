@@ -1,10 +1,6 @@
-<img src="assets/images/app_logo.png" alt="App Logo" width="200" />
-
+# Habitar
 <a href="https://github.com/Vader-Femi/Habitar/" target="_blank"
 rel="nofollow noopener noreferrer" aria-label="Live Demo"><u>Live Demo 🚀(Coming soon)</u></a>
-
-
-# Habitar
 
 A habit-tracking app using Flutter, configured with [Bloc], [Hydrated Bloc], and [Flutter Super] for a robust and dynamic state management. 
 Applied clean architecture principles to ensure a clear separation of features. 
