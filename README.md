@@ -20,7 +20,7 @@ Incorporated push notifications with [flutter_local_notifications] to remind use
 <br />
 <div>
   &emsp;&emsp;&emsp;
-  <img src="assets/images/app_light_mode.png" alt="Light theme" width="330">
+  <img src="assets/images/app_light_mode.png" alt="Light theme" width="1080">
   &emsp;&emsp;&emsp;&emsp;
   <img src="assets/images/app_dark_mode.png" alt="Dark theme" width="320">  
 </div>
@@ -40,18 +40,18 @@ run the code generation tool
 flutter pub run build_runner build
 ```
 
-### ApiService
+## ApiService
 
 Abstraction over the firebase communication that defines (all) firebase functions.
 Network functions return DataSuccess or DataFailed which are implementations of the abstract [DataState] class
 
-- [AuthService] - Firebase Auth related functions
-- [HomeService] - Habit and Firebase Firestore related functions
+- [AuthApiService] - Firebase Auth related functions
+- [HomeApiService] - Habit and Firebase Firestore related functions
 - [DataState] - An abstract class of Generic type that contains the network response or error
 
-[AuthService]: lib/features/auth/data/sources/auth_service.dart
-[HomeService]: lib/features/home/data/sources/home_service.dart
-[DataState]: lib/core/res/data_state.dart/sources/home_service.dart
+[AuthApiService]: lib/features/auth/data/sources/auth_service.dart
+[HomeApiService]: lib/features/home/data/sources/home_service.dart
+[DataState]: lib/core/res/data_state.dart
 
 ## Dependency Management
 
@@ -62,11 +62,33 @@ Dependencies are managed in the [`service_locator.dart`][service_locator] file. 
 
 
 ## Features
-This app has 2 feature [Auth] and [Home]...TBD
+This app has 4 feature [Splash], [Choose Mode], [Auth], and [Home] 
+
+### Splash
+Contains the splash screen page that checks if user is logged in, then routes accordingly. I has a 1 second delay before routing.
+
+### Choose Mode
+Simply contains a hydrated bloc class that stores the theme preference (dark or light mode).
+It is used in the main class and is set to use whatever theme mode the device happens to be in by default.
+
+### Auth
+Is divided into data, domain, and presentation
+- Data: Contains the model classes, repository implementation, and the [AuthApiService]
+- Domain: Contains the entity classes, repository definition, and the use cases for auth activities like sign in and sign up.
+- Presentation: Contains the bloc along with state and event classes, auth widgets, and the 4 auth pages.
 
 [Auth]: lib/features/auth
+
+### Home
+Is divided into data, domain, and presentation
+- Data: Contains the model classes, repository implementation, [drift] database classes, [flutter_local_notifications] related classes, and the [HomeApiService]
+- Domain: Contains the entity classes, repository definition, and the use cases for activities that can be performed on habits like adding, deleting, etc.
+- Presentation: Contains the [Flutter Super] state classes, habit screens widgets, and the 5 pages for interacting with habits.
+
 [Home]: lib/features/home
 
-## Logger
+## Other relevant classes
+ - 
 
+## Logger
 This project uses firebase [crashlytics] to log error and crashes
