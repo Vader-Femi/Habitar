@@ -92,3 +92,9 @@ Is divided into data, domain, and presentation
 
 ## Logger
 This project uses firebase [crashlytics] to log error and crashes
+
+
+## Future recommendations
+Add a function to cancel all notifications assigned for a specific day whenever a habit is marked as completed for that day
+This might involve updating how the notification id is generated.
+
