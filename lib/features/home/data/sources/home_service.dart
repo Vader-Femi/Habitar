@@ -173,13 +173,13 @@ class HomeServiceImpl extends HomeService {
             newHabitModel.toJson(),
           );
 
-      //Reschedule notifications with new habit
-      //I thing this one might actually be pointless for now
+      //Cancel notifications for today and reschedule for next time
       var notificationService = sl<NotificationService>();
-      await notificationService.cancelScheduledNotifications(habitModel);
-      await notificationService.scheduleNotificationsForHabit(
-        HabitEntity.fromModel(newHabitModel),
-      );
+      // await notificationService.cancelScheduledNotifications(habitModel);
+      // await notificationService.scheduleNotificationsForHabit(
+      //   HabitEntity.fromModel(newHabitModel),
+      // );
+      await notificationService.cancelNotificationsForToday(habitModel);
 
       // Also update local db
       await sl<UpdateHabitInDbUseCase>().call(

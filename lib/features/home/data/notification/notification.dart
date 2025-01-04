@@ -17,7 +17,7 @@ import 'get_notification_id.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   @pragma('vm:entry-point')
   static Future<void> onDidReceiveNotification(
@@ -34,15 +34,14 @@ class NotificationService {
       } catch (e) {
         if (kDebugMode) {
           print(
-              "Failed to init dependencies. Dependencies might already be initialized ${e
-                  .toString()}");
+              "Failed to init dependencies. Dependencies might already be initialized ${e.toString()}");
         }
       }
 
       var habitEntity = HabitEntity.fromJson(
           jsonDecode(notificationResponse.payload.toString()));
       var todayHabitEntity =
-      TodayHabitEntity.fromEntity(habitEntity).copyWith(isSelected: true);
+          TodayHabitEntity.fromEntity(habitEntity).copyWith(isSelected: true);
 
       var habitFromDB = await sl<GetSingleHabitFromDBUseCase>()
           .call(params: todayHabitEntity.habit.habit);
@@ -83,19 +82,19 @@ class NotificationService {
   static Future<void> init() async {
     // Define android init settings
     const AndroidInitializationSettings androidInitializationSettings =
-    AndroidInitializationSettings("@mipmap/ic_launcher");
+        AndroidInitializationSettings("@mipmap/ic_launcher");
 
     // Define ios init settings
     const DarwinInitializationSettings iOSInitializationSettings =
-    DarwinInitializationSettings();
+        DarwinInitializationSettings();
 
     // Define linux init settings
     final LinuxInitializationSettings linuxInitializationSettings =
-    LinuxInitializationSettings(defaultActionName: 'Open notification');
+        LinuxInitializationSettings(defaultActionName: 'Open notification');
 
     // Combine android and ios init settings
     final InitializationSettings initializationSettings =
-    InitializationSettings(
+        InitializationSettings(
       android: androidInitializationSettings,
       iOS: iOSInitializationSettings,
       linux: linuxInitializationSettings,
@@ -111,24 +110,24 @@ class NotificationService {
     // Request notification permission from android
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
 
     // Request notification permission from ios
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   //Cancel and delete all notifications
   Future<void> cancelAndDeleteAllNotifications() async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
-    await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
 
     if (pendingNotificationRequests.isNotEmpty) {
       await flutterLocalNotificationsPlugin.cancelAll();
@@ -136,8 +135,9 @@ class NotificationService {
   }
 
   //Show an instant notification
-  Future<void> showInstantNotification({String title = "Your habit reminder",
-    required HabitEntity habit}) async {
+  Future<void> showInstantNotification(
+      {String title = "Your habit reminder",
+      required HabitEntity habit}) async {
     await flutterLocalNotificationsPlugin.show(
       habit.habit.hashCode,
       title,
@@ -154,7 +154,6 @@ class NotificationService {
     required HabitEntity habit,
     required DateTime scheduleDateTime,
   }) async {
-
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
@@ -162,7 +161,7 @@ class NotificationService {
       TZDateTime.from(scheduleDateTime, local),
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       payload: json.encode(habit.toJson()),
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
@@ -172,14 +171,10 @@ class NotificationService {
   Future<void> cancelScheduledNotifications(HabitEntity habit) async {
     for (var day in habit.selectedPeriodicity) {
       for (var time in habit.selectedTimeOfDay) {
-
-        await flutterLocalNotificationsPlugin.cancel(
-          getNotificationId(habit.habit, day, time)
-        );
+        await flutterLocalNotificationsPlugin
+            .cancel(getNotificationId(habit.habit, day, time));
       }
     }
-
-
   }
 
   //Schedule notification for habit
@@ -187,10 +182,10 @@ class NotificationService {
     for (var day in habit.selectedPeriodicity) {
       for (var time in habit.selectedTimeOfDay) {
         var desiredWeekDay =
-        (weekNames.firstWhere((element) => element.longName == day));
+            (weekNames.firstWhere((element) => element.longName == day));
 
         var desiredDayTime =
-        (timeNames.firstWhere((element) => element.name == time));
+            (timeNames.firstWhere((element) => element.name == time));
 
         var today = DateTime.now();
         var todayWeekday = today.weekday;
@@ -201,7 +196,7 @@ class NotificationService {
         );
 
         await scheduleNotification(
-          id: getNotificationId(habit.habit,day,time),
+          id: getNotificationId(habit.habit, day, time),
           habit: habit,
           scheduleDateTime: scheduleDateTime,
         );
@@ -217,10 +212,10 @@ class NotificationService {
       for (var day in habit.selectedPeriodicity) {
         for (var time in habit.selectedTimeOfDay) {
           var desiredWeekDay =
-          (weekNames.firstWhere((element) => element.longName == day));
+              (weekNames.firstWhere((element) => element.longName == day));
 
           var desiredDayTime =
-          (timeNames.firstWhere((element) => element.name == time));
+              (timeNames.firstWhere((element) => element.name == time));
 
           var today = DateTime.now();
           var todayWeekday = today.weekday;
@@ -228,15 +223,49 @@ class NotificationService {
           var scheduleDateTime = today.copyWith(
             hour: desiredDayTime.time,
             day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
-            minute: 38, //01,
+            minute: 01,
           );
 
           await scheduleNotification(
-            id: getNotificationId(habit.habit,day,time),
+            id: getNotificationId(habit.habit, day, time),
             habit: habit,
             scheduleDateTime: scheduleDateTime,
           );
         }
+      }
+    }
+  }
+
+  //Reschedule notification for ticked habits
+  Future<void> cancelNotificationsForToday(HabitEntity habit) async {
+    await cancelScheduledNotifications(habit);
+
+    for (var day in habit.selectedPeriodicity) {
+      for (var time in habit.selectedTimeOfDay) {
+        var desiredWeekDay =
+            (weekNames.firstWhere((element) => element.longName == day));
+
+        var desiredDayTime =
+            (timeNames.firstWhere((element) => element.name == time));
+
+        var today = DateTime.now();
+        var todayWeekday = today.weekday;
+
+        var scheduleDateTime = today.copyWith(
+          hour: desiredDayTime.time,
+          day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
+          minute: 01,
+        );
+
+        if (todayWeekday == desiredWeekDay.positionInWeek) {
+          scheduleDateTime.add(Duration(days: 7));
+        }
+
+        await scheduleNotification(
+          id: getNotificationId(habit.habit, day, time),
+          habit: habit,
+          scheduleDateTime: scheduleDateTime,
+        );
       }
     }
   }
