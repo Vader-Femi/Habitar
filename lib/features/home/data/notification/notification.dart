@@ -162,7 +162,7 @@ class NotificationService {
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       payload: json.encode(habit.toJson()),
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
@@ -178,7 +178,11 @@ class NotificationService {
   }
 
   //Schedule notification for habit
-  Future<void> scheduleNotificationsForHabit(HabitEntity habit) async {
+  // Or Reschedule notification for ticked habits if you set ignoreTodayNotifications to true
+  Future<void> scheduleNotificationsForHabit({
+    required HabitEntity habit,
+    bool ignoreTodayNotifications = false,
+  }) async {
     for (var day in habit.selectedPeriodicity) {
       for (var time in habit.selectedTimeOfDay) {
         var desiredWeekDay =
@@ -194,6 +198,12 @@ class NotificationService {
           hour: desiredDayTime.time,
           day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
         );
+
+        if (ignoreTodayNotifications) {
+          if (todayWeekday == desiredWeekDay.positionInWeek) {
+            scheduleDateTime.add(Duration(days: 7));
+          }
+        }
 
         await scheduleNotification(
           id: getNotificationId(habit.habit, day, time),
@@ -232,40 +242,6 @@ class NotificationService {
             scheduleDateTime: scheduleDateTime,
           );
         }
-      }
-    }
-  }
-
-  //Reschedule notification for ticked habits
-  Future<void> cancelNotificationsForToday(HabitEntity habit) async {
-    await cancelScheduledNotifications(habit);
-
-    for (var day in habit.selectedPeriodicity) {
-      for (var time in habit.selectedTimeOfDay) {
-        var desiredWeekDay =
-            (weekNames.firstWhere((element) => element.longName == day));
-
-        var desiredDayTime =
-            (timeNames.firstWhere((element) => element.name == time));
-
-        var today = DateTime.now();
-        var todayWeekday = today.weekday;
-
-        var scheduleDateTime = today.copyWith(
-          hour: desiredDayTime.time,
-          day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
-          minute: 01,
-        );
-
-        if (todayWeekday == desiredWeekDay.positionInWeek) {
-          scheduleDateTime.add(Duration(days: 7));
-        }
-
-        await scheduleNotification(
-          id: getNotificationId(habit.habit, day, time),
-          habit: habit,
-          scheduleDateTime: scheduleDateTime,
-        );
       }
     }
   }

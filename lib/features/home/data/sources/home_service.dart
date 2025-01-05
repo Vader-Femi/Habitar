@@ -64,7 +64,7 @@ class HomeServiceImpl extends HomeService {
       //Reschedule notifications
       var notificationService = sl<NotificationService>();
       await notificationService.scheduleNotificationsForHabit(
-        HabitEntity.fromModel(habitModel),
+        habit: HabitEntity.fromModel(habitModel),
       );
 
       //Add to local db
@@ -179,7 +179,10 @@ class HomeServiceImpl extends HomeService {
       // await notificationService.scheduleNotificationsForHabit(
       //   HabitEntity.fromModel(newHabitModel),
       // );
-      await notificationService.cancelNotificationsForToday(habitModel);
+      await notificationService.scheduleNotificationsForHabit(
+        habit: habitModel,
+        ignoreTodayNotifications: true,
+      );
 
       // Also update local db
       await sl<UpdateHabitInDbUseCase>().call(
@@ -310,7 +313,7 @@ class HomeServiceImpl extends HomeService {
             //The reschedule
             var addAHabitEntity = AddAHabitEntity.fromModel(newHabitReqModel);
             await notificationService.scheduleNotificationsForHabit(
-              HabitEntity.fromAddAHabitEntity(addAHabitEntity),
+              habit: HabitEntity.fromAddAHabitEntity(addAHabitEntity),
             );
 
             //update local db with updated habit
