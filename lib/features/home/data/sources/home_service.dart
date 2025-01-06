@@ -61,7 +61,7 @@ class HomeServiceImpl extends HomeService {
           .doc(newHabitReq.habit)
           .set(newHabitReqModel.toJson());
 
-      //Reschedule notifications
+      //Schedule notifications
       var notificationService = sl<NotificationService>();
       await notificationService.scheduleNotificationsForHabit(
         habit: HabitEntity.fromModel(habitModel),
@@ -181,7 +181,7 @@ class HomeServiceImpl extends HomeService {
       // );
       await notificationService.scheduleNotificationsForHabit(
         habit: habitModel,
-        ignoreTodayNotifications: true,
+        ignoreTodayNotifications: todayHabitEntity.isSelected,
       );
 
       // Also update local db

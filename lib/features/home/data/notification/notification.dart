@@ -163,7 +163,8 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: json.encode(habit.toJson()),
+      // payload: json.encode(habit.toJson()),
+      payload: json.encode("${habit.habit} ${scheduleDateTime.toString()}"),
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
   }
@@ -201,7 +202,7 @@ class NotificationService {
 
         if (ignoreTodayNotifications) {
           if (todayWeekday == desiredWeekDay.positionInWeek) {
-            scheduleDateTime.add(Duration(days: 7));
+            scheduleDateTime = scheduleDateTime.add(Duration(days: 7));
           }
         }
 
