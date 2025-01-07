@@ -195,10 +195,7 @@ class _DeleteAccountButton extends StatelessWidget {
         tag: Constants.skipButtonHeroTag,
         child: OutlinedButton(
           onPressed:() async {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => DeleteAccountAlertDialog(),
-            );
+            showDeleteAccountAlertDialog(context);
           },
           style: OutlinedButton.styleFrom(
             elevation: 5,
@@ -222,10 +219,7 @@ class _LogOutButton extends StatelessWidget {
       child: NextButton(
         title: "Log out",
         onClick: () async {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => LogOutAlertDialog(),
-          );
+          showLogOutAlertDialog(context);
         },
       ),
     );
