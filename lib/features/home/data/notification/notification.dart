@@ -162,9 +162,8 @@ class NotificationService {
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      // payload: json.encode(habit.toJson()),
-      payload: json.encode("${habit.habit} ${scheduleDateTime.toString()}"),
+      androidScheduleMode: AndroidScheduleMode.alarmClock,
+      payload: json.encode(habit.toJson()),
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
   }
@@ -234,7 +233,8 @@ class NotificationService {
           var scheduleDateTime = today.copyWith(
             hour: desiredDayTime.time,
             day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
-            minute: 01,
+            minute: 1,
+            second: 00
           );
 
           await scheduleNotification(

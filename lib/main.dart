@@ -52,6 +52,11 @@ void main() async {
   initializeTimeZones(); // must be from package:timezone/data/latest.dart
   await NotificationService.init();
 
+  var x = await NotificationService.flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  for(var z in x){
+    print("${z.payload}");
+  }
+
   runApp(const SuperApp(child: MyApp()));
 }
 
