@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
     var isLoggedIn = await sl<IsUserLoggedIn>().call();
     // await Future.delayed(const Duration(seconds: 1));
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 300));
       if (isLoggedIn == true) {
         Navigator.pushReplacementNamed(context, '/Home');
       } else {

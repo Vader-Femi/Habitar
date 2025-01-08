@@ -127,8 +127,8 @@ class UpdateHabitViewmodel {
         habit: _habit.text,
         selectedPeriodicity: selectedPeriodicity,
         selectedTimeOfDay: selectedTimeOfDay,
-        streak: "",
-        lastDateTicked: "",
+        streak: oldHabit.streak,
+        lastDateTicked: oldHabit.lastDateTicked,
       ),
     );
 
