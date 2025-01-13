@@ -171,8 +171,14 @@ class NotificationService {
   Future<void> cancelScheduledNotifications(HabitEntity habit) async {
     for (var day in habit.selectedPeriodicity) {
       for (var time in habit.selectedTimeOfDay) {
-        await flutterLocalNotificationsPlugin
-            .cancel(getNotificationId(habit.habit, day, time));
+        var desiredWeekDay =
+            (weekNames.firstWhere((element) => element.longName == day));
+
+        var desiredDayTime =
+            (timeNames.firstWhere((element) => element.name == time));
+
+        await flutterLocalNotificationsPlugin.cancel(getNotificationId(
+            habit.habit, desiredWeekDay.longName, desiredDayTime.name));
       }
     }
   }
@@ -206,7 +212,9 @@ class NotificationService {
         }
 
         await scheduleNotification(
-          id: getNotificationId(habit.habit, day, time),
+          // id: getNotificationId(habit.habit, day, time),
+          id: getNotificationId(
+              habit.habit, desiredWeekDay.longName, desiredDayTime.name),
           habit: habit,
           scheduleDateTime: scheduleDateTime,
         );
@@ -231,14 +239,13 @@ class NotificationService {
           var todayWeekday = today.weekday;
 
           var scheduleDateTime = today.copyWith(
-            hour: desiredDayTime.time,
-            day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
-            minute: 1,
-            second: 00
-          );
+              hour: desiredDayTime.time,
+              day: today.day + (desiredWeekDay.positionInWeek - todayWeekday),
+              minute: 1,
+              second: 00);
 
           await scheduleNotification(
-            id: getNotificationId(habit.habit, day, time),
+            id: getNotificationId(habit.habit, desiredWeekDay.longName, desiredDayTime.name),
             habit: habit,
             scheduleDateTime: scheduleDateTime,
           );
