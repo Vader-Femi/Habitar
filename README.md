@@ -20,7 +20,7 @@ Incorporated push notifications with [flutter_local_notifications] to remind use
 <br />
 <div>
   &emsp;&emsp;&emsp;
-  <img src="assets/images/app_light_mode.png" alt="Light theme" width="1080">
+  <img src="assets/images/app_light_mode.png" alt="Light theme" width="320">
   &emsp;&emsp;&emsp;&emsp;
   <img src="assets/images/app_dark_mode.png" alt="Dark theme" width="320">  
 </div>
