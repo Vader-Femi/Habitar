@@ -1,5 +1,5 @@
 # Habitar
-<a href="https://github.com/Vader-Femi/Habitar/" target="_blank"
+<a href="https://appetize.io/app/b_b6g3rbmshvvykreskmfo3mevdq" target="_blank"
 rel="nofollow noopener noreferrer" aria-label="Live Demo"><u>Live Demo 🚀(Coming soon)</u></a>
 
 A habit-tracking app using Flutter, configured with [Bloc], [Hydrated Bloc], and [Flutter Super] for a robust and dynamic state management. 
