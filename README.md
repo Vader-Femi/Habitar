@@ -1,6 +1,6 @@
 # Habitar
 <a href="https://appetize.io/app/b_nqcolhpm3blzmlb3eripogqzaa?device=pixel7&osVersion=13.0&toolbar=true" target="_blank"
-rel="nofollow noopener noreferrer" aria-label="Live Demo"><u>Live Demo 🚀(Coming soon)</u></a>
+rel="nofollow noopener noreferrer" aria-label="Live Demo"><u>Live Demo</u></a>
 
 A habit-tracking app using Flutter, configured with [Bloc], [Hydrated Bloc], and [Flutter Super] for a robust and dynamic state management. 
 Applied clean architecture principles to ensure a clear separation of features. 
